@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
 import { differentials } from "@/lib/nexsuria-data";
 import * as Icons from "lucide-react";
-import { EditableText, Hideable } from "@/components/editable";
+import { EditableText, Hideable, Movable } from "@/components/editable";
 
 export const Route = createFileRoute("/diferenciais")({
   head: () => ({
@@ -20,7 +20,7 @@ function Diferenciais() {
   return (
     <>
       <PageHeader id="diferenciais" eyebrow="Diferenciais" title="O que separa evolução de mera implantação." description="Oito alavancas que estruturam a forma como a Nexsuria conduz projetos e relacionamentos." />
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
+      <Movable id="diferenciais.section.grid" label="Seção Diferenciais" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {differentials.map((d, i) => {
             const Icon = (Icons as unknown as Record<string, Icons.LucideIcon>)[d.icon] ?? Icons.Sparkles;
@@ -37,7 +37,7 @@ function Diferenciais() {
             );
           })}
         </div>
-      </section>
+      </Movable>
     </>
   );
 }

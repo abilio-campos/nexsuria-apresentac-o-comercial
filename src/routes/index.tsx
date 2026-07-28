@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Network, Sparkles, Target, BrainCircuit, ShieldCheck, Gauge, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { kpis, solutions, differentials } from "@/lib/nexsuria-data";
-import { EditableText, Hideable } from "@/components/editable";
+import { EditableText, Hideable, Movable, SectionDivider } from "@/components/editable";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,7 +20,7 @@ function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate overflow-hidden">
+      <Movable id="home.section.hero" label="Seção Hero" as="section" className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-hero-gradient opacity-95" />
         <div className="absolute inset-0 -z-10 opacity-30 [background:radial-gradient(1000px_500px_at_20%_0%,white,transparent),radial-gradient(800px_400px_at_80%_100%,white,transparent)]" />
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-14 md:py-20 text-primary-foreground">
@@ -65,10 +65,12 @@ function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </Movable>
+
+      <SectionDivider id="home.divider.1" />
 
       {/* Value pillars */}
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
+      <Movable id="home.section.pilares" label="Seção Pilares" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="max-w-2xl">
           <span className="text-xs uppercase tracking-widest text-muted-foreground">Posicionamento</span>
           <h2 className="mt-2 text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
@@ -97,10 +99,12 @@ function HomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </Movable>
+
+      <SectionDivider id="home.divider.2" />
 
       {/* Solutions preview */}
-      <section className="bg-secondary/40 border-y border-border">
+      <Movable id="home.section.solucoes" label="Seção Soluções" as="section" className="bg-secondary/40 border-y border-border">
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
             <div>
@@ -129,10 +133,12 @@ function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </Movable>
+
+      <SectionDivider id="home.divider.3" />
 
       {/* Differentials strip */}
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
+      <Movable id="home.section.diferenciais" label="Seção Diferenciais" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div>
             <span className="text-xs uppercase tracking-widest text-muted-foreground">Por que Nexsuria</span>
@@ -156,7 +162,9 @@ function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </Movable>
+
+
 
     </>
   );

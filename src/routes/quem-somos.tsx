@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
 import { values, timeline } from "@/lib/nexsuria-data";
 import { MapPin } from "lucide-react";
-import { EditableText, Hideable } from "@/components/editable";
+import { EditableText, Hideable, Movable, SectionDivider } from "@/components/editable";
 
 export const Route = createFileRoute("/quem-somos")({
   head: () => ({
@@ -26,7 +26,7 @@ function QuemSomos() {
         description="Nascida em Campinas/SP com a missão de conectar pessoas e negócios, a Nexsuria atua como Centro de Inteligência Empresarial — reunindo os melhores especialistas do mercado sob uma única coordenação estratégica."
       />
 
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16 grid gap-6 md:grid-cols-3">
+      <Movable id="quem-somos.section.pmv" label="Seção Propósito/Missão/Visão" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-16 grid gap-6 md:grid-cols-3">
         {[
           { title: "Propósito", text: "Conectar pessoas e negócios para gerar evolução empresarial mensurável." },
           { title: "Missão", text: "Ser o Centro de Inteligência Empresarial que orquestra estratégia, tecnologia e IA para acelerar resultados." },
@@ -39,9 +39,11 @@ function QuemSomos() {
             </div>
           </Hideable>
         ))}
-      </section>
+      </Movable>
 
-      <section className="bg-secondary/40 border-y border-border">
+      <SectionDivider id="quem-somos.divider.1" />
+
+      <Movable id="quem-somos.section.valores" label="Seção Valores" as="section" className="bg-secondary/40 border-y border-border">
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
           <EditableText id="quem-somos.valores.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Cultura</EditableText>
           <EditableText id="quem-somos.valores.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">Nossos valores</EditableText>
@@ -56,9 +58,11 @@ function QuemSomos() {
             ))}
           </div>
         </div>
-      </section>
+      </Movable>
 
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
+      <SectionDivider id="quem-somos.divider.2" />
+
+      <Movable id="quem-somos.section.mapa" label="Seção Mapa/Linha do tempo" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
         <div className="grid md:grid-cols-[1fr_2fr] gap-10">
           <Hideable id="quem-somos.mapa" label="Mapa de atuação">
             <div>
@@ -88,7 +92,7 @@ function QuemSomos() {
             </ol>
           </div>
         </div>
-      </section>
+      </Movable>
     </>
   );
 }
