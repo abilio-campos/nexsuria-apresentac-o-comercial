@@ -65,10 +65,12 @@ function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </Movable>
+
+      <SectionDivider id="home.divider.1" />
 
       {/* Value pillars */}
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
+      <Movable id="home.section.pilares" label="Seção Pilares" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="max-w-2xl">
           <span className="text-xs uppercase tracking-widest text-muted-foreground">Posicionamento</span>
           <h2 className="mt-2 text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
