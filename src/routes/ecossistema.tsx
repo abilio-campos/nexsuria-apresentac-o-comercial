@@ -1,12 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
-import { partners, contactInfo } from "@/lib/nexsuria-data";
+import { partners, contactInfo, solutions } from "@/lib/nexsuria-data";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 import { EditableText, Hideable } from "@/components/editable";
 import { Markable } from "@/components/markable";
+
+const solutionSlugForPartner = (partnerName: string) =>
+  solutions.find((s) => s.specialist.name === partnerName)?.slug;
 
 export const Route = createFileRoute("/ecossistema")({
   head: () => ({
