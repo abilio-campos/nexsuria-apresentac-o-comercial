@@ -37,6 +37,17 @@ function SolucoesLayout() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((s, idx) => {
             const hidden = list.isHidden(s.slug);
+            const palette = [
+              "bg-[color-mix(in_oklab,var(--primary)_10%,var(--card))] hover:bg-[color-mix(in_oklab,var(--primary)_16%,var(--card))]",
+              "bg-[color-mix(in_oklab,#7dd3fc_18%,var(--card))] hover:bg-[color-mix(in_oklab,#7dd3fc_26%,var(--card))]",
+              "bg-[color-mix(in_oklab,#fda4af_16%,var(--card))] hover:bg-[color-mix(in_oklab,#fda4af_24%,var(--card))]",
+              "bg-[color-mix(in_oklab,#fcd34d_16%,var(--card))] hover:bg-[color-mix(in_oklab,#fcd34d_24%,var(--card))]",
+              "bg-[color-mix(in_oklab,#86efac_16%,var(--card))] hover:bg-[color-mix(in_oklab,#86efac_24%,var(--card))]",
+              "bg-[color-mix(in_oklab,#c4b5fd_18%,var(--card))] hover:bg-[color-mix(in_oklab,#c4b5fd_26%,var(--card))]",
+              "bg-[color-mix(in_oklab,#f9a8d4_16%,var(--card))] hover:bg-[color-mix(in_oklab,#f9a8d4_24%,var(--card))]",
+              "bg-[color-mix(in_oklab,#5eead4_16%,var(--card))] hover:bg-[color-mix(in_oklab,#5eead4_24%,var(--card))]",
+            ];
+            const tint = palette[idx % palette.length];
             return (
             <Markable key={s.slug} id={`mark.solucao.${s.slug}`} label={`Solução: ${s.title}`} page="Soluções">
             <Hideable id={`solucoes.card.${s.slug}`} label={`Solução: ${s.title}`}>
@@ -74,7 +85,7 @@ function SolucoesLayout() {
               <Link
                 to="/solucoes/$slug"
                 params={{ slug: s.slug }}
-                className="group block rounded-2xl border border-border bg-card p-6 hover:border-primary/40 hover:shadow-elegant transition-all"
+                className={`group block rounded-2xl border border-border p-6 hover:border-primary/40 hover:shadow-elegant transition-all ${tint}`}
               >
                 <EditableText id={`solucoes.card.${s.slug}.esp`} as="div" className="text-[10px] uppercase tracking-widest text-muted-foreground">{s.specialist.name}</EditableText>
                 <EditableText id={`solucoes.card.${s.slug}.title`} as="h3" className="mt-2 block text-lg font-semibold leading-tight">{s.title}</EditableText>
