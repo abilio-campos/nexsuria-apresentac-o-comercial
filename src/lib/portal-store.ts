@@ -69,6 +69,7 @@ type State = {
   listOrders: Record<string, string[]>;
   listHidden: Record<string, string[]>;
   positions: Record<string, { x: number; y: number }>;
+  sizes: Record<string, { w?: number; h?: number }>;
   btnScale: "p" | "m" | "g" | "gg";
   editMode: boolean;
   theme: { primary?: string; foreground?: string };
@@ -85,6 +86,7 @@ const initial: State = {
   listOrders: {},
   listHidden: {},
   positions: {},
+  sizes: {},
   btnScale: "m",
   editMode: false,
   theme: {},
@@ -112,6 +114,7 @@ function load() {
         listOrders: { ...(parsed.listOrders || {}) },
         listHidden: { ...(parsed.listHidden || {}) },
         positions: { ...(parsed.positions || {}) },
+        sizes: { ...(parsed.sizes || {}) },
         btnScale: (parsed.btnScale as State["btnScale"]) || "m",
         theme: { ...(parsed.theme || {}) },
         marks: { ...(parsed.marks || {}) },
@@ -236,6 +239,12 @@ export const portal = {
     else delete positions[id];
     set({ positions });
   },
+  setSize(id: string, size: { w?: number; h?: number } | null) {
+    const sizes = { ...state.sizes };
+    if (size && (size.w != null || size.h != null)) sizes[id] = size;
+    else delete sizes[id];
+    set({ sizes });
+  },
   setBtnScale(scale: State["btnScale"]) {
     set({ btnScale: scale });
   },
@@ -301,6 +310,7 @@ export const portal = {
       listOrders: { ...state.listOrders, ...(patch.listOrders || {}) },
       listHidden: { ...state.listHidden, ...(patch.listHidden || {}) },
       positions: { ...state.positions, ...(patch.positions || {}) },
+      sizes: { ...state.sizes, ...(patch.sizes || {}) },
       btnScale: patch.btnScale ?? state.btnScale,
       theme: { ...state.theme, ...(patch.theme || {}) },
       perceptions: { ...state.perceptions, ...(patch.perceptions || {}) },
