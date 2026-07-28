@@ -51,17 +51,19 @@ function HomePage() {
 
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
             {kpis.map((k, i) => (
-              <Hideable key={k.label} id={`home.kpi.${i}`} label={`KPI: ${k.label}`}>
-                <div className="rounded-xl border border-white/15 bg-white/5 backdrop-blur p-5">
-                  <div className="text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
-                    <EditableText id={`home.kpi.${i}.value`} as="span">{k.value}</EditableText>
-                    <EditableText id={`home.kpi.${i}.suffix`} as="span" className="text-white/70">{k.suffix}</EditableText>
+              <Movable key={k.label} id={`home.kpi.${i}.box`} label={`KPI: ${k.label}`}>
+                <Hideable id={`home.kpi.${i}`} label={`KPI: ${k.label}`}>
+                  <div className="rounded-xl border border-white/15 bg-white/5 backdrop-blur p-5">
+                    <div className="text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
+                      <EditableText id={`home.kpi.${i}.value`} as="span">{k.value}</EditableText>
+                      <EditableText id={`home.kpi.${i}.suffix`} as="span" className="text-white/70">{k.suffix}</EditableText>
+                    </div>
+                    <EditableText id={`home.kpi.${i}.label`} as="div" className="mt-1 text-xs text-white/70 uppercase tracking-widest">
+                      {k.label}
+                    </EditableText>
                   </div>
-                  <EditableText id={`home.kpi.${i}.label`} as="div" className="mt-1 text-xs text-white/70 uppercase tracking-widest">
-                    {k.label}
-                  </EditableText>
-                </div>
-              </Hideable>
+                </Hideable>
+              </Movable>
             ))}
           </div>
         </div>
