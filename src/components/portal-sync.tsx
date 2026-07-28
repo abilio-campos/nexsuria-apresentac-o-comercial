@@ -34,6 +34,7 @@ export function PortalSync() {
             textColors: data.textColors,
             listOrders: data.listOrders,
             listHidden: data.listHidden,
+            positions: data.positions,
             theme: data.theme,
             perceptions: data.perceptions,
             marks: data.marks,
