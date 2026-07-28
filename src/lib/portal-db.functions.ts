@@ -87,6 +87,7 @@ export const savePortalConfig = createServerFn({ method: "POST" })
     textColors?: Record<string, string>;
     listOrders?: Record<string, string[]>;
     listHidden?: Record<string, string[]>;
+    positions?: Record<string, { x: number; y: number }>;
     theme?: { primary?: string; foreground?: string };
     perceptions?: Perceptions;
   }) => data)
