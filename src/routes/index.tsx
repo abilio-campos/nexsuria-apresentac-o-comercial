@@ -109,10 +109,12 @@ function HomePage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
             <div>
-              <span className="text-xs uppercase tracking-widest text-muted-foreground">Soluções</span>
-              <h2 className="mt-2 text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
-                 13 frentes de evolução empresarial
-              </h2>
+              <Movable id="home.solucoes.eyebrow.box" label="Eyebrow: Soluções" inline>
+                <EditableText id="home.solucoes.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Soluções</EditableText>
+              </Movable>
+              <Movable id="home.solucoes.title.box" label="Título: 13 frentes">
+                <EditableText id="home.solucoes.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">13 frentes de evolução empresarial</EditableText>
+              </Movable>
             </div>
             <Button asChild variant="ghost"><Link to="/solucoes">Ver todas <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
           </div>
