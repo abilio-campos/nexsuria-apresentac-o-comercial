@@ -50,7 +50,7 @@ function Equipe() {
         title="Experiência executiva, próxima e responsável"
         description="A Nexsuria acredita que resultados consistentes nascem da combinação entre experiência executiva, inovação, tecnologia e relacionamento próximo com cada cliente."
       />
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16 grid gap-6 md:grid-cols-2">
+      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16 grid gap-6">
         {people.map((p, pi) => (
           <Hideable key={p.name} id={`equipe.${pi}`} label={p.name}>
             <div className="rounded-3xl border border-border bg-card p-8 shadow-card-soft">
