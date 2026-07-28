@@ -51,17 +51,19 @@ function HomePage() {
 
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
             {kpis.map((k, i) => (
-              <Hideable key={k.label} id={`home.kpi.${i}`} label={`KPI: ${k.label}`}>
-                <div className="rounded-xl border border-white/15 bg-white/5 backdrop-blur p-5">
-                  <div className="text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
-                    <EditableText id={`home.kpi.${i}.value`} as="span">{k.value}</EditableText>
-                    <EditableText id={`home.kpi.${i}.suffix`} as="span" className="text-white/70">{k.suffix}</EditableText>
+              <Movable key={k.label} id={`home.kpi.${i}.box`} label={`KPI: ${k.label}`}>
+                <Hideable id={`home.kpi.${i}`} label={`KPI: ${k.label}`}>
+                  <div className="rounded-xl border border-white/15 bg-white/5 backdrop-blur p-5">
+                    <div className="text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
+                      <EditableText id={`home.kpi.${i}.value`} as="span">{k.value}</EditableText>
+                      <EditableText id={`home.kpi.${i}.suffix`} as="span" className="text-white/70">{k.suffix}</EditableText>
+                    </div>
+                    <EditableText id={`home.kpi.${i}.label`} as="div" className="mt-1 text-xs text-white/70 uppercase tracking-widest">
+                      {k.label}
+                    </EditableText>
                   </div>
-                  <EditableText id={`home.kpi.${i}.label`} as="div" className="mt-1 text-xs text-white/70 uppercase tracking-widest">
-                    {k.label}
-                  </EditableText>
-                </div>
-              </Hideable>
+                </Hideable>
+              </Movable>
             ))}
           </div>
         </div>
@@ -91,13 +93,15 @@ function HomePage() {
             { icon: ShieldCheck, title: "Compliance", text: "Segurança jurídica, fiscal e trabalhista." },
             { icon: TrendingUp, title: "Resultado Mensurável", text: "Evolução empresarial que aparece no P&L." },
           ].map(({ icon: Icon, title, text }) => (
-            <div key={title} className="group rounded-2xl border border-border bg-card p-6 shadow-card-soft hover:shadow-elegant transition-shadow">
-              <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
-                <Icon className="h-5 w-5" />
+            <Movable key={title} id={`home.pilar.${title}.box`} label={`Pilar: ${title}`}>
+              <div className="group rounded-2xl border border-border bg-card p-6 shadow-card-soft hover:shadow-elegant transition-shadow">
+                <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-4 font-semibold">{title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{text}</p>
               </div>
-              <h3 className="mt-4 font-semibold">{title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{text}</p>
-            </div>
+            </Movable>
           ))}
         </div>
       </Movable>
@@ -120,19 +124,20 @@ function HomePage() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {solutions.slice(0, 6).map((s) => (
-              <Link
-                key={s.slug}
-                to="/solucoes/$slug"
-                params={{ slug: s.slug }}
-                className="group block rounded-2xl border border-border bg-card p-6 hover:border-primary/40 hover:shadow-elegant transition-all"
-              >
-                <div className="text-xs text-muted-foreground uppercase tracking-widest">{s.specialist.name}</div>
-                <h3 className="mt-2 text-lg font-semibold">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{s.tagline}</p>
-                <div className="mt-4 flex items-center text-sm text-primary group-hover:translate-x-1 transition-transform">
-                  Explorar <ArrowRight className="ml-1 h-4 w-4" />
-                </div>
-              </Link>
+              <Movable key={s.slug} id={`home.solucao.${s.slug}.box`} label={`Solução: ${s.title}`}>
+                <Link
+                  to="/solucoes/$slug"
+                  params={{ slug: s.slug }}
+                  className="group block rounded-2xl border border-border bg-card p-6 hover:border-primary/40 hover:shadow-elegant transition-all"
+                >
+                  <div className="text-xs text-muted-foreground uppercase tracking-widest">{s.specialist.name}</div>
+                  <h3 className="mt-2 text-lg font-semibold">{s.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{s.tagline}</p>
+                  <div className="mt-4 flex items-center text-sm text-primary group-hover:translate-x-1 transition-transform">
+                    Explorar <ArrowRight className="ml-1 h-4 w-4" />
+                  </div>
+                </Link>
+              </Movable>
             ))}
           </div>
         </div>
@@ -159,10 +164,12 @@ function HomePage() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             {differentials.slice(0, 6).map((d) => (
-              <div key={d.title} className="rounded-xl border border-border bg-card p-4">
-                <div className="text-sm font-semibold">{d.title}</div>
-                <p className="mt-1 text-xs text-muted-foreground line-clamp-3">{d.description}</p>
-              </div>
+              <Movable key={d.title} id={`home.diff.${d.title}.box`} label={`Diferencial: ${d.title}`}>
+                <div className="rounded-xl border border-border bg-card p-4">
+                  <div className="text-sm font-semibold">{d.title}</div>
+                  <p className="mt-1 text-xs text-muted-foreground line-clamp-3">{d.description}</p>
+                </div>
+              </Movable>
             ))}
           </div>
         </div>
