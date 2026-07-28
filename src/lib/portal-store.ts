@@ -86,6 +86,7 @@ const initial: State = {
   listOrders: {},
   listHidden: {},
   positions: {},
+  sizes: {},
   btnScale: "m",
   editMode: false,
   theme: {},
