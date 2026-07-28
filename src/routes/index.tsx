@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Network, Sparkles, Target, BrainCircuit, ShieldCheck, Gauge, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { kpis, solutions, differentials } from "@/lib/nexsuria-data";
-import { EditableText, Hideable } from "@/components/editable";
+import { EditableText, Hideable, Movable, SectionDivider } from "@/components/editable";
 
 export const Route = createFileRoute("/")({
   head: () => ({
