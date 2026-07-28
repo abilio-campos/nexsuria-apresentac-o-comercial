@@ -75,6 +75,7 @@ export const loadPortalConfig = createServerFn({ method: "GET" })
       listOrders: config.listOrders,
       listHidden: config.listHidden,
       positions: config.positions,
+      sizes: config.sizes,
       theme: config.theme,
       perceptions: config.perceptions,
       marks: markMap,
