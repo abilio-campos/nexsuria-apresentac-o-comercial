@@ -257,6 +257,24 @@
   .presenting footer { display: none; }
 }
 
+/*
+ * Presentation overlap scroll — from the second section onward, each section
+ * sticks to the top and slides over the previous one as the user scrolls.
+ * Only active in presentation mode.
+ */
+.presenting main > section,
+.presenting main > div > section {
+  background: var(--background);
+}
+.presenting main > section ~ section,
+.presenting main > div > section ~ section {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  z-index: 1;
+  box-shadow: 0 -12px 40px -20px color-mix(in oklab, var(--foreground) 25%, transparent);
+}
+
 /* Scalable primary CTAs (shadcn Button). Menu items and inline links are unaffected. */
 :root { --btn-scale: 1; }
 [data-btn-scalable] {
