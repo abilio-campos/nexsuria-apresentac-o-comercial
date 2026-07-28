@@ -99,10 +99,12 @@ function HomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </Movable>
+
+      <SectionDivider id="home.divider.2" />
 
       {/* Solutions preview */}
-      <section className="bg-secondary/40 border-y border-border">
+      <Movable id="home.section.solucoes" label="Seção Soluções" as="section" className="bg-secondary/40 border-y border-border">
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
             <div>
