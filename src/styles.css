@@ -394,8 +394,6 @@
 }
 
 /* ---------- Home (sem PageHeader) — flui em 2 telas de rolagem ---------- */
-/* A Home tem 4 sessões sequenciais; em vez de empilhar sticky (o que geraria
-   4 telas), ela rola normalmente com padding comprimido. */
 .presenting main > section.home-flow,
 .presenting main > div > section.home-flow {
   position: static;
@@ -404,13 +402,23 @@
   overflow: visible;
   display: block;
   box-shadow: none;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background: var(--background);
+  width: 100%;
+  max-width: min(1720px, 100%);
+  margin-left: auto;
+  margin-right: auto;
 }
-.presenting .home-flow .py-20 { padding-top: 1rem; padding-bottom: 1rem; }
-.presenting .home-flow .py-14 { padding-top: 0.8rem; padding-bottom: 0.8rem; }
-.presenting .home-flow .mt-16 { margin-top: 1rem; }
-.presenting .home-flow .mt-10 { margin-top: 0.75rem; }
+/* O hero mantém o gradiente próprio (fica dentro do overlay -z-10). */
+.presenting main > section.home-flow:first-of-type { background: transparent; }
+.presenting .home-flow .py-20 { padding-top: 0.85rem; padding-bottom: 0.85rem; }
+.presenting .home-flow .py-14 { padding-top: 0.7rem; padding-bottom: 0.7rem; }
+.presenting .home-flow .md\:py-20 { padding-top: 0.85rem; padding-bottom: 0.85rem; }
+.presenting .home-flow .mt-16 { margin-top: 0.75rem; }
+.presenting .home-flow .mt-10 { margin-top: 0.6rem; }
+.presenting .home-flow .mt-8  { margin-top: 0.5rem; }
+.presenting .home-flow .mt-6  { margin-top: 0.4rem; }
 
 /* Botão escalável (mantém sistema existente) */
 :root { --btn-scale: 1; }
