@@ -124,19 +124,20 @@ function HomePage() {
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {solutions.slice(0, 6).map((s) => (
-              <Link
-                key={s.slug}
-                to="/solucoes/$slug"
-                params={{ slug: s.slug }}
-                className="group block rounded-2xl border border-border bg-card p-6 hover:border-primary/40 hover:shadow-elegant transition-all"
-              >
-                <div className="text-xs text-muted-foreground uppercase tracking-widest">{s.specialist.name}</div>
-                <h3 className="mt-2 text-lg font-semibold">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{s.tagline}</p>
-                <div className="mt-4 flex items-center text-sm text-primary group-hover:translate-x-1 transition-transform">
-                  Explorar <ArrowRight className="ml-1 h-4 w-4" />
-                </div>
-              </Link>
+              <Movable key={s.slug} id={`home.solucao.${s.slug}.box`} label={`Solução: ${s.title}`}>
+                <Link
+                  to="/solucoes/$slug"
+                  params={{ slug: s.slug }}
+                  className="group block rounded-2xl border border-border bg-card p-6 hover:border-primary/40 hover:shadow-elegant transition-all"
+                >
+                  <div className="text-xs text-muted-foreground uppercase tracking-widest">{s.specialist.name}</div>
+                  <h3 className="mt-2 text-lg font-semibold">{s.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{s.tagline}</p>
+                  <div className="mt-4 flex items-center text-sm text-primary group-hover:translate-x-1 transition-transform">
+                    Explorar <ArrowRight className="ml-1 h-4 w-4" />
+                  </div>
+                </Link>
+              </Movable>
             ))}
           </div>
         </div>
