@@ -45,8 +45,12 @@ function QuemSomos() {
 
       <Movable id="quem-somos.section.valores" label="Seção Valores" as="section" className="bg-secondary/40 border-y border-border">
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
-          <EditableText id="quem-somos.valores.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Cultura</EditableText>
-          <EditableText id="quem-somos.valores.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">Nossos valores</EditableText>
+          <Movable id="quem-somos.valores.eyebrow.box" label="Eyebrow: Cultura" inline>
+            <EditableText id="quem-somos.valores.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Cultura</EditableText>
+          </Movable>
+          <Movable id="quem-somos.valores.title.box" label="Título: Nossos valores">
+            <EditableText id="quem-somos.valores.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">Nossos valores</EditableText>
+          </Movable>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((v, i) => (
               <Hideable key={v.name} id={`quem-somos.valor.${i}`} label={`Valor: ${v.name}`}>
