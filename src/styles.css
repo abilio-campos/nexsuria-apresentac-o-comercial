@@ -234,6 +234,24 @@
   font-size: 16px;
 }
 
+/* Em Apresentar, esconder a sidebar e usar 100% da largura para
+   que a faixa azul e as sessões tenham a mesma largura em todas as páginas. */
+.presenting aside[data-sidebar],
+.presenting aside.lovable-sidebar,
+.presenting > body > div > aside,
+.presenting aside {
+  display: none !important;
+}
+.presenting main,
+.presenting main ~ *,
+.presenting div.flex-1 {
+  margin-left: 0 !important;
+}
+.presenting .lg\:ml-72,
+.presenting .lg\:ml-16 { margin-left: 0 !important; }
+.presenting header.sticky,
+.presenting .edit-toolbar { display: none !important; }
+
 /* Titles / subtitles — mais compactos e proporcionais na apresentação */
 .presenting h1 { font-size: clamp(1.75rem, 2.6vw, 2.75rem); line-height: 1.08; letter-spacing: -0.01em; }
 .presenting h2 { font-size: clamp(1.4rem, 1.8vw, 2rem);    line-height: 1.12; letter-spacing: -0.005em; }
@@ -376,23 +394,31 @@
 }
 
 /* ---------- Home (sem PageHeader) — flui em 2 telas de rolagem ---------- */
-/* A Home tem 4 sessões sequenciais; em vez de empilhar sticky (o que geraria
-   4 telas), ela rola normalmente com padding comprimido. */
 .presenting main > section.home-flow,
 .presenting main > div > section.home-flow {
-  position: static;
+  position: relative;
   height: auto;
   min-height: 0;
   overflow: visible;
   display: block;
   box-shadow: none;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  background: var(--background);
+  width: 100%;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
-.presenting .home-flow .py-20 { padding-top: 1rem; padding-bottom: 1rem; }
-.presenting .home-flow .py-14 { padding-top: 0.8rem; padding-bottom: 0.8rem; }
-.presenting .home-flow .mt-16 { margin-top: 1rem; }
-.presenting .home-flow .mt-10 { margin-top: 0.75rem; }
+/* O hero mantém o gradiente próprio; sessões seguintes ficam opacas full-width. */
+.presenting main > section.home-flow:first-of-type { background: transparent; }
+.presenting .home-flow .py-20 { padding-top: 0.85rem; padding-bottom: 0.85rem; }
+.presenting .home-flow .py-14 { padding-top: 0.7rem; padding-bottom: 0.7rem; }
+.presenting .home-flow .md\:py-20 { padding-top: 0.85rem; padding-bottom: 0.85rem; }
+.presenting .home-flow .mt-16 { margin-top: 0.75rem; }
+.presenting .home-flow .mt-10 { margin-top: 0.6rem; }
+.presenting .home-flow .mt-8  { margin-top: 0.5rem; }
+.presenting .home-flow .mt-6  { margin-top: 0.4rem; }
 
 /* Botão escalável (mantém sistema existente) */
 :root { --btn-scale: 1; }
