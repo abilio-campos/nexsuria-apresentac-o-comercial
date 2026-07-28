@@ -223,7 +223,9 @@ function Ecossistema() {
                   <span className="mr-1 text-[9px] uppercase tracking-widest opacity-70">
                     {n.kind === "client" ? "Cliente" : "Prospect"}
                   </span>
-                  {n.data.name}
+                  <EditableText id={`ecossistema.node.${n.id}.name`} as="span">
+                    {n.data.name}
+                  </EditableText>
                 </div>
               ))}
 
