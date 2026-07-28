@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
 import { values, timeline } from "@/lib/nexsuria-data";
 import { MapPin } from "lucide-react";
-import { EditableText, Hideable } from "@/components/editable";
+import { EditableText, Hideable, Movable, SectionDivider } from "@/components/editable";
 
 export const Route = createFileRoute("/quem-somos")({
   head: () => ({
