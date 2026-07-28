@@ -50,41 +50,41 @@ function Equipe() {
         title="Experiência executiva, próxima e responsável"
         description="A Nexsuria acredita que resultados consistentes nascem da combinação entre experiência executiva, inovação, tecnologia e relacionamento próximo com cada cliente."
       />
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16 grid gap-6">
-        {people.map((p, pi) => (
-          <Hideable key={p.name} id={`equipe.${pi}`} label={p.name}>
-            <div className="rounded-3xl border border-border bg-card p-8 shadow-card-soft">
-              <div className="flex items-center gap-4">
-                <div className="grid h-16 w-16 place-items-center rounded-2xl bg-hero-gradient text-primary-foreground text-xl font-semibold font-[family-name:var(--font-display)]">
-                  <EditableText id={`equipe.${pi}.initials`}>{p.initials}</EditableText>
+      <section className="equipe-combined mx-auto max-w-7xl px-4 lg:px-8 py-10">
+        <div className="grid gap-6 md:grid-cols-2">
+          {people.map((p, pi) => (
+            <Hideable key={p.name} id={`equipe.${pi}`} label={p.name}>
+              <div className="h-full rounded-3xl border border-border bg-card p-6 lg:p-8 shadow-card-soft">
+                <div className="flex items-center gap-4">
+                  <div className="grid h-14 w-14 place-items-center rounded-2xl bg-hero-gradient text-primary-foreground text-lg font-semibold font-[family-name:var(--font-display)]">
+                    <EditableText id={`equipe.${pi}.initials`}>{p.initials}</EditableText>
+                  </div>
+                  <div>
+                    <EditableText id={`equipe.${pi}.name`} as="h3" className="text-lg lg:text-xl font-semibold block">{p.name}</EditableText>
+                    <EditableText id={`equipe.${pi}.role`} as="div" className="text-sm text-muted-foreground">{p.role}</EditableText>
+                  </div>
                 </div>
-                <div>
-                  <EditableText id={`equipe.${pi}.name`} as="h3" className="text-xl font-semibold block">{p.name}</EditableText>
-                  <EditableText id={`equipe.${pi}.role`} as="div" className="text-sm text-muted-foreground">{p.role}</EditableText>
-                </div>
+                <ul className="mt-4 space-y-2 text-sm text-foreground/90">
+                  {p.highlights.map((h, hi) => (
+                    <Hideable key={h} id={`equipe.${pi}.h.${hi}`} label={`Destaque ${hi + 1}`}>
+                      <li className="flex gap-2">
+                        <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
+                        <EditableText id={`equipe.${pi}.h.${hi}.text`} as="span" multiline>{h}</EditableText>
+                      </li>
+                    </Hideable>
+                  ))}
+                </ul>
+                <a href={p.linkedin} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 text-sm text-primary hover:underline">
+                  <Linkedin className="h-4 w-4" /> LinkedIn
+                </a>
               </div>
-              <ul className="mt-6 space-y-2 text-sm text-foreground/90">
-                {p.highlights.map((h, hi) => (
-                  <Hideable key={h} id={`equipe.${pi}.h.${hi}`} label={`Destaque ${hi + 1}`}>
-                    <li className="flex gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
-                      <EditableText id={`equipe.${pi}.h.${hi}.text`} as="span" multiline>{h}</EditableText>
-                    </li>
-                  </Hideable>
-                ))}
-              </ul>
-              <a href={p.linkedin} target="_blank" rel="noreferrer" className="mt-6 inline-flex items-center gap-2 text-sm text-primary hover:underline">
-                <Linkedin className="h-4 w-4" /> LinkedIn
-              </a>
-            </div>
-          </Hideable>
-        ))}
-      </section>
+            </Hideable>
+          ))}
+        </div>
 
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 pb-16">
         <Hideable id="equipe.quote" label="Citação">
-          <div className="rounded-2xl border border-border bg-secondary/40 p-8">
-            <EditableText id="equipe.quote.text" as="p" multiline className="text-lg text-foreground/90 max-w-4xl">
+          <div className="mt-6 rounded-2xl border border-border bg-secondary/40 p-6 lg:p-8">
+            <EditableText id="equipe.quote.text" as="p" multiline className="text-base lg:text-lg text-foreground/90">
               {"\"A Nexsuria acredita que resultados consistentes nascem da combinação entre experiência executiva, inovação, tecnologia e relacionamento próximo com cada cliente. Nossa equipe atua como consultora estratégica durante toda a jornada, garantindo que cada projeto gere valor real para o negócio.\""}
             </EditableText>
           </div>

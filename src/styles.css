@@ -323,6 +323,15 @@
   flex: 0 0 auto;
 }
 
+/* Equipe: two people cards side by side + quote below, all in one sticky screen */
+.presenting main > section.equipe-combined,
+.presenting main > div > section.equipe-combined {
+  justify-content: flex-start;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  overflow: auto;
+}
+
 /* Long form pages opt out of the sticky-fill overlap: they scroll normally
    under the fixed header instead of being locked to viewport height. */
 .presenting main > section.percepcoes-page,
