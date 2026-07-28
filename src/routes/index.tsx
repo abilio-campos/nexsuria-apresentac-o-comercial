@@ -20,7 +20,7 @@ function HomePage() {
   return (
     <>
       {/* Hero */}
-      <Movable id="home.section.hero" label="Seção Hero" as="section" className="relative isolate overflow-hidden">
+      <Movable id="home.section.hero" label="Seção Hero" as="section" className="home-flow relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-hero-gradient opacity-95" />
         <div className="absolute inset-0 -z-10 opacity-30 [background:radial-gradient(1000px_500px_at_20%_0%,white,transparent),radial-gradient(800px_400px_at_80%_100%,white,transparent)]" />
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-14 md:py-20 text-primary-foreground">
