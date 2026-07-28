@@ -406,11 +406,11 @@
   padding-bottom: 0.75rem;
   background: var(--background);
   width: 100%;
-  max-width: min(1720px, 100%);
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
+  margin-left: 0;
+  margin-right: 0;
 }
-/* O hero mantém o gradiente próprio (fica dentro do overlay -z-10). */
+/* O hero mantém o gradiente próprio; sessões seguintes ficam opacas full-width. */
 .presenting main > section.home-flow:first-of-type { background: transparent; }
 .presenting .home-flow .py-20 { padding-top: 0.85rem; padding-bottom: 0.85rem; }
 .presenting .home-flow .py-14 { padding-top: 0.7rem; padding-bottom: 0.7rem; }
