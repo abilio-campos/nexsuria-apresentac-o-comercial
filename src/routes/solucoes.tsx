@@ -1,7 +1,7 @@
 import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
 import { solutions } from "@/lib/nexsuria-data";
-import { ArrowRight, ArrowUp, ArrowDown, EyeOff, Eye } from "lucide-react";
+import { ArrowUp, ArrowDown, EyeOff, Eye } from "lucide-react";
 import { EditableText, Hideable } from "@/components/editable";
 import { Markable } from "@/components/markable";
 import { useOrderedList } from "@/lib/list-order";
