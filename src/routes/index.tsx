@@ -162,7 +162,9 @@ function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </Movable>
+
+
 
     </>
   );
