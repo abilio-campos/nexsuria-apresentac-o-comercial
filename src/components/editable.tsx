@@ -496,11 +496,148 @@ export function Movable({
   );
 }
 
-// Linha divisória de seção que pode ser reposicionada no modo edição.
+// Linha divisória de seção que pode ser reposicionada e redimensionada.
 export function SectionDivider({ id, className }: { id: string; className?: string }) {
+  const s = usePortalStore();
+  const size = s.sizes[id];
+  const w = size?.w;
+  const h = size?.h ?? 1;
   return (
-    <Movable id={id} label="Divisor" className={cn("block w-full", className)}>
-      <hr className="border-0 border-t border-border" />
+    <Movable id={id} label="Divisor" className={cn("block", className)}>
+      <Resizable
+        id={id}
+        axis="both"
+        minW={40}
+        minH={1}
+        maxH={40}
+        defaultW={undefined}
+        defaultH={1}
+        style={{ width: w != null ? `${w}px` : "100%" }}
+      >
+        <div
+          style={{ height: `${h}px` }}
+          className="w-full bg-border rounded-full"
+        />
+      </Resizable>
     </Movable>
   );
 }
+
+// Generic resizable wrapper. Shows a handle in edit mode; persists width/height
+// (in pixels) to the portal store under the given id.
+export function Resizable({
+  id,
+  children,
+  axis = "both",
+  minW = 80,
+  minH = 20,
+  maxW,
+  maxH,
+  defaultW,
+  defaultH,
+  className,
+  style,
+  as = "div",
+}: {
+  id: string;
+  children: ReactNode;
+  axis?: "x" | "y" | "both";
+  minW?: number;
+  minH?: number;
+  maxW?: number;
+  maxH?: number;
+  defaultW?: number;
+  defaultH?: number;
+  className?: string;
+  style?: CSSProperties;
+  as?: "div" | "section" | "span";
+}) {
+  const s = usePortalStore();
+  const size = s.sizes[id];
+  const w = size?.w ?? defaultW;
+  const h = size?.h ?? defaultH;
+  const Tag = as as any;
+  const ref = useRef<HTMLElement>(null);
+
+  const startResize = (dir: "x" | "y" | "both") => (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const startW = rect.width;
+    const startH = rect.height;
+    const onMove = (ev: MouseEvent) => {
+      let nw = startW + (ev.clientX - startX);
+      let nh = startH + (ev.clientY - startY);
+      nw = Math.max(minW, maxW ? Math.min(maxW, nw) : nw);
+      nh = Math.max(minH, maxH ? Math.min(maxH, nh) : nh);
+      portal.setSize(id, {
+        w: dir === "y" ? size?.w : Math.round(nw),
+        h: dir === "x" ? size?.h : Math.round(nh),
+      });
+    };
+    const onUp = () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  };
+
+  const appliedStyle: CSSProperties = { ...style };
+  if (w != null) appliedStyle.width = `${w}px`;
+  if (h != null && (axis === "y" || axis === "both")) appliedStyle.height = `${h}px`;
+
+  if (!s.editMode) {
+    return (
+      <Tag ref={ref as any} className={className} style={appliedStyle}>
+        {children}
+      </Tag>
+    );
+  }
+
+  return (
+    <Tag
+      ref={ref as any}
+      className={cn("relative group/resizable", className)}
+      style={appliedStyle}
+    >
+      {children}
+      {(axis === "x" || axis === "both") && (
+        <span
+          onMouseDown={startResize("x")}
+          title="Redimensionar largura"
+          className="absolute top-1/2 -right-1 -translate-y-1/2 z-20 h-8 w-2 rounded-full bg-primary/70 hover:bg-primary cursor-ew-resize shadow ring-1 ring-white/30"
+        />
+      )}
+      {(axis === "y" || axis === "both") && (
+        <span
+          onMouseDown={startResize("y")}
+          title="Redimensionar altura"
+          className="absolute left-1/2 -bottom-1 -translate-x-1/2 z-20 h-2 w-8 rounded-full bg-primary/70 hover:bg-primary cursor-ns-resize shadow ring-1 ring-white/30"
+        />
+      )}
+      {axis === "both" && (
+        <span
+          onMouseDown={startResize("both")}
+          title="Redimensionar"
+          className="absolute -right-1 -bottom-1 z-20 h-3 w-3 rounded-sm bg-primary hover:scale-110 cursor-nwse-resize shadow ring-1 ring-white/30"
+        />
+      )}
+      {(size?.w != null || size?.h != null) && (
+        <button
+          type="button"
+          onClick={() => portal.setSize(id, null)}
+          className="absolute -left-2 -bottom-2 z-20 rounded-full bg-secondary text-secondary-foreground text-[10px] px-2 py-0.5 shadow"
+          title="Restaurar tamanho"
+        >
+          ↺
+        </button>
+      )}
+    </Tag>
+  );
+}
+
