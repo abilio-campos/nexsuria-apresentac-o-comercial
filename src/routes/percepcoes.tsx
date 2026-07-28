@@ -317,7 +317,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#F4F6F9;color:#1A2233;mi
         description="Registre dores e oportunidades detectadas durante a apresentação. Marque diretamente nos itens de cada página (botão “Marcar”) ou preencha os campos livres abaixo."
       />
 
-      <section className="mx-auto max-w-6xl px-4 lg:px-8 py-10 space-y-8">
+      <section className="percepcoes-page mx-auto max-w-6xl px-4 lg:px-8 py-10 space-y-8">
         {/* Identificação */}
         <div className="rounded-2xl border border-border bg-card p-6 grid gap-4 md:grid-cols-2">
           <div>
