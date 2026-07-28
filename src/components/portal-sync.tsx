@@ -66,6 +66,7 @@ export function PortalSync() {
           textColors: rest.textColors,
           listOrders: rest.listOrders,
           listHidden: rest.listHidden,
+          positions: rest.positions,
           theme: rest.theme,
           perceptions: rest.perceptions,
         },
