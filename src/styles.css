@@ -208,67 +208,92 @@
 }
 
 /*
- * Presentation mode — when the "Apresentar" button is active we add
- * `.presenting` on <html>. Widen content containers, cut vertical padding,
- * and scale typography so slides fill 1920x1080 screens without wasted
- * space or scrollbars in the middle of sections.
+ * ============================================================
+ * Presentation mode ("Apresentar") — global design refinement
+ * ============================================================
+ * Objetivos:
+ *  - Faixa azul (PageHeader) com largura e altura uniformes em todas
+ *    as sessões, tipografia mais equilibrada.
+ *  - Cada sessão cabe em no máximo 2 telas de rolagem.
+ *  - Títulos, subtítulos, botões, boxes e sombras padronizados.
+ *  - Não altera funcionalidade de edição/reposição.
  */
+
+/* Softer, more premium global shadows */
+:root {
+  --shadow-elegant: 0 14px 34px -18px color-mix(in oklab, oklch(0.35 0.11 255) 32%, transparent);
+  --shadow-card: 0 6px 20px -10px color-mix(in oklab, oklch(0.18 0.03 250) 12%, transparent);
+}
+.dark {
+  --shadow-elegant: 0 14px 34px -18px color-mix(in oklab, oklch(0.7 0.15 245) 32%, transparent);
+  --shadow-card: 0 6px 20px -10px oklch(0 0 0 / 35%);
+}
+
+/* ---------- General presenting adjustments (all breakpoints) ---------- */
 .presenting {
-  /* Larger base type at big screens for readability across the room. */
+  font-size: 16px;
 }
 
-@media (min-width: 1024px) {
-  .presenting .max-w-7xl,
-  .presenting .max-w-6xl,
-  .presenting .max-w-5xl {
-    max-width: min(1720px, 100%);
-  }
+/* Titles / subtitles — mais compactos e proporcionais na apresentação */
+.presenting h1 { font-size: clamp(1.75rem, 2.6vw, 2.75rem); line-height: 1.08; letter-spacing: -0.01em; }
+.presenting h2 { font-size: clamp(1.4rem, 1.8vw, 2rem);    line-height: 1.12; letter-spacing: -0.005em; }
+.presenting h3 { font-size: clamp(1.05rem, 1.2vw, 1.35rem); line-height: 1.2; }
+.presenting p  { line-height: 1.5; }
 
-  .presenting .max-w-4xl { max-width: min(1400px, 100%); }
-  .presenting .max-w-3xl { max-width: min(1200px, 95%); }
-  .presenting .max-w-2xl { max-width: min(1000px, 90%); }
+/* Uniform section paddings — corta o espaço vertical de todas as classes py-* */
+.presenting .py-24, .presenting .py-20 { padding-top: 1.75rem; padding-bottom: 1.75rem; }
+.presenting .py-16 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.presenting .py-14 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+.presenting .py-12 { padding-top: 1.1rem; padding-bottom: 1.1rem; }
+.presenting .py-10 { padding-top: 1rem;   padding-bottom: 1rem; }
+.presenting .py-8  { padding-top: 0.85rem; padding-bottom: 0.85rem; }
+.presenting .pt-20 { padding-top: 1.75rem; }
+.presenting .pt-16 { padding-top: 1.5rem; }
+.presenting .pt-14 { padding-top: 1.25rem; }
+.presenting .pt-12 { padding-top: 1.1rem; }
+.presenting .pt-10 { padding-top: 1rem; }
+.presenting .pb-20 { padding-bottom: 1.75rem; }
+.presenting .pb-16 { padding-bottom: 1.5rem; }
+.presenting .pb-14 { padding-bottom: 1.25rem; }
+.presenting .pb-12 { padding-bottom: 1.1rem; }
+.presenting .pb-10 { padding-bottom: 1rem; }
+.presenting .md\:py-20 { padding-top: 1.75rem; padding-bottom: 1.75rem; }
+.presenting .md\:py-16 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
 
-  /* Ensure section content respects the sidebar-offset main area and adds
-     comfortable side padding so cards on the right aren't clipped. */
-  .presenting main,
-  .presenting section { padding-left: clamp(1.5rem, 2vw, 2.5rem); padding-right: clamp(1.5rem, 2vw, 2.5rem); }
+/* Cards / boxes — padding uniforme e menor */
+.presenting .p-8  { padding: 1.1rem; }
+.presenting .p-7  { padding: 1rem; }
+.presenting .p-6  { padding: 0.9rem; }
+.presenting .p-5  { padding: 0.8rem; }
+.presenting .p-4  { padding: 0.7rem; }
 
-  /* Tighten vertical padding so sections stop reserving huge whitespace. */
-  .presenting .py-20 { padding-top: 2.75rem; padding-bottom: 2.75rem; }
-  .presenting .py-16 { padding-top: 2.25rem; padding-bottom: 2.25rem; }
-  .presenting .py-14 { padding-top: 2rem; padding-bottom: 2rem; }
-  .presenting .py-12 { padding-top: 1.75rem; padding-bottom: 1.75rem; }
-  .presenting .py-10 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-  .presenting .pb-20 { padding-bottom: 2.75rem; }
-  .presenting .pb-16 { padding-bottom: 2.25rem; }
-  .presenting .pt-20 { padding-top: 2.75rem; }
-  .presenting .pt-16 { padding-top: 2.25rem; }
-  .presenting .md\:py-20 { padding-top: 2.75rem; padding-bottom: 2.75rem; }
+/* Larguras uniformes em todos os breakpoints (não só ≥1024px) */
+.presenting .max-w-7xl,
+.presenting .max-w-6xl,
+.presenting .max-w-5xl { max-width: min(1720px, 100%); }
+.presenting .max-w-4xl { max-width: min(1400px, 100%); }
+.presenting .max-w-3xl { max-width: min(1200px, 95%); }
+.presenting .max-w-2xl { max-width: min(1000px, 92%); }
 
-  /* Slightly larger typography for the room. */
-  .presenting {
-    font-size: 17px;
-  }
-  .presenting h1 { font-size: clamp(2.5rem, 3.4vw, 4rem); line-height: 1.05; }
-  .presenting h2 { font-size: clamp(1.75rem, 2.2vw, 2.5rem); line-height: 1.1; }
-  .presenting h3 { font-size: clamp(1.25rem, 1.5vw, 1.65rem); line-height: 1.15; }
-
-  /* Footer becomes visual noise on a projected slide. */
-  .presenting footer { display: none; }
+.presenting main, .presenting section {
+  padding-left: clamp(1rem, 1.6vw, 2rem);
+  padding-right: clamp(1rem, 1.6vw, 2rem);
 }
 
-/*
- * Presentation mode — the page header stays fixed at the top and every
- * section below it stacks (sticky) and slides over the previous one as the
- * user scrolls. Section offsets account for the measured header height
- * exposed via --presenting-header-h (set by <PageHeader>).
- */
+/* Botões — escala consistente, evita botões desproporcionais */
+.presenting button, .presenting .btn, .presenting a[role="button"] {
+  font-size: 0.9rem;
+}
+.presenting [data-btn-scalable] { --btn-scale: 0.95; }
+
+/* Footer some no modo apresentação */
+.presenting footer { display: none; }
+
+/* ---------- Sticky overlap header + sections ---------- */
 :root { --presenting-header-h: 0px; }
 
 .presenting main > section,
-.presenting main > div > section {
-  background: var(--background);
-}
+.presenting main > div > section { background: var(--background); }
 
 .presenting main > section.page-header,
 .presenting main > div > section.page-header {
@@ -277,9 +302,7 @@
   z-index: 40;
 }
 
-/* In presentation mode force the header to align horizontally with the
-   sections below it, ignoring any manual resize the user may have applied
-   in edit mode. This keeps the sticky overlap looking proportional. */
+/* Header alinhado horizontalmente com as sessões — largura uniforme */
 .presenting section.page-header > div {
   width: 100% !important;
   max-width: min(1720px, 100%) !important;
@@ -287,67 +310,61 @@
   margin-left: auto;
   margin-right: auto;
 }
+.presenting section.page-header .rounded-2xl {
+  min-height: auto !important;
+}
 
+/* Sessões abaixo da faixa azul: sticky, altura = viewport - header,
+   com scroll interno se o conteúdo exceder (garante no máx 2 telas
+   de rolagem por sessão via overflow-y auto dentro do sticky) */
 .presenting main > section.page-header ~ section,
 .presenting main > div > section.page-header ~ section {
   position: sticky;
-  top: calc(var(--presenting-header-h, 0px) + 1rem);
-  min-height: calc(100vh - var(--presenting-header-h, 0px) - 1rem);
-  height: calc(100vh - var(--presenting-header-h, 0px) - 1rem);
+  top: calc(var(--presenting-header-h, 0px) + 0.75rem);
+  min-height: calc(100vh - var(--presenting-header-h, 0px) - 0.75rem);
+  height: calc(100vh - var(--presenting-header-h, 0px) - 0.75rem);
   z-index: 1;
-  box-shadow: 0 -12px 40px -20px color-mix(in oklab, var(--foreground) 25%, transparent);
+  box-shadow: 0 -10px 34px -20px color-mix(in oklab, var(--foreground) 22%, transparent);
   background: var(--background);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   width: 100%;
   max-width: min(1720px, 100%);
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Fit ecosystem network diagram inside available viewport in presentation mode */
+/* Fit ecossistema no viewport */
 .presenting .presenting-fit {
-  max-width: min(100%, calc(100vh - var(--presenting-header-h, 0px) - 6rem));
-  max-height: calc(100vh - var(--presenting-header-h, 0px) - 6rem);
+  max-width: min(100%, calc(100vh - var(--presenting-header-h, 0px) - 5rem));
+  max-height: calc(100vh - var(--presenting-header-h, 0px) - 5rem);
 }
 
+/* Quem-somos combinada */
+.presenting main > section.quem-somos-combined { gap: 0.75rem; }
+.presenting main > section.quem-somos-combined > * { flex: 0 0 auto; }
 
-/* Nested content wrappers inside a combined sticky section should also
-   distribute vertically so blocks feel proportional across screens. */
-.presenting main > section.quem-somos-combined {
-  gap: 1rem;
-}
-.presenting main > section.quem-somos-combined > * {
-  flex: 0 0 auto;
-}
-
-/* Equipe: two people cards side by side + quote below, all in one sticky screen */
+/* Equipe combinada */
 .presenting main > section.equipe-combined,
 .presenting main > div > section.equipe-combined {
   justify-content: flex-start;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  overflow: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
-/* IA: dashboard + capacidades + liderança em uma única tela sticky */
+/* IA unificada */
 .presenting main > section.ia-unified,
 .presenting main > div > section.ia-unified {
   justify-content: flex-start;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  overflow: auto;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
-.presenting .ia-unified .h-40 { height: 7.5rem; }
-.presenting .ia-unified .p-6 { padding: 1rem; }
-.presenting .ia-unified .p-5 { padding: 0.85rem; }
-.presenting .ia-unified .p-4 { padding: 0.75rem; }
+.presenting .ia-unified .h-40 { height: 6.5rem; }
 
-
-/* Long form pages opt out of the sticky-fill overlap: they scroll normally
-   under the fixed header instead of being locked to viewport height. */
+/* Long-form: percepções → scroll normal */
 .presenting main > section.percepcoes-page,
 .presenting main > div > section.percepcoes-page {
   position: static;
@@ -358,14 +375,33 @@
   box-shadow: none;
 }
 
-/* Scalable primary CTAs (shadcn Button). Menu items and inline links are unaffected. */
+/* ---------- Home (sem PageHeader) — flui em 2 telas de rolagem ---------- */
+/* A Home tem 4 sessões sequenciais; em vez de empilhar sticky (o que geraria
+   4 telas), ela rola normalmente com padding comprimido. */
+.presenting main > section.home-flow,
+.presenting main > div > section.home-flow {
+  position: static;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  display: block;
+  box-shadow: none;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.presenting .home-flow .py-20 { padding-top: 1rem; padding-bottom: 1rem; }
+.presenting .home-flow .py-14 { padding-top: 0.8rem; padding-bottom: 0.8rem; }
+.presenting .home-flow .mt-16 { margin-top: 1rem; }
+.presenting .home-flow .mt-10 { margin-top: 0.75rem; }
+
+/* Botão escalável (mantém sistema existente) */
 :root { --btn-scale: 1; }
 [data-btn-scalable] {
   transform: scale(var(--btn-scale, 1));
   transform-origin: left center;
 }
 
-/* Movable block drag handle (only visible in edit mode via inline .editing class) */
+/* Movable handle */
 .movable-handle {
   position: absolute;
   top: -0.6rem;
@@ -387,5 +423,5 @@
 .movable-handle:active { cursor: grabbing; }
 .movable-moved { outline: 1px dashed color-mix(in oklab, var(--primary) 60%, transparent); outline-offset: 4px; }
 
-/* Sidebar drag state */
+/* Sidebar drag */
 .nav-drag-over { outline: 2px dashed var(--primary); outline-offset: -2px; border-radius: 8px; }

@@ -20,7 +20,7 @@ function HomePage() {
   return (
     <>
       {/* Hero */}
-      <Movable id="home.section.hero" label="Seção Hero" as="section" className="relative isolate overflow-hidden">
+      <Movable id="home.section.hero" label="Seção Hero" as="section" className="home-flow relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-hero-gradient opacity-95" />
         <div className="absolute inset-0 -z-10 opacity-30 [background:radial-gradient(1000px_500px_at_20%_0%,white,transparent),radial-gradient(800px_400px_at_80%_100%,white,transparent)]" />
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-14 md:py-20 text-primary-foreground">
@@ -72,7 +72,7 @@ function HomePage() {
       <SectionDivider id="home.divider.1" />
 
       {/* Value pillars */}
-      <Movable id="home.section.pilares" label="Seção Pilares" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
+      <Movable id="home.section.pilares" label="Seção Pilares" as="section" className="home-flow mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="max-w-2xl">
           <Movable id="home.pilares.eyebrow.box" label="Eyebrow: Posicionamento" inline>
             <EditableText id="home.pilares.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Posicionamento</EditableText>
@@ -109,7 +109,7 @@ function HomePage() {
       <SectionDivider id="home.divider.2" />
 
       {/* Solutions preview */}
-      <Movable id="home.section.solucoes" label="Seção Soluções" as="section" className="bg-secondary/40 border-y border-border">
+      <Movable id="home.section.solucoes" label="Seção Soluções" as="section" className="home-flow bg-secondary/40 border-y border-border">
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
             <div>
@@ -146,7 +146,7 @@ function HomePage() {
       <SectionDivider id="home.divider.3" />
 
       {/* Differentials strip */}
-      <Movable id="home.section.diferenciais" label="Seção Diferenciais" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
+      <Movable id="home.section.diferenciais" label="Seção Diferenciais" as="section" className="home-flow mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div>
             <Movable id="home.diff.eyebrow.box" label="Eyebrow: Por que Nexsuria" inline>
