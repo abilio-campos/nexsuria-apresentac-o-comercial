@@ -72,7 +72,7 @@ function HomePage() {
       <SectionDivider id="home.divider.1" />
 
       {/* Value pillars */}
-      <Movable id="home.section.pilares" label="Seção Pilares" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
+      <Movable id="home.section.pilares" label="Seção Pilares" as="section" className="home-flow mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="max-w-2xl">
           <Movable id="home.pilares.eyebrow.box" label="Eyebrow: Posicionamento" inline>
             <EditableText id="home.pilares.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Posicionamento</EditableText>
