@@ -70,8 +70,12 @@ function QuemSomos() {
         <div className="grid md:grid-cols-[1fr_2fr] gap-10">
           <Hideable id="quem-somos.mapa" label="Mapa de atuação">
             <div>
-              <EditableText id="quem-somos.mapa.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Mapa de atuação</EditableText>
-              <EditableText id="quem-somos.mapa.title" as="h3" className="mt-2 block text-2xl font-semibold font-[family-name:var(--font-display)]">Base em Campinas, alcance nacional</EditableText>
+              <Movable id="quem-somos.mapa.eyebrow.box" label="Eyebrow: Mapa de atuação" inline>
+                <EditableText id="quem-somos.mapa.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Mapa de atuação</EditableText>
+              </Movable>
+              <Movable id="quem-somos.mapa.title.box" label="Título: Base em Campinas">
+                <EditableText id="quem-somos.mapa.title" as="h3" className="mt-2 block text-2xl font-semibold font-[family-name:var(--font-display)]">Base em Campinas, alcance nacional</EditableText>
+              </Movable>
               <EditableText id="quem-somos.mapa.text" as="p" multiline className="mt-3 text-muted-foreground">
                 Sediada em Campinas/SP, a Nexsuria conduz projetos em todo o Brasil por meio do seu ecossistema de especialistas.
               </EditableText>
