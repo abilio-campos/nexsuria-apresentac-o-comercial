@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
 import { differentials } from "@/lib/nexsuria-data";
 import * as Icons from "lucide-react";
-import { EditableText, Hideable } from "@/components/editable";
+import { EditableText, Hideable, Movable } from "@/components/editable";
 
 export const Route = createFileRoute("/diferenciais")({
   head: () => ({
