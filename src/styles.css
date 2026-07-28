@@ -396,7 +396,7 @@
 /* ---------- Home (sem PageHeader) — flui em 2 telas de rolagem ---------- */
 .presenting main > section.home-flow,
 .presenting main > div > section.home-flow {
-  position: static;
+  position: relative;
   height: auto;
   min-height: 0;
   overflow: visible;
