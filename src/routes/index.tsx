@@ -146,7 +146,7 @@ function HomePage() {
       <SectionDivider id="home.divider.3" />
 
       {/* Differentials strip */}
-      <Movable id="home.section.diferenciais" label="Seção Diferenciais" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
+      <Movable id="home.section.diferenciais" label="Seção Diferenciais" as="section" className="home-flow mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div>
             <Movable id="home.diff.eyebrow.box" label="Eyebrow: Por que Nexsuria" inline>
