@@ -93,13 +93,15 @@ function HomePage() {
             { icon: ShieldCheck, title: "Compliance", text: "Segurança jurídica, fiscal e trabalhista." },
             { icon: TrendingUp, title: "Resultado Mensurável", text: "Evolução empresarial que aparece no P&L." },
           ].map(({ icon: Icon, title, text }) => (
-            <div key={title} className="group rounded-2xl border border-border bg-card p-6 shadow-card-soft hover:shadow-elegant transition-shadow">
-              <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
-                <Icon className="h-5 w-5" />
+            <Movable key={title} id={`home.pilar.${title}.box`} label={`Pilar: ${title}`}>
+              <div className="group rounded-2xl border border-border bg-card p-6 shadow-card-soft hover:shadow-elegant transition-shadow">
+                <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-4 font-semibold">{title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{text}</p>
               </div>
-              <h3 className="mt-4 font-semibold">{title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{text}</p>
-            </div>
+            </Movable>
           ))}
         </div>
       </Movable>
