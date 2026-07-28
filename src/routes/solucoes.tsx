@@ -76,7 +76,7 @@ function SolucoesLayout() {
                 params={{ slug: s.slug }}
                 className="group block rounded-2xl border border-border bg-card p-6 hover:border-primary/40 hover:shadow-elegant transition-all"
               >
-                <EditableText id={`solucoes.card.${s.slug}.esp`} as="div" className="text-[10px] uppercase tracking-widest text-muted-foreground">{`Especialista · ${s.specialist.name}`}</EditableText>
+                <EditableText id={`solucoes.card.${s.slug}.esp`} as="div" className="text-[10px] uppercase tracking-widest text-muted-foreground">{s.specialist.name}</EditableText>
                 <EditableText id={`solucoes.card.${s.slug}.title`} as="h3" className="mt-2 block text-lg font-semibold leading-tight">{s.title}</EditableText>
                 <EditableText id={`solucoes.card.${s.slug}.tagline`} as="p" multiline className="mt-2 text-sm text-muted-foreground">{s.tagline}</EditableText>
                 <div className="mt-4 flex items-center text-sm text-primary group-hover:translate-x-1 transition-transform">
