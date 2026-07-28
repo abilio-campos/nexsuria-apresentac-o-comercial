@@ -34,8 +34,8 @@ function SolucaoDetail() {
       <PageHeader id={base} eyebrow={s.specialist.name} title={s.title} description={s.tagline}>
         <div className="flex flex-wrap gap-2">
           <Button asChild variant="secondary" size="sm">
-            <Link to="/solucoes">
-              <ArrowLeft className="h-4 w-4 mr-1" /> Voltar para Soluções
+            <Link to="/ecossistema">
+              <ArrowLeft className="h-4 w-4 mr-1" /> Voltar para Ecossistema
             </Link>
           </Button>
         </div>
@@ -128,8 +128,8 @@ function SolucaoDetail() {
                   </a>
                 </Button>
                 <Button asChild variant="ghost">
-                  <Link to="/solucoes">
-                    <ArrowLeft className="h-4 w-4 mr-1" /> Voltar para Soluções
+                  <Link to="/ecossistema">
+                    <ArrowLeft className="h-4 w-4 mr-1" /> Voltar para Ecossistema
                   </Link>
                 </Button>
               </div>

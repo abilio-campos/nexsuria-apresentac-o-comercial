@@ -1,7 +1,7 @@
-import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
 import { solutions } from "@/lib/nexsuria-data";
-import { ArrowRight, ArrowUp, ArrowDown, EyeOff, Eye } from "lucide-react";
+import { ArrowUp, ArrowDown, EyeOff, Eye } from "lucide-react";
 import { EditableText, Hideable } from "@/components/editable";
 import { Markable } from "@/components/markable";
 import { useOrderedList } from "@/lib/list-order";
@@ -82,18 +82,10 @@ function SolucoesLayout() {
                   </button>
                 </div>
               )}
-              <Link
-                to="/solucoes/$slug"
-                params={{ slug: s.slug }}
-                className={`group block rounded-2xl border border-border p-6 hover:border-primary/40 hover:shadow-elegant transition-all ${tint}`}
-              >
-                
+              <div className={`block rounded-2xl border border-border p-6 transition-all ${tint}`}>
                 <EditableText id={`solucoes.card.${s.slug}.title`} as="h3" className="mt-2 block text-lg font-semibold leading-tight">{s.title}</EditableText>
                 <EditableText id={`solucoes.card.${s.slug}.tagline`} as="p" multiline className="mt-2 text-sm text-muted-foreground">{s.tagline}</EditableText>
-                <div className="mt-4 flex items-center text-sm text-primary group-hover:translate-x-1 transition-transform">
-                  Ver solução <ArrowRight className="ml-1 h-4 w-4" />
-                </div>
-              </Link>
+              </div>
               </div>
             </Hideable>
             </Markable>
