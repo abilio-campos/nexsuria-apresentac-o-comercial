@@ -85,7 +85,9 @@ function QuemSomos() {
             </div>
           </Hideable>
           <div>
-            <EditableText id="quem-somos.timeline.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Linha do tempo</EditableText>
+            <Movable id="quem-somos.timeline.eyebrow.box" label="Eyebrow: Linha do tempo" inline>
+              <EditableText id="quem-somos.timeline.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Linha do tempo</EditableText>
+            </Movable>
             <ol className="mt-4 relative border-l border-border ml-3 space-y-6">
               {timeline.map((t, i) => (
                 <Hideable key={t.title} id={`quem-somos.timeline.${i}`} label={`Marco: ${t.title}`}>
