@@ -225,14 +225,6 @@ function Ecossistema() {
                   </EditableText>
                 </div>
               ))}
-
-              {/* Legend */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 translate-y-full flex flex-wrap justify-center gap-3 text-[11px] text-muted-foreground pt-4">
-                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-primary/70" /> Nexsuria</span>
-                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm border border-primary/40 bg-card" /> Parceiros</span>
-                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full border border-emerald-500/50 bg-emerald-500/20" /> Clientes</span>
-                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full border border-amber-500/50 bg-amber-500/20" /> Prospects</span>
-              </div>
             </div>
           );
         })()}
