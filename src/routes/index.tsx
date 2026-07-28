@@ -164,10 +164,12 @@ function HomePage() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             {differentials.slice(0, 6).map((d) => (
-              <div key={d.title} className="rounded-xl border border-border bg-card p-4">
-                <div className="text-sm font-semibold">{d.title}</div>
-                <p className="mt-1 text-xs text-muted-foreground line-clamp-3">{d.description}</p>
-              </div>
+              <Movable key={d.title} id={`home.diff.${d.title}.box`} label={`Diferencial: ${d.title}`}>
+                <div className="rounded-xl border border-border bg-card p-4">
+                  <div className="text-sm font-semibold">{d.title}</div>
+                  <p className="mt-1 text-xs text-muted-foreground line-clamp-3">{d.description}</p>
+                </div>
+              </Movable>
             ))}
           </div>
         </div>
