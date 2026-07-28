@@ -4,9 +4,23 @@ import { partners, contactInfo, solutions } from "@/lib/nexsuria-data";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
 import { EditableText, Hideable } from "@/components/editable";
 import { Markable } from "@/components/markable";
+import nexsuriaLogo from "@/assets/nexsuria-logo.png.asset.json";
+
+const clients = [
+  { slug: "cliente-1", name: "Cliente A" },
+  { slug: "cliente-2", name: "Cliente B" },
+  { slug: "cliente-3", name: "Cliente C" },
+  { slug: "cliente-4", name: "Cliente D" },
+];
+const prospects = [
+  { slug: "prospect-1", name: "Prospect A" },
+  { slug: "prospect-2", name: "Prospect B" },
+  { slug: "prospect-3", name: "Prospect C" },
+  { slug: "prospect-4", name: "Prospect D" },
+];
+
 
 const solutionSlugForPartner = (partnerName: string) =>
   solutions.find((s) => s.specialist.name === partnerName)?.slug;
@@ -35,47 +49,196 @@ function Ecossistema() {
       />
 
       <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
-        <div className="relative mx-auto aspect-square w-full max-w-2xl">
-          <div className="absolute inset-0 rounded-full border border-border/70" />
-          <div className="absolute inset-8 rounded-full border border-dashed border-border/50" />
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-32 rounded-full bg-hero-gradient shadow-elegant grid place-items-center text-primary-foreground">
-            <div className="text-center">
-              <Sparkles className="h-5 w-5 mx-auto" />
-              <div className="mt-1 font-semibold font-[family-name:var(--font-display)]">NEXSURIA</div>
-              <div className="text-[10px] opacity-80 uppercase tracking-widest">Centro de Inteligência</div>
+        {(() => {
+          // Build node graph: Nexsuria + partners + clients + prospects
+          const CENTER = { x: 50, y: 50 };
+          const partnerNodes = partners.map((p, i) => {
+            const a = (i / partners.length) * Math.PI * 2 - Math.PI / 2;
+            return {
+              kind: "partner" as const,
+              id: `p-${p.slug}`,
+              data: p,
+              x: 50 + Math.cos(a) * 28,
+              y: 50 + Math.sin(a) * 28,
+            };
+          });
+          const arc = (count: number, from: number, to: number, r: number) =>
+            Array.from({ length: count }, (_, i) => {
+              const t = count === 1 ? 0.5 : i / (count - 1);
+              const a = (from + (to - from) * t) * (Math.PI / 180);
+              return { x: 50 + Math.cos(a) * r, y: 50 + Math.sin(a) * r };
+            });
+          const clientPos = arc(clients.length, -170, -10, 46);
+          const prospectPos = arc(prospects.length, 10, 170, 46);
+          const clientNodes = clients.map((c, i) => ({
+            kind: "client" as const,
+            id: `c-${c.slug}`,
+            data: c,
+            x: clientPos[i].x,
+            y: clientPos[i].y,
+          }));
+          const prospectNodes = prospects.map((c, i) => ({
+            kind: "prospect" as const,
+            id: `pr-${c.slug}`,
+            data: c,
+            x: prospectPos[i].x,
+            y: prospectPos[i].y,
+          }));
+          const all = [...partnerNodes, ...clientNodes, ...prospectNodes];
+          const byId = Object.fromEntries(all.map((n) => [n.id, n]));
+
+          type Edge = [string, string, number?];
+          const edges: Edge[] = [];
+          // Nexsuria → all
+          all.forEach((n) => edges.push([`nex`, n.id, 0.5]));
+          // Partner ↔ neighbour partner
+          partnerNodes.forEach((p, i) => {
+            const next = partnerNodes[(i + 1) % partnerNodes.length];
+            edges.push([p.id, next.id, 0.25]);
+          });
+          // Each client/prospect → 3 nearest partners
+          const nearest = (node: { x: number; y: number }, k = 3) =>
+            partnerNodes
+              .map((p) => ({ id: p.id, d: Math.hypot(p.x - node.x, p.y - node.y) }))
+              .sort((a, b) => a.d - b.d)
+              .slice(0, k);
+          clientNodes.forEach((c) =>
+            nearest(c).forEach((p) => edges.push([c.id, p.id, 0.22]))
+          );
+          prospectNodes.forEach((c) =>
+            nearest(c).forEach((p) => edges.push([c.id, p.id, 0.22]))
+          );
+          // Client ↔ neighbour client, prospect ↔ neighbour prospect
+          clientNodes.forEach((c, i) => {
+            if (i < clientNodes.length - 1)
+              edges.push([c.id, clientNodes[i + 1].id, 0.18]);
+          });
+          prospectNodes.forEach((c, i) => {
+            if (i < prospectNodes.length - 1)
+              edges.push([c.id, prospectNodes[i + 1].id, 0.18]);
+          });
+          // Some client ↔ prospect cross links
+          clientNodes.forEach((c, i) => {
+            const pr = prospectNodes[prospectNodes.length - 1 - i];
+            if (pr) edges.push([c.id, pr.id, 0.14]);
+          });
+
+          const nodeStyle = (kind: string) => {
+            if (kind === "partner")
+              return "border-primary/40 bg-card text-foreground";
+            if (kind === "client")
+              return "border-emerald-500/50 bg-emerald-500/10 text-foreground";
+            return "border-amber-500/50 bg-amber-500/10 text-foreground";
+          };
+
+          return (
+            <div className="relative mx-auto aspect-square w-full max-w-3xl">
+              {/* Neural network edges */}
+              <svg
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                className="absolute inset-0 h-full w-full pointer-events-none"
+              >
+                <defs>
+                  <radialGradient id="nex-glow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="var(--primary)" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+                <circle cx="50" cy="50" r="14" fill="url(#nex-glow)" />
+                {edges.map(([a, b, op], idx) => {
+                  const na = a === "nex" ? CENTER : byId[a];
+                  const nb = b === "nex" ? CENTER : byId[b];
+                  if (!na || !nb) return null;
+                  return (
+                    <line
+                      key={idx}
+                      x1={na.x}
+                      y1={na.y}
+                      x2={nb.x}
+                      y2={nb.y}
+                      stroke="var(--primary)"
+                      strokeOpacity={op ?? 0.25}
+                      strokeWidth={0.15}
+                      vectorEffect="non-scaling-stroke"
+                    />
+                  );
+                })}
+                {/* Node dots on top of lines for crisp connection points */}
+                {all.map((n) => (
+                  <circle
+                    key={`dot-${n.id}`}
+                    cx={n.x}
+                    cy={n.y}
+                    r={0.6}
+                    fill="var(--primary)"
+                    opacity={0.6}
+                  />
+                ))}
+              </svg>
+
+              {/* Nexsuria center */}
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-28 w-28 md:h-32 md:w-32 rounded-full bg-hero-gradient shadow-elegant grid place-items-center text-primary-foreground overflow-hidden ring-4 ring-background">
+                <img
+                  src={nexsuriaLogo.url}
+                  alt="Nexsuria"
+                  className="h-full w-full object-contain p-3"
+                />
+              </div>
+
+              {/* Partner nodes */}
+              {partnerNodes.map((n) => {
+                const slug = solutionSlugForPartner(n.data.name);
+                const className = `absolute -translate-x-1/2 -translate-y-1/2 rounded-xl border px-2.5 py-1.5 text-[11px] md:text-xs font-medium shadow-card-soft hover:shadow-elegant hover:border-primary/60 transition-all ${nodeStyle("partner")}`;
+                const style = { left: `${n.x}%`, top: `${n.y}%` };
+                return slug ? (
+                  <Link
+                    key={n.id}
+                    to="/solucoes/$slug"
+                    params={{ slug }}
+                    style={style}
+                    className={className}
+                  >
+                    {n.data.name}
+                  </Link>
+                ) : (
+                  <button
+                    key={n.id}
+                    onClick={() => setSelected(n.data)}
+                    style={style}
+                    className={className}
+                  >
+                    {n.data.name}
+                  </button>
+                );
+              })}
+
+              {/* Client & Prospect nodes */}
+              {[...clientNodes, ...prospectNodes].map((n) => (
+                <div
+                  key={n.id}
+                  style={{ left: `${n.x}%`, top: `${n.y}%` }}
+                  className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full border px-2.5 py-1 text-[10px] md:text-xs font-medium shadow-card-soft ${nodeStyle(n.kind)}`}
+                >
+                  <span className="mr-1 text-[9px] uppercase tracking-widest opacity-70">
+                    {n.kind === "client" ? "Cliente" : "Prospect"}
+                  </span>
+                  {n.data.name}
+                </div>
+              ))}
+
+              {/* Legend */}
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 translate-y-full flex flex-wrap justify-center gap-3 text-[11px] text-muted-foreground pt-4">
+                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-primary/70" /> Nexsuria</span>
+                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm border border-primary/40 bg-card" /> Parceiros</span>
+                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full border border-emerald-500/50 bg-emerald-500/20" /> Clientes</span>
+                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full border border-amber-500/50 bg-amber-500/20" /> Prospects</span>
+              </div>
             </div>
-          </div>
-          {partners.map((p, i) => {
-            const angle = (i / partners.length) * Math.PI * 2 - Math.PI / 2;
-            const r = 44;
-            const x = 50 + Math.cos(angle) * r;
-            const y = 50 + Math.sin(angle) * r;
-            const slug = solutionSlugForPartner(p.name);
-            const className =
-              "absolute -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-card px-3 py-2 text-xs md:text-sm font-medium shadow-card-soft hover:shadow-elegant hover:border-primary/40 transition-all";
-            return slug ? (
-              <Link
-                key={p.slug}
-                to="/solucoes/$slug"
-                params={{ slug }}
-                style={{ left: `${x}%`, top: `${y}%` }}
-                className={className}
-              >
-                {p.name}
-              </Link>
-            ) : (
-              <button
-                key={p.slug}
-                onClick={() => setSelected(p)}
-                style={{ left: `${x}%`, top: `${y}%` }}
-                className={className}
-              >
-                {p.name}
-              </button>
-            );
-          })}
-        </div>
+          );
+        })()}
       </section>
+
 
       <section className="mx-auto max-w-7xl px-4 lg:px-8 pb-16">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
