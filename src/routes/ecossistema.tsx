@@ -220,9 +220,6 @@ function Ecossistema() {
                   style={{ left: `${n.x}%`, top: `${n.y}%` }}
                   className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full border px-2.5 py-1 text-[10px] md:text-xs font-medium shadow-card-soft ${nodeStyle(n.kind)}`}
                 >
-                  <span className="mr-1 text-[9px] uppercase tracking-widest opacity-70">
-                    {n.kind === "client" ? "Cliente" : "Prospect"}
-                  </span>
                   <EditableText id={`ecossistema.node.${n.id}.name`} as="span">
                     {n.data.name}
                   </EditableText>
