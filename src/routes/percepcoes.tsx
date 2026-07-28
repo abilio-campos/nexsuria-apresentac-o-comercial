@@ -357,18 +357,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#F4F6F9;color:#1A2233;mi
         </div>
 
         {/* Ações */}
-        <div className="flex flex-wrap gap-2">
-          <Button onClick={copyReport} variant="default">
+        <div className="flex flex-wrap gap-2 items-center">
+          <Button onClick={copyReport} variant="default" size="default" className="shrink-0">
             {copied ? <Check className="h-4 w-4 mr-2" /> : <Copy className="h-4 w-4 mr-2" />}
             {copied ? "Copiado!" : "Copiar relatório"}
           </Button>
-          <Button onClick={printAta} variant="outline">
+          <Button onClick={printAta} variant="outline" size="default" className="shrink-0">
             <Printer className="h-4 w-4 mr-2" />
             Imprimir ata
           </Button>
           {total > 0 && (
             <Button
               variant="outline"
+              size="default"
+              className="shrink-0"
               onClick={() => {
                 if (confirm("Limpar todas as marcações e anotações desta sessão?")) portal.clearAllMarks();
               }}
