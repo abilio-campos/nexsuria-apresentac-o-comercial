@@ -26,32 +26,32 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
   }, [size?.w, size?.h]);
 
   return (
-    <section ref={ref} className="page-header mx-auto max-w-7xl px-4 lg:px-8 pt-4">
+    <section ref={ref} className="page-header mx-auto max-w-7xl px-4 lg:px-8 pt-3">
       <Resizable
         id={`${base}.header`}
         axis="both"
         minW={280}
-        minH={80}
+        minH={72}
         className="mx-auto"
       >
-        <div className="relative isolate overflow-hidden rounded-2xl border border-border shadow-elegant h-full">
+        <div className="relative isolate overflow-hidden rounded-2xl border border-border shadow-card-soft h-full">
           <div className="absolute inset-0 -z-10 bg-hero-gradient opacity-95" />
-          <div className="absolute inset-0 -z-10 opacity-25 [background:radial-gradient(700px_300px_at_10%_0%,white,transparent),radial-gradient(600px_300px_at_100%_100%,white,transparent)]" />
-          <div className="px-6 lg:px-10 py-8 md:py-12 text-primary-foreground h-full">
+          <div className="absolute inset-0 -z-10 opacity-20 [background:radial-gradient(700px_300px_at_10%_0%,white,transparent),radial-gradient(600px_300px_at_100%_100%,white,transparent)]" />
+          <div className="px-6 lg:px-9 py-5 md:py-6 text-primary-foreground h-full">
             {eyebrow && (
-              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-2.5 py-0.5 text-[11px] backdrop-blur">
                 <EditableText id={`${base}.eyebrow`}>{eyebrow}</EditableText>
               </div>
             )}
-            <EditableText id={`${base}.title`} as="h1" className="mt-3 block max-w-3xl font-[family-name:var(--font-display)] text-2xl md:text-4xl font-bold tracking-tight leading-tight">
+            <EditableText id={`${base}.title`} as="h1" className="mt-2 block max-w-3xl font-[family-name:var(--font-display)] text-xl md:text-3xl font-bold tracking-tight leading-tight">
               {title}
             </EditableText>
             {description && (
-              <EditableText id={`${base}.description`} as="p" multiline className="mt-2 block max-w-2xl text-white/85 text-sm md:text-base">
+              <EditableText id={`${base}.description`} as="p" multiline className="mt-1.5 block max-w-2xl text-white/85 text-xs md:text-sm">
                 {description}
               </EditableText>
             )}
-            {children && <div className="mt-4">{children}</div>}
+            {children && <div className="mt-3">{children}</div>}
           </div>
         </div>
       </Resizable>
