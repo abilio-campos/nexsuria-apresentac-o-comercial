@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { solutions, contactInfo, type Solution } from "@/lib/nexsuria-data";
+import { solutions, partners, contactInfo, type Solution } from "@/lib/nexsuria-data";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, AlertTriangle, Sparkles, MessageCircle } from "lucide-react";
