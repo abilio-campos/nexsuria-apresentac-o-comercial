@@ -282,8 +282,23 @@
   position: sticky;
   top: calc(var(--presenting-header-h, 0px) + 1rem);
   min-height: calc(100vh - var(--presenting-header-h, 0px) - 1rem);
+  height: calc(100vh - var(--presenting-header-h, 0px) - 1rem);
   z-index: 1;
   box-shadow: 0 -12px 40px -20px color-mix(in oklab, var(--foreground) 25%, transparent);
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Nested content wrappers inside a combined sticky section should also
+   distribute vertically so blocks feel proportional across screens. */
+.presenting main > section.quem-somos-combined {
+  gap: 1rem;
+}
+.presenting main > section.quem-somos-combined > * {
+  flex: 0 0 auto;
 }
 
 /* Scalable primary CTAs (shadcn Button). Menu items and inline links are unaffected. */
