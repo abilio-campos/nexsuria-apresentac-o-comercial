@@ -72,14 +72,15 @@ function HomePage() {
       {/* Value pillars */}
       <Movable id="home.section.pilares" label="Seção Pilares" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="max-w-2xl">
-          <span className="text-xs uppercase tracking-widest text-muted-foreground">Posicionamento</span>
-          <h2 className="mt-2 text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
-            Um portal, um ecossistema, um único responsável.
-          </h2>
-          <p className="mt-3 text-muted-foreground">
-            A Nexsuria compreende o negócio, desenha a estratégia, seleciona o especialista ideal e coordena
-            toda a execução — do diagnóstico à evolução contínua.
-          </p>
+          <Movable id="home.pilares.eyebrow.box" label="Eyebrow: Posicionamento" inline>
+            <EditableText id="home.pilares.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Posicionamento</EditableText>
+          </Movable>
+          <Movable id="home.pilares.title.box" label="Título: Um portal">
+            <EditableText id="home.pilares.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">Um portal, um ecossistema, um único responsável.</EditableText>
+          </Movable>
+          <Movable id="home.pilares.text.box" label="Texto: Nexsuria compreende">
+            <EditableText id="home.pilares.text" as="p" multiline className="mt-3 text-muted-foreground">A Nexsuria compreende o negócio, desenha a estratégia, seleciona o especialista ideal e coordena toda a execução — do diagnóstico à evolução contínua.</EditableText>
+          </Movable>
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-3">
           {[
@@ -108,10 +109,12 @@ function HomePage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
           <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
             <div>
-              <span className="text-xs uppercase tracking-widest text-muted-foreground">Soluções</span>
-              <h2 className="mt-2 text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
-                 13 frentes de evolução empresarial
-              </h2>
+              <Movable id="home.solucoes.eyebrow.box" label="Eyebrow: Soluções" inline>
+                <EditableText id="home.solucoes.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Soluções</EditableText>
+              </Movable>
+              <Movable id="home.solucoes.title.box" label="Título: 13 frentes">
+                <EditableText id="home.solucoes.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">13 frentes de evolução empresarial</EditableText>
+              </Movable>
             </div>
             <Button asChild variant="ghost"><Link to="/solucoes">Ver todas <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
           </div>
@@ -141,14 +144,15 @@ function HomePage() {
       <Movable id="home.section.diferenciais" label="Seção Diferenciais" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-20">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           <div>
-            <span className="text-xs uppercase tracking-widest text-muted-foreground">Por que Nexsuria</span>
-            <h2 className="mt-2 text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">
-              Diferenciais que fazem projetos entregarem resultado.
-            </h2>
-            <p className="mt-3 text-muted-foreground">
-              Consultoria estratégica, ecossistema curado e governança executiva — três alavancas
-              que separam evolução de mera implantação.
-            </p>
+            <Movable id="home.diff.eyebrow.box" label="Eyebrow: Por que Nexsuria" inline>
+              <EditableText id="home.diff.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Por que Nexsuria</EditableText>
+            </Movable>
+            <Movable id="home.diff.title.box" label="Título: Diferenciais">
+              <EditableText id="home.diff.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">Diferenciais que fazem projetos entregarem resultado.</EditableText>
+            </Movable>
+            <Movable id="home.diff.text.box" label="Texto: Consultoria estratégica">
+              <EditableText id="home.diff.text" as="p" multiline className="mt-3 text-muted-foreground">Consultoria estratégica, ecossistema curado e governança executiva — três alavancas que separam evolução de mera implantação.</EditableText>
+            </Movable>
             <Button asChild className="mt-6" variant="outline">
               <Link to="/diferenciais">Todos os diferenciais</Link>
             </Button>

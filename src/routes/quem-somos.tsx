@@ -45,8 +45,12 @@ function QuemSomos() {
 
       <Movable id="quem-somos.section.valores" label="Seção Valores" as="section" className="bg-secondary/40 border-y border-border">
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
-          <EditableText id="quem-somos.valores.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Cultura</EditableText>
-          <EditableText id="quem-somos.valores.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">Nossos valores</EditableText>
+          <Movable id="quem-somos.valores.eyebrow.box" label="Eyebrow: Cultura" inline>
+            <EditableText id="quem-somos.valores.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Cultura</EditableText>
+          </Movable>
+          <Movable id="quem-somos.valores.title.box" label="Título: Nossos valores">
+            <EditableText id="quem-somos.valores.title" as="h2" className="mt-2 block text-3xl md:text-4xl font-semibold font-[family-name:var(--font-display)]">Nossos valores</EditableText>
+          </Movable>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {values.map((v, i) => (
               <Hideable key={v.name} id={`quem-somos.valor.${i}`} label={`Valor: ${v.name}`}>
@@ -66,8 +70,12 @@ function QuemSomos() {
         <div className="grid md:grid-cols-[1fr_2fr] gap-10">
           <Hideable id="quem-somos.mapa" label="Mapa de atuação">
             <div>
-              <EditableText id="quem-somos.mapa.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Mapa de atuação</EditableText>
-              <EditableText id="quem-somos.mapa.title" as="h3" className="mt-2 block text-2xl font-semibold font-[family-name:var(--font-display)]">Base em Campinas, alcance nacional</EditableText>
+              <Movable id="quem-somos.mapa.eyebrow.box" label="Eyebrow: Mapa de atuação" inline>
+                <EditableText id="quem-somos.mapa.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Mapa de atuação</EditableText>
+              </Movable>
+              <Movable id="quem-somos.mapa.title.box" label="Título: Base em Campinas">
+                <EditableText id="quem-somos.mapa.title" as="h3" className="mt-2 block text-2xl font-semibold font-[family-name:var(--font-display)]">Base em Campinas, alcance nacional</EditableText>
+              </Movable>
               <EditableText id="quem-somos.mapa.text" as="p" multiline className="mt-3 text-muted-foreground">
                 Sediada em Campinas/SP, a Nexsuria conduz projetos em todo o Brasil por meio do seu ecossistema de especialistas.
               </EditableText>
@@ -77,7 +85,9 @@ function QuemSomos() {
             </div>
           </Hideable>
           <div>
-            <EditableText id="quem-somos.timeline.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Linha do tempo</EditableText>
+            <Movable id="quem-somos.timeline.eyebrow.box" label="Eyebrow: Linha do tempo" inline>
+              <EditableText id="quem-somos.timeline.eyebrow" as="span" className="text-xs uppercase tracking-widest text-muted-foreground">Linha do tempo</EditableText>
+            </Movable>
             <ol className="mt-4 relative border-l border-border ml-3 space-y-6">
               {timeline.map((t, i) => (
                 <Hideable key={t.title} id={`quem-somos.timeline.${i}`} label={`Marco: ${t.title}`}>
