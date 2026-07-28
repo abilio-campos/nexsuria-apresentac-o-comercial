@@ -4,9 +4,23 @@ import { partners, contactInfo, solutions } from "@/lib/nexsuria-data";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Sparkles } from "lucide-react";
 import { EditableText, Hideable } from "@/components/editable";
 import { Markable } from "@/components/markable";
+import nexsuriaLogo from "@/assets/nexsuria-logo.png.asset.json";
+
+const clients = [
+  { slug: "cliente-1", name: "Cliente A" },
+  { slug: "cliente-2", name: "Cliente B" },
+  { slug: "cliente-3", name: "Cliente C" },
+  { slug: "cliente-4", name: "Cliente D" },
+];
+const prospects = [
+  { slug: "prospect-1", name: "Prospect A" },
+  { slug: "prospect-2", name: "Prospect B" },
+  { slug: "prospect-3", name: "Prospect C" },
+  { slug: "prospect-4", name: "Prospect D" },
+];
+
 
 const solutionSlugForPartner = (partnerName: string) =>
   solutions.find((s) => s.specialist.name === partnerName)?.slug;
