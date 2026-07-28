@@ -327,7 +327,9 @@ function Ecossistema() {
               </Markable>
             ))}
           </div>
-        </div>
+          </div>
+        </Hideable>
+
       </section>
 
 
