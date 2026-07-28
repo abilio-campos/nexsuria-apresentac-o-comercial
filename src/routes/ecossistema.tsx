@@ -1,12 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
-import { partners, contactInfo } from "@/lib/nexsuria-data";
+import { partners, contactInfo, solutions } from "@/lib/nexsuria-data";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
 import { EditableText, Hideable } from "@/components/editable";
 import { Markable } from "@/components/markable";
+
+const solutionSlugForPartner = (partnerName: string) =>
+  solutions.find((s) => s.specialist.name === partnerName)?.slug;
 
 export const Route = createFileRoute("/ecossistema")({
   head: () => ({
@@ -47,12 +50,25 @@ function Ecossistema() {
             const r = 44;
             const x = 50 + Math.cos(angle) * r;
             const y = 50 + Math.sin(angle) * r;
-            return (
+            const slug = solutionSlugForPartner(p.name);
+            const className =
+              "absolute -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-card px-3 py-2 text-xs md:text-sm font-medium shadow-card-soft hover:shadow-elegant hover:border-primary/40 transition-all";
+            return slug ? (
+              <Link
+                key={p.slug}
+                to="/solucoes/$slug"
+                params={{ slug }}
+                style={{ left: `${x}%`, top: `${y}%` }}
+                className={className}
+              >
+                {p.name}
+              </Link>
+            ) : (
               <button
                 key={p.slug}
                 onClick={() => setSelected(p)}
                 style={{ left: `${x}%`, top: `${y}%` }}
-                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-card px-3 py-2 text-xs md:text-sm font-medium shadow-card-soft hover:shadow-elegant hover:border-primary/40 transition-all"
+                className={className}
               >
                 {p.name}
               </button>
@@ -63,13 +79,10 @@ function Ecossistema() {
 
       <section className="mx-auto max-w-7xl px-4 lg:px-8 pb-16">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {partners.map((p) => (
-            <Markable key={p.slug} id={`mark.parceiro.${p.slug}`} label={`Parceiro: ${p.name}`} page="Ecossistema">
-            <Hideable id={`ecossistema.${p.slug}`} label={`Parceiro: ${p.name}`}>
-              <button
-                onClick={() => setSelected(p)}
-                className="w-full text-left rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-elegant transition-all"
-              >
+          {partners.map((p) => {
+            const slug = solutionSlugForPartner(p.name);
+            const inner = (
+              <div className="w-full text-left rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-elegant transition-all">
                 <div className="flex items-center justify-between">
                   <EditableText id={`ecossistema.${p.slug}.name`} as="h3" className="font-semibold">{p.name}</EditableText>
                   {p.exclusive && (
@@ -79,10 +92,24 @@ function Ecossistema() {
                 <EditableText id={`ecossistema.${p.slug}.specialty`} as="p" multiline className="mt-1 text-sm text-muted-foreground">
                   {p.specialty}
                 </EditableText>
-              </button>
-            </Hideable>
-            </Markable>
-          ))}
+              </div>
+            );
+            return (
+              <Markable key={p.slug} id={`mark.parceiro.${p.slug}`} label={`Parceiro: ${p.name}`} page="Ecossistema">
+                <Hideable id={`ecossistema.${p.slug}`} label={`Parceiro: ${p.name}`}>
+                  {slug ? (
+                    <Link to="/solucoes/$slug" params={{ slug }} className="block">
+                      {inner}
+                    </Link>
+                  ) : (
+                    <button onClick={() => setSelected(p)} className="block w-full text-left">
+                      {inner}
+                    </button>
+                  )}
+                </Hideable>
+              </Markable>
+            );
+          })}
         </div>
       </section>
 
