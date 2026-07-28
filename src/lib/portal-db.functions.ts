@@ -63,6 +63,7 @@ export const loadPortalConfig = createServerFn({ method: "GET" })
       listOrders?: Record<string, string[]>;
       listHidden?: Record<string, string[]>;
       positions?: Record<string, { x: number; y: number }>;
+      sizes?: Record<string, { w?: number; h?: number }>;
       theme?: { primary?: string; foreground?: string };
       perceptions?: Perceptions;
     };
