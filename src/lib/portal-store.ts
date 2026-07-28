@@ -310,6 +310,7 @@ export const portal = {
       listOrders: { ...state.listOrders, ...(patch.listOrders || {}) },
       listHidden: { ...state.listHidden, ...(patch.listHidden || {}) },
       positions: { ...state.positions, ...(patch.positions || {}) },
+      sizes: { ...state.sizes, ...(patch.sizes || {}) },
       btnScale: patch.btnScale ?? state.btnScale,
       theme: { ...state.theme, ...(patch.theme || {}) },
       perceptions: { ...state.perceptions, ...(patch.perceptions || {}) },
