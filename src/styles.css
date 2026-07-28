@@ -307,6 +307,13 @@
   margin-right: auto;
 }
 
+/* Fit ecosystem network diagram inside available viewport in presentation mode */
+.presenting .presenting-fit {
+  max-width: min(100%, calc(100vh - var(--presenting-header-h, 0px) - 6rem));
+  max-height: calc(100vh - var(--presenting-header-h, 0px) - 6rem);
+}
+
+
 /* Nested content wrappers inside a combined sticky section should also
    distribute vertically so blocks feel proportional across screens. */
 .presenting main > section.quem-somos-combined {
