@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { solutions, contactInfo, type Solution } from "@/lib/nexsuria-data";
+import { solutions, partners, contactInfo, type Solution } from "@/lib/nexsuria-data";
 import { PageHeader } from "@/components/page-header";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, AlertTriangle, Sparkles, MessageCircle } from "lucide-react";
@@ -31,10 +31,14 @@ function SolucaoDetail() {
   const base = `solucao.${s.slug}`;
   return (
     <>
-      <PageHeader id={base} eyebrow={`Solução · ${s.specialist.name}`} title={s.title} description={s.tagline}>
-        <Link to="/solucoes" className="inline-flex items-center gap-1 text-sm text-white/80 hover:text-white">
-          <ArrowLeft className="h-4 w-4" /> Todas as soluções
-        </Link>
+      <PageHeader id={base} eyebrow={s.specialist.name} title={s.title} description={s.tagline}>
+        <div className="flex flex-wrap gap-2">
+          <Button asChild variant="secondary" size="sm">
+            <Link to="/solucoes">
+              <ArrowLeft className="h-4 w-4 mr-1" /> Voltar para Soluções
+            </Link>
+          </Button>
+        </div>
       </PageHeader>
 
       <section className="mx-auto max-w-7xl px-4 lg:px-8 -mt-8">
@@ -105,8 +109,7 @@ function SolucaoDetail() {
       <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
         <Hideable id={`${base}.esp`} label="Especialista">
           <div className="rounded-3xl border border-border bg-card p-8 md:p-10 shadow-card-soft">
-            <EditableText id={`${base}.esp.eyebrow`} as="div" className="text-xs uppercase tracking-widest text-muted-foreground">Especialista Responsável</EditableText>
-            <EditableText id={`${base}.esp.name`} as="h3" className="mt-2 block text-2xl md:text-3xl font-semibold font-[family-name:var(--font-display)]">{s.specialist.name}</EditableText>
+            <EditableText id={`${base}.esp.name`} as="h3" className="block text-2xl md:text-3xl font-semibold font-[family-name:var(--font-display)]">{s.specialist.name}</EditableText>
             <EditableText id={`${base}.esp.desc`} as="p" multiline className="mt-3 text-muted-foreground max-w-3xl">{s.specialist.description}</EditableText>
             <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {s.specialist.capabilities.map((c, i) => (
@@ -124,8 +127,32 @@ function SolucaoDetail() {
                     <MessageCircle className="h-4 w-4 mr-2" /> Fale no WhatsApp
                   </a>
                 </Button>
+                <Button asChild variant="ghost">
+                  <Link to="/solucoes">
+                    <ArrowLeft className="h-4 w-4 mr-1" /> Voltar para Soluções
+                  </Link>
+                </Button>
               </div>
             </Hideable>
+          </div>
+        </Hideable>
+
+        <Hideable id={`${base}.todosparceiros`} label="Todos os parceiros">
+          <div className="mt-10">
+            <div className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Ecossistema completo</div>
+            <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+              {partners.map((p) => {
+                const active = p.name === s.specialist.name;
+                return (
+                  <div
+                    key={p.slug}
+                    className={`rounded-xl border p-3 text-sm ${active ? "border-primary bg-primary/10 text-primary font-semibold" : "border-border bg-card"}`}
+                  >
+                    {p.name}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </Hideable>
       </section>
