@@ -220,22 +220,11 @@ function Ecossistema() {
                   style={{ left: `${n.x}%`, top: `${n.y}%` }}
                   className={`absolute -translate-x-1/2 -translate-y-1/2 rounded-full border px-2.5 py-1 text-[10px] md:text-xs font-medium shadow-card-soft ${nodeStyle(n.kind)}`}
                 >
-                  <span className="mr-1 text-[9px] uppercase tracking-widest opacity-70">
-                    {n.kind === "client" ? "Cliente" : "Prospect"}
-                  </span>
                   <EditableText id={`ecossistema.node.${n.id}.name`} as="span">
                     {n.data.name}
                   </EditableText>
                 </div>
               ))}
-
-              {/* Legend */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 translate-y-full flex flex-wrap justify-center gap-3 text-[11px] text-muted-foreground pt-4">
-                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-primary/70" /> Nexsuria</span>
-                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm border border-primary/40 bg-card" /> Parceiros</span>
-                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full border border-emerald-500/50 bg-emerald-500/20" /> Clientes</span>
-                <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-full border border-amber-500/50 bg-amber-500/20" /> Prospects</span>
-              </div>
             </div>
           );
         })()}
