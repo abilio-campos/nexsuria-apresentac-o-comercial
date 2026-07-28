@@ -408,3 +408,99 @@ export function Hideable({ id, children, label }: { id: string; children: ReactN
     </div>
   );
 }
+
+// Drag-only wrapper (sem botão de ocultar). Usa a mesma store de posições.
+export function Movable({
+  id,
+  children,
+  label,
+  as = "div",
+  className,
+  inline,
+}: {
+  id: string;
+  children: ReactNode;
+  label?: string;
+  as?: "div" | "section" | "span";
+  className?: string;
+  inline?: boolean;
+}) {
+  const s = usePortalStore();
+  const pos = s.positions[id];
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const Tag = as as any;
+
+  const startDrag = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const start = { x: e.clientX, y: e.clientY };
+    const base = pos ?? { x: 0, y: 0 };
+    const onMove = (ev: MouseEvent) => {
+      const nx = base.x + (ev.clientX - start.x);
+      const ny = base.y + (ev.clientY - start.y);
+      if (wrapperRef.current) {
+        wrapperRef.current.style.transform = `translate(${nx}px, ${ny}px)`;
+      }
+    };
+    const onUp = (ev: MouseEvent) => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onUp);
+      const nx = base.x + (ev.clientX - start.x);
+      const ny = base.y + (ev.clientY - start.y);
+      portal.setPosition(id, { x: nx, y: ny });
+    };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  };
+
+  if (!s.editMode) {
+    if (!pos) return <Tag className={className}>{children}</Tag>;
+    return (
+      <Tag className={className} style={{ transform: `translate(${pos.x}px, ${pos.y}px)` }}>
+        {children}
+      </Tag>
+    );
+  }
+
+  return (
+    <Tag
+      ref={wrapperRef as any}
+      className={cn(
+        "relative group/movable",
+        inline ? "inline-block align-baseline" : "",
+        pos && "movable-moved",
+        className,
+      )}
+      style={pos ? { transform: `translate(${pos.x}px, ${pos.y}px)` } : undefined}
+    >
+      <button
+        onMouseDown={startDrag}
+        className="movable-handle"
+        title={label ? `Arrastar: ${label}` : "Arrastar para reposicionar"}
+        type="button"
+      >
+        ✥
+      </button>
+      {pos && (
+        <button
+          onClick={() => portal.setPosition(id, null)}
+          className="absolute -top-2 -right-2 z-10 rounded-full bg-secondary text-secondary-foreground text-[10px] px-2 py-0.5 shadow"
+          title="Restaurar posição"
+          type="button"
+        >
+          ↺
+        </button>
+      )}
+      {children}
+    </Tag>
+  );
+}
+
+// Linha divisória de seção que pode ser reposicionada no modo edição.
+export function SectionDivider({ id, className }: { id: string; className?: string }) {
+  return (
+    <Movable id={id} label="Divisor" className={cn("block w-full", className)}>
+      <hr className="border-0 border-t border-border" />
+    </Movable>
+  );
+}
