@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useMatches } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page-header";
 import { solutions } from "@/lib/nexsuria-data";
 import { ArrowUp, ArrowDown, EyeOff, Eye } from "lucide-react";
