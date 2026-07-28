@@ -278,34 +278,38 @@ function Ecossistema() {
         </div>
 
         {/* Clientes */}
-        <div className="mt-10">
-          <EditableText id="ecossistema.clientes.title" as="h3" className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
-            Clientes
-          </EditableText>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {clients.map((c) => (
-              <Markable key={c.slug} id={`mark.cliente.${c.slug}`} label={`Cliente: ${c.name}`} page="Ecossistema">
-                <Hideable id={`ecossistema.cliente.${c.slug}`} label={`Cliente: ${c.name}`}>
-                  <div className="w-full text-left rounded-2xl border border-emerald-500/40 bg-emerald-500/5 p-5 hover:border-emerald-500/70 hover:shadow-elegant transition-all">
-                    <div className="flex items-center justify-between">
-                      <EditableText id={`ecossistema.cliente.${c.slug}.name`} as="h3" className="font-semibold">{c.name}</EditableText>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 uppercase tracking-widest">Cliente</span>
+        <Hideable id="ecossistema.clientes.section" label="Seção Clientes">
+          <div className="mt-10">
+            <EditableText id="ecossistema.clientes.title" as="h3" className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+              Clientes
+            </EditableText>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {clients.map((c) => (
+                <Markable key={c.slug} id={`mark.cliente.${c.slug}`} label={`Cliente: ${c.name}`} page="Ecossistema">
+                  <Hideable id={`ecossistema.cliente.${c.slug}`} label={`Cliente: ${c.name}`}>
+                    <div className="w-full text-left rounded-2xl border border-emerald-500/40 bg-emerald-500/5 p-5 hover:border-emerald-500/70 hover:shadow-elegant transition-all">
+                      <div className="flex items-center justify-between">
+                        <EditableText id={`ecossistema.cliente.${c.slug}.name`} as="h3" className="font-semibold">{c.name}</EditableText>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 uppercase tracking-widest">Cliente</span>
+                      </div>
+                      <EditableText id={`ecossistema.cliente.${c.slug}.note`} as="p" multiline className="mt-1 text-sm text-muted-foreground">
+                        Descrição do cliente.
+                      </EditableText>
                     </div>
-                    <EditableText id={`ecossistema.cliente.${c.slug}.note`} as="p" multiline className="mt-1 text-sm text-muted-foreground">
-                      Descrição do cliente.
-                    </EditableText>
-                  </div>
-                </Hideable>
-              </Markable>
-            ))}
+                  </Hideable>
+                </Markable>
+              ))}
+            </div>
           </div>
-        </div>
+        </Hideable>
 
         {/* Prospects */}
-        <div className="mt-8">
-          <EditableText id="ecossistema.prospects.title" as="h3" className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
-            Prospects
-          </EditableText>
+        <Hideable id="ecossistema.prospects.section" label="Seção Prospects">
+          <div className="mt-8">
+            <EditableText id="ecossistema.prospects.title" as="h3" className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+              Prospects
+            </EditableText>
+
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {prospects.map((c) => (
               <Markable key={c.slug} id={`mark.prospect.${c.slug}`} label={`Prospect: ${c.name}`} page="Ecossistema">
