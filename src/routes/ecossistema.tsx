@@ -132,7 +132,7 @@ function Ecossistema() {
           };
 
           return (
-            <div className="relative mx-auto aspect-square w-full max-w-3xl">
+            <div className="relative mx-auto aspect-square w-full max-w-3xl presenting-fit">
               {/* Neural network edges */}
               <svg
                 viewBox="0 0 100 100"
