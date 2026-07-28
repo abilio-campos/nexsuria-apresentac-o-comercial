@@ -35,7 +35,7 @@ function IA() {
         description="Do dashboard executivo ao agente autônomo: aplicamos IA para acelerar decisões, automatizar operações e criar vantagem competitiva sustentável."
       />
 
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 -mt-8">
+      <section className="ia-unified mx-auto max-w-7xl px-4 lg:px-8 -mt-8 pb-10">
         <Hideable id="ia.dashboard" label="Dashboard executivo">
         <div className="rounded-2xl border border-border bg-card p-6 shadow-elegant">
           <div className="flex items-center justify-between">
@@ -64,9 +64,9 @@ function IA() {
             ))}
           </div>
           <div className="mt-4 grid gap-3 md:grid-cols-[2fr_1fr]">
-            <div className="rounded-xl border border-border bg-secondary/30 p-4 h-48">
+            <div className="rounded-xl border border-border bg-secondary/30 p-4 h-40">
               <EditableText id="ia.chart.title" as="div" className="text-xs text-muted-foreground mb-2">Previsão de Receita (LLM + ML)</EditableText>
-              <svg viewBox="0 0 400 140" className="w-full h-full" preserveAspectRatio="none">
+              <svg viewBox="0 0 400 140" className="w-full h-[calc(100%-1.5rem)]" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="var(--primary)" stopOpacity="0.35" />
@@ -85,33 +85,31 @@ function IA() {
           </div>
         </div>
         </Hideable>
-      </section>
 
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {capabilities.map(({ icon: Icon, title, text }, i) => (
             <Markable key={title} id={`mark.ia.cap.${i}`} label={`Capacidade IA: ${title}`} page="Inteligência Artificial">
             <Hideable id={`ia.cap.${i}`} label={`Capacidade: ${title}`}>
-              <div className="rounded-2xl border border-border bg-card p-6">
-                <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
-                  <Icon className="h-5 w-5" />
+              <div className="rounded-2xl border border-border bg-card p-4">
+                <div className="flex items-center gap-3">
+                  <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  <EditableText id={`ia.cap.${i}.title`} as="h3" className="font-semibold text-sm">{title}</EditableText>
                 </div>
-                <EditableText id={`ia.cap.${i}.title`} as="h3" className="mt-4 block font-semibold">{title}</EditableText>
-                <EditableText id={`ia.cap.${i}.text`} as="p" multiline className="mt-1 text-sm text-muted-foreground">{text}</EditableText>
+                <EditableText id={`ia.cap.${i}.text`} as="p" multiline className="mt-2 text-xs text-muted-foreground">{text}</EditableText>
               </div>
             </Hideable>
             </Markable>
           ))}
         </div>
-      </section>
 
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 pb-16">
         <Hideable id="ia.lideranca" label="Liderança direta">
-          <div className="rounded-2xl border border-border bg-secondary/40 p-8 flex flex-col md:flex-row items-start gap-6">
-            <BrainCircuit className="h-10 w-10 text-primary" />
+          <div className="mt-6 rounded-2xl border border-border bg-secondary/40 p-5 flex flex-col md:flex-row items-start gap-4">
+            <BrainCircuit className="h-8 w-8 text-primary shrink-0" />
             <div>
-              <EditableText id="ia.lideranca.title" as="h3" className="text-xl font-semibold block">Liderança direta da Nexsuria</EditableText>
-              <EditableText id="ia.lideranca.text" as="p" multiline className="mt-2 text-muted-foreground max-w-3xl">
+              <EditableText id="ia.lideranca.title" as="h3" className="text-lg font-semibold block">Liderança direta da Nexsuria</EditableText>
+              <EditableText id="ia.lideranca.text" as="p" multiline className="mt-1 text-sm text-muted-foreground max-w-3xl">
                 Diferente de outras áreas, Inteligência Empresarial e IA é uma competência liderada diretamente pela Nexsuria. Combinamos governança de dados, engenharia analítica, ciência de dados e agentes para gerar decisão e ação.
               </EditableText>
             </div>

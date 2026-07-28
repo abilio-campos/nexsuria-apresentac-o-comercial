@@ -332,6 +332,20 @@
   overflow: auto;
 }
 
+/* IA: dashboard + capacidades + liderança em uma única tela sticky */
+.presenting main > section.ia-unified,
+.presenting main > div > section.ia-unified {
+  justify-content: flex-start;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  overflow: auto;
+}
+.presenting .ia-unified .h-40 { height: 7.5rem; }
+.presenting .ia-unified .p-6 { padding: 1rem; }
+.presenting .ia-unified .p-5 { padding: 0.85rem; }
+.presenting .ia-unified .p-4 { padding: 0.75rem; }
+
+
 /* Long form pages opt out of the sticky-fill overlap: they scroll normally
    under the fixed header instead of being locked to viewport height. */
 .presenting main > section.percepcoes-page,
