@@ -323,6 +323,18 @@
   flex: 0 0 auto;
 }
 
+/* Long form pages opt out of the sticky-fill overlap: they scroll normally
+   under the fixed header instead of being locked to viewport height. */
+.presenting main > section.percepcoes-page,
+.presenting main > div > section.percepcoes-page {
+  position: static;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  display: block;
+  box-shadow: none;
+}
+
 /* Scalable primary CTAs (shadcn Button). Menu items and inline links are unaffected. */
 :root { --btn-scale: 1; }
 [data-btn-scalable] {
