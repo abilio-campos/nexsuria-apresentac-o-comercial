@@ -242,7 +242,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
                               "font-mono text-[11px] w-8 h-8 flex items-center justify-center rounded-md transition-all",
                               active
                                 ? sidebarDark
-                                  ? "bg-primary/30 text-[var(--sidebar-executive-foreground)] ring-1 ring-primary/60"
+                                  ? "bg-primary/30 text-primary ring-1 ring-primary/60"
                                   : "bg-primary/15 text-primary ring-1 ring-primary/30"
                                 : sidebarDark
                                   ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
