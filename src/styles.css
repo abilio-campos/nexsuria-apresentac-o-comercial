@@ -234,23 +234,10 @@
   font-size: 16px;
 }
 
-/* Em Apresentar, esconder a sidebar e usar 100% da largura para
-   que a faixa azul e as sessões tenham a mesma largura em todas as páginas. */
-.presenting aside[data-sidebar],
-.presenting aside.lovable-sidebar,
-.presenting > body > div > aside,
-.presenting aside {
-  display: none !important;
-}
-.presenting main,
-.presenting main ~ *,
-.presenting div.flex-1 {
-  margin-left: 0 !important;
-}
-.presenting .lg\:ml-72,
-.presenting .lg\:ml-16 { margin-left: 0 !important; }
+/* Em Apresentar mantemos a sidebar visível — apenas escondemos a toolbar de edição. */
 .presenting header.sticky,
 .presenting .edit-toolbar { display: none !important; }
+
 
 /* Titles / subtitles — mais compactos e proporcionais na apresentação */
 .presenting h1 { font-size: clamp(1.75rem, 2.6vw, 2.75rem); line-height: 1.08; letter-spacing: -0.01em; }
