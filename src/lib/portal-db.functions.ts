@@ -127,11 +127,18 @@ export const savePortalMarks = createServerFn({ method: "POST" })
       updated_at: new Date().toISOString(),
     }));
 
-    await supabase.from("portal_marks").delete().eq("user_id", userId);
     if (rows.length > 0) {
-      const { error } = await supabase.from("portal_marks").insert(rows);
+      const { error } = await supabase
+        .from("portal_marks")
+        .upsert(rows, { onConflict: "user_id,mark_id" });
       if (error) throw new Error(error.message);
     }
+    const keepIds = rows.map((r) => r.mark_id);
+    let del = supabase.from("portal_marks").delete().eq("user_id", userId);
+    if (keepIds.length > 0) {
+      del = del.not("mark_id", "in", `(${keepIds.map((id) => `"${id}"`).join(",")})`);
+    }
+    await del;
     return { ok: true };
   });
 
