@@ -216,7 +216,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
                           collapsed ? "px-0 py-1.5 justify-center" : "px-3 py-1.5",
                           active
                             ? sidebarDark
-                              ? "bg-primary/25 text-[var(--sidebar-executive-foreground)] shadow-sm ring-1 ring-primary/50"
+                              ? "bg-gradient-to-r from-primary/20 via-primary/10 to-transparent text-foreground shadow-sm ring-1 ring-primary/50"
                               : "bg-gradient-to-r from-primary/15 via-primary/5 to-transparent text-foreground shadow-sm ring-1 ring-primary/20"
                             : sidebarDark
                               ? "text-[var(--sidebar-executive-foreground)]/90 hover:text-[var(--sidebar-executive-foreground)] hover:bg-[var(--sidebar-executive-accent)]/70 hover:translate-x-0.5"
