@@ -29,18 +29,37 @@ export function PortalShell({ children }: { children: ReactNode }) {
     const sd = localStorage.getItem("nx-sidebar-dark");
     if (sd === "1") setSidebarDark(true);
   }, []);
+  // Trava o scroll do fundo enquanto o menu mobile está aberto, evitando
+  // que a página por trás role junto com o overlay/drawer no celular.
   useEffect(() => {
-    const onScroll = () => {
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      setScrollPct(max > 0 ? Math.min(100, Math.max(0, (h.scrollTop / max) * 100)) : 0);
+    if (!mobileOpen) return;
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = overflow; };
+  }, [mobileOpen]);
+  useEffect(() => {
+    // Calcula o progresso de rolagem da página. Em modo Apresentar, cada
+    // seção vira seu próprio container com rolagem interna (overflow-y:
+    // auto), então o scroll não acontece mais no document — por isso o
+    // listener usa capture (3º parâmetro "true") para também escutar a
+    // rolagem que ocorre dentro dessas seções, e calcula a porcentagem em
+    // cima do elemento que de fato rolou (e.target), não sempre do html.
+    const pct = (el: HTMLElement) => {
+      const max = el.scrollHeight - el.clientHeight;
+      return max > 0 ? Math.min(100, Math.max(0, (el.scrollTop / max) * 100)) : 0;
     };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    const onScroll = (e: Event) => {
+      const target = e.target;
+      const el = target instanceof HTMLElement ? target : document.documentElement;
+      setScrollPct(pct(el));
+    };
+    const onResize = () => setScrollPct(pct(document.documentElement));
+    setScrollPct(pct(document.documentElement));
+    window.addEventListener("scroll", onScroll, { passive: true, capture: true });
+    window.addEventListener("resize", onResize);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("scroll", onScroll, true);
+      window.removeEventListener("resize", onResize);
     };
   }, [pathname]);
   const toggleTheme = () => {
