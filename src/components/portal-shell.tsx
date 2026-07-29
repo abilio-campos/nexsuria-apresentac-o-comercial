@@ -216,7 +216,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
                           collapsed ? "px-0 py-1.5 justify-center" : "px-3 py-1.5",
                           active
                             ? sidebarDark
-                              ? "bg-primary/25 text-[var(--sidebar-executive-foreground)] shadow-sm ring-1 ring-primary/50"
+                              ? "bg-gradient-to-r from-primary/20 via-primary/10 to-transparent text-foreground shadow-sm ring-1 ring-primary/50"
                               : "bg-gradient-to-r from-primary/15 via-primary/5 to-transparent text-foreground shadow-sm ring-1 ring-primary/20"
                             : sidebarDark
                               ? "text-[var(--sidebar-executive-foreground)]/90 hover:text-[var(--sidebar-executive-foreground)] hover:bg-[var(--sidebar-executive-accent)]/70 hover:translate-x-0.5"
@@ -242,7 +242,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
                               "font-mono text-[11px] w-8 h-8 flex items-center justify-center rounded-md transition-all",
                               active
                                 ? sidebarDark
-                                  ? "bg-primary/30 text-[var(--sidebar-executive-foreground)] ring-1 ring-primary/60"
+                                  ? "bg-primary/30 text-primary ring-1 ring-primary/60"
                                   : "bg-primary/15 text-primary ring-1 ring-primary/30"
                                 : sidebarDark
                                   ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
@@ -258,7 +258,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
                                 "font-mono text-[10px] shrink-0 w-7 h-7 flex items-center justify-center rounded-md transition-all",
                                 active
                                   ? sidebarDark
-                                    ? "bg-primary/30 text-[var(--sidebar-executive-foreground)] ring-1 ring-primary/60"
+                                    ? "bg-primary/30 text-primary ring-1 ring-primary/60"
                                     : "bg-primary/20 text-primary ring-1 ring-primary/30"
                                   : sidebarDark
                                     ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] ring-1 ring-[var(--sidebar-executive-border)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
