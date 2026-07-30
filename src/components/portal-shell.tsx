@@ -235,10 +235,10 @@ export function PortalShell({ children }: { children: ReactNode }) {
                           collapsed ? "px-0 py-1.5 justify-center" : "px-3 py-1.5",
                           active
                             ? sidebarDark
-                              ? "bg-gradient-to-r from-primary/20 via-primary/10 to-transparent text-foreground shadow-sm ring-1 ring-primary/50"
+                              ? "bg-gradient-to-r from-primary/45 via-primary/20 to-transparent text-foreground shadow-[0_0_20px_-4px_var(--primary)] ring-1 ring-primary/70"
                               : "bg-gradient-to-r from-primary/15 via-primary/5 to-transparent text-foreground shadow-sm ring-1 ring-primary/20"
                             : sidebarDark
-                              ? "text-[var(--sidebar-executive-foreground)]/90 hover:text-[var(--sidebar-executive-foreground)] hover:bg-[var(--sidebar-executive-accent)]/70 hover:translate-x-0.5"
+                              ? "text-[var(--sidebar-executive-foreground)]/95 hover:text-[var(--sidebar-executive-foreground)] hover:bg-[var(--sidebar-executive-accent)]/80 hover:translate-x-0.5"
                               : "text-foreground/85 hover:text-foreground hover:bg-sidebar-accent/60 hover:translate-x-0.5",
                           item.hidden && "opacity-50 line-through",
                         )}
@@ -261,10 +261,10 @@ export function PortalShell({ children }: { children: ReactNode }) {
                               "font-mono text-[11px] w-8 h-8 flex items-center justify-center rounded-md transition-all",
                               active
                                 ? sidebarDark
-                                  ? "bg-primary/30 text-primary ring-1 ring-primary/60"
+                                  ? "bg-primary/55 text-primary-foreground ring-1 ring-primary/80 shadow-[0_0_12px_-2px_var(--primary)]"
                                   : "bg-primary/15 text-primary ring-1 ring-primary/30"
                                 : sidebarDark
-                                  ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
+                                  ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] ring-1 ring-[var(--sidebar-executive-border)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
                                   : "text-muted-foreground/70 group-hover:bg-sidebar-accent group-hover:text-foreground",
                             )}
                           >
@@ -277,7 +277,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
                                 "font-mono text-[10px] shrink-0 w-7 h-7 flex items-center justify-center rounded-md transition-all",
                                 active
                                   ? sidebarDark
-                                    ? "bg-primary/30 text-primary ring-1 ring-primary/60"
+                                    ? "bg-primary/55 text-primary-foreground ring-1 ring-primary/80 shadow-[0_0_12px_-2px_var(--primary)]"
                                     : "bg-primary/20 text-primary ring-1 ring-primary/30"
                                   : sidebarDark
                                     ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] ring-1 ring-[var(--sidebar-executive-border)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
