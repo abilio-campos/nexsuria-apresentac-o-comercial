@@ -179,7 +179,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
             {!collapsed && (
               <div className="leading-tight min-w-0">
                 <div className="text-sm font-semibold truncate">Nexsuria</div>
-                <div className={cn("text-[10px] uppercase tracking-[0.14em] truncate", sidebarDark ? "text-[var(--sidebar-executive-foreground)]/60" : "text-muted-foreground")}>
+                <div className={cn("text-[10px] uppercase tracking-[0.14em] truncate", sidebarDark ? "text-[var(--sidebar-executive-foreground)]/80" : "text-muted-foreground")}>
                   Portal Executivo
                 </div>
               </div>
@@ -187,7 +187,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
           </Link>
           <button
             onClick={toggleCollapsed}
-            className={cn("hidden lg:inline-flex p-1.5 rounded-md", sidebarDark ? "hover:bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)]/70" : "hover:bg-sidebar-accent text-muted-foreground")}
+            className={cn("hidden lg:inline-flex p-1.5 rounded-md", sidebarDark ? "hover:bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)]/90" : "hover:bg-sidebar-accent text-muted-foreground")}
             aria-label="Recolher menu"
           >
             <ChevronLeft className={cn("h-4 w-4 transition-transform", collapsed && "rotate-180")} />
@@ -235,10 +235,10 @@ export function PortalShell({ children }: { children: ReactNode }) {
                           collapsed ? "px-0 py-1.5 justify-center" : "px-3 py-1.5",
                           active
                             ? sidebarDark
-                              ? "bg-gradient-to-r from-primary/45 via-primary/20 to-transparent text-foreground shadow-[0_0_20px_-4px_var(--primary)] ring-1 ring-primary/70"
+                              ? "bg-primary text-primary-foreground shadow-[0_0_24px_-4px_var(--primary)] ring-1 ring-primary-foreground/30"
                               : "bg-gradient-to-r from-primary/15 via-primary/5 to-transparent text-foreground shadow-sm ring-1 ring-primary/20"
                             : sidebarDark
-                              ? "text-[var(--sidebar-executive-foreground)]/95 hover:text-[var(--sidebar-executive-foreground)] hover:bg-[var(--sidebar-executive-accent)]/80 hover:translate-x-0.5"
+                              ? "text-[var(--sidebar-executive-foreground)] hover:text-[var(--sidebar-executive-foreground)] hover:bg-[var(--sidebar-executive-accent)] hover:translate-x-0.5"
                               : "text-foreground/85 hover:text-foreground hover:bg-sidebar-accent/60 hover:translate-x-0.5",
                           item.hidden && "opacity-50 line-through",
                         )}
@@ -261,7 +261,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
                               "font-mono text-[11px] w-8 h-8 flex items-center justify-center rounded-md transition-all",
                               active
                                 ? sidebarDark
-                                  ? "bg-primary/55 text-primary-foreground ring-1 ring-primary/80 shadow-[0_0_12px_-2px_var(--primary)]"
+                                  ? "bg-primary text-primary-foreground ring-1 ring-primary-foreground/40 shadow-[0_0_14px_-2px_var(--primary)]"
                                   : "bg-primary/15 text-primary ring-1 ring-primary/30"
                                 : sidebarDark
                                   ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] ring-1 ring-[var(--sidebar-executive-border)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
@@ -275,13 +275,13 @@ export function PortalShell({ children }: { children: ReactNode }) {
                             <span
                               className={cn(
                                 "font-mono text-[10px] shrink-0 w-7 h-7 flex items-center justify-center rounded-md transition-all",
-                                active
-                                  ? sidebarDark
-                                    ? "bg-primary/55 text-primary-foreground ring-1 ring-primary/80 shadow-[0_0_12px_-2px_var(--primary)]"
-                                    : "bg-primary/20 text-primary ring-1 ring-primary/30"
-                                  : sidebarDark
-                                    ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] ring-1 ring-[var(--sidebar-executive-border)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
-                                    : "bg-sidebar-accent/40 text-muted-foreground/80 group-hover:bg-sidebar-accent group-hover:text-foreground",
+                                  active
+                                    ? sidebarDark
+                                      ? "bg-primary text-primary-foreground ring-1 ring-primary-foreground/40 shadow-[0_0_14px_-2px_var(--primary)]"
+                                      : "bg-primary/20 text-primary ring-1 ring-primary/30"
+                                    : sidebarDark
+                                      ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)] ring-1 ring-[var(--sidebar-executive-border)] group-hover:bg-[var(--sidebar-executive-accent)] group-hover:text-[var(--sidebar-executive-foreground)]"
+                                      : "bg-sidebar-accent/40 text-muted-foreground/80 group-hover:bg-sidebar-accent group-hover:text-foreground",
                               )}
                             >
                               {num}
