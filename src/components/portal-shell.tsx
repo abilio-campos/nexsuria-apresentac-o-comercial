@@ -187,7 +187,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
           </Link>
           <button
             onClick={toggleCollapsed}
-            className={cn("hidden lg:inline-flex p-1.5 rounded-md", sidebarDark ? "hover:bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)]/70" : "hover:bg-sidebar-accent text-muted-foreground")}
+            className={cn("hidden lg:inline-flex p-1.5 rounded-md", sidebarDark ? "hover:bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)]/90" : "hover:bg-sidebar-accent text-muted-foreground")}
             aria-label="Recolher menu"
           >
             <ChevronLeft className={cn("h-4 w-4 transition-transform", collapsed && "rotate-180")} />
