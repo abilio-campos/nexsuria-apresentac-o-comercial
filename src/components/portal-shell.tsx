@@ -235,10 +235,10 @@ export function PortalShell({ children }: { children: ReactNode }) {
                           collapsed ? "px-0 py-1.5 justify-center" : "px-3 py-1.5",
                           active
                             ? sidebarDark
-                              ? "bg-gradient-to-r from-primary/20 via-primary/10 to-transparent text-foreground shadow-sm ring-1 ring-primary/50"
+                              ? "bg-gradient-to-r from-primary/45 via-primary/20 to-transparent text-foreground shadow-[0_0_20px_-4px_var(--primary)] ring-1 ring-primary/70"
                               : "bg-gradient-to-r from-primary/15 via-primary/5 to-transparent text-foreground shadow-sm ring-1 ring-primary/20"
                             : sidebarDark
-                              ? "text-[var(--sidebar-executive-foreground)]/90 hover:text-[var(--sidebar-executive-foreground)] hover:bg-[var(--sidebar-executive-accent)]/70 hover:translate-x-0.5"
+                              ? "text-[var(--sidebar-executive-foreground)]/95 hover:text-[var(--sidebar-executive-foreground)] hover:bg-[var(--sidebar-executive-accent)]/80 hover:translate-x-0.5"
                               : "text-foreground/85 hover:text-foreground hover:bg-sidebar-accent/60 hover:translate-x-0.5",
                           item.hidden && "opacity-50 line-through",
                         )}
