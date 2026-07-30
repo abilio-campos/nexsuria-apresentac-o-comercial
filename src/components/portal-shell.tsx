@@ -179,7 +179,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
             {!collapsed && (
               <div className="leading-tight min-w-0">
                 <div className="text-sm font-semibold truncate">Nexsuria</div>
-                <div className={cn("text-[10px] uppercase tracking-[0.14em] truncate", sidebarDark ? "text-[var(--sidebar-executive-foreground)]/60" : "text-muted-foreground")}>
+                <div className={cn("text-[10px] uppercase tracking-[0.14em] truncate", sidebarDark ? "text-[var(--sidebar-executive-foreground)]/80" : "text-muted-foreground")}>
                   Portal Executivo
                 </div>
               </div>
