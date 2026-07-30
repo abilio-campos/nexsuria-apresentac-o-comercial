@@ -239,9 +239,7 @@ function Ecossistema() {
               <div className="w-full text-left rounded-2xl border border-border bg-card p-5 hover:border-primary/40 hover:shadow-elegant transition-all">
                 <div className="flex items-center justify-between">
                   <EditableText id={`ecossistema.${p.slug}.name`} as="h3" className="font-semibold">{p.name}</EditableText>
-                  {p.exclusive && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase tracking-widest">Exclusivo</span>
-                  )}
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary uppercase tracking-widest">Parceiro</span>
                 </div>
                 <EditableText id={`ecossistema.${p.slug}.specialty`} as="p" multiline className="mt-1 text-sm text-muted-foreground">
                   {p.specialty}
