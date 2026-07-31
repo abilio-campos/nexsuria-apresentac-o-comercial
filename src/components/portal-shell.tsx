@@ -156,6 +156,41 @@ export function PortalShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [items, pathname, navigate, presenting]);
 
+  // Rolagem contínua no modo Apresentar: ao chegar no fim da sessão atual,
+  // continuar rolando avança para a próxima sessão do menu (e o item do menu
+  // acompanha automaticamente, pois o destaque segue a rota). Rolando para
+  // cima no topo, volta para a sessão anterior.
+  useEffect(() => {
+    if (!presenting) return;
+    let lock = false;
+    let accum = 0;
+    const idx = items.findIndex((it) => (it.to === "/" ? pathname === "/" : pathname.startsWith(it.to)));
+    const go = (dir: 1 | -1) => {
+      const target = items[idx + dir];
+      if (!target || lock) return;
+      lock = true;
+      accum = 0;
+      navigate({ to: target.to }).then(() => {
+        window.scrollTo({ top: dir === 1 ? 0 : document.documentElement.scrollHeight, behavior: "instant" as ScrollBehavior });
+        setTimeout(() => { lock = false; }, 600);
+      });
+    };
+    const onWheel = (e: WheelEvent) => {
+      if (idx === -1 || lock) return;
+      const el = document.documentElement;
+      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
+      const atTop = el.scrollTop <= 2;
+      if (e.deltaY > 0 && atBottom) accum += e.deltaY;
+      else if (e.deltaY < 0 && atTop) accum += e.deltaY;
+      else { accum = 0; return; }
+      if (accum > 120) go(1);
+      else if (accum < -120) go(-1);
+    };
+    window.addEventListener("wheel", onWheel, { passive: true });
+    return () => window.removeEventListener("wheel", onWheel);
+  }, [presenting, items, pathname, navigate]);
+
+
   return (
     <div className="min-h-screen flex bg-background text-foreground">
       {/* Sidebar */}
