@@ -95,13 +95,16 @@ function HomePage() {
           ].map(({ icon: Icon, title, text }) => (
             <Movable key={title} id={`home.pilar.${title}.box`} label={`Pilar: ${title}`}>
               <div className="group rounded-2xl border border-border bg-card p-6 shadow-card-soft hover:shadow-elegant transition-shadow">
-                <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
-                  <Icon className="h-5 w-5" />
+                <div className="flex items-center gap-3">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <h3 className="font-semibold leading-tight">{title}</h3>
                 </div>
-                <h3 className="mt-4 font-semibold">{title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">{text}</p>
+                <p className="mt-3 text-sm text-muted-foreground">{text}</p>
               </div>
             </Movable>
+
           ))}
         </div>
       </Movable>
