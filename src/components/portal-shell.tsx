@@ -173,9 +173,11 @@ export function PortalShell({ children }: { children: ReactNode }) {
       return { atTop: el.scrollTop <= 4, atBottom: max <= 4 || el.scrollTop >= max - 4 };
     };
     const go = (dir: 1 | -1) => {
-      if (lock || idx === -1) return;
-      const target = items[idx + dir];
+      if (lock || idx === -1 || items.length < 2) return;
+      // Looping: ao passar do último item volta ao primeiro (e vice-versa).
+      const target = items[(idx + dir + items.length) % items.length];
       if (!target) return;
+
       lock = true;
       accum = 0;
       void navigate({ to: target.to });
