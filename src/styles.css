@@ -320,20 +320,23 @@
 }
 
 /* Sessões abaixo da faixa azul: sticky, altura = viewport - header,
-   com scroll interno se o conteúdo exceder (garante no máx 2 telas
-   de rolagem por sessão via overflow-y auto dentro do sticky) */
+   podendo expandir até 2 telas quando o conteúdo precisar.
+   Removemos height fixo para evitar rolagem interna desnecessária. */
 .presenting main > section.page-header ~ section,
 .presenting main > div > section.page-header ~ section {
   position: sticky;
   top: calc(var(--presenting-header-h, 0px) + 0.75rem);
   min-height: calc(100vh - var(--presenting-header-h, 0px) - 0.75rem);
-  height: calc(100vh - var(--presenting-header-h, 0px) - 0.75rem);
+  max-height: calc(200vh - var(--presenting-header-h, 0px) - 0.75rem);
+  height: auto;
   z-index: 1;
   box-shadow: 0 -10px 34px -20px color-mix(in oklab, var(--foreground) 22%, transparent);
   background: var(--background);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
