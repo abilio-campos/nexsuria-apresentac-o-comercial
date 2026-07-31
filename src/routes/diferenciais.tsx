@@ -20,7 +20,7 @@ function Diferenciais() {
   return (
     <>
       <PageHeader id="diferenciais" eyebrow="Diferenciais" title="O que separa evolução de mera implantação." description="Oito alavancas que estruturam a forma como a Nexsuria conduz projetos e relacionamentos." />
-      <Movable id="diferenciais.section.grid" label="Seção Diferenciais" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
+      <Movable id="diferenciais.section.grid" label="Seção Diferenciais" as="section" className="diferenciais-page mx-auto max-w-7xl px-4 lg:px-8 py-16">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {differentials.map((d, i) => {
             const Icon = (Icons as unknown as Record<string, Icons.LucideIcon>)[d.icon] ?? Icons.Sparkles;

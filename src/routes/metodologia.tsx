@@ -23,7 +23,7 @@ function Metodologia() {
         title="Do diagnóstico à evolução contínua"
         description="Um framework claro para transformar estratégia em execução — com o especialista certo em cada etapa e governança do início ao fim."
       />
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
+      <section className="metodologia-page mx-auto max-w-7xl px-4 lg:px-8 py-16">
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {methodology.map((m, i) => (
             <Hideable key={m.step} id={`metodologia.${i}`} label={`Etapa: ${m.title}`}>

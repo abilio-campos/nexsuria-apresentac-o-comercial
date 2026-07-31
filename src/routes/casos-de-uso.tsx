@@ -37,7 +37,7 @@ function Casos() {
   return (
     <>
       <PageHeader id="casos" eyebrow="Casos de Uso" title="Como a Nexsuria aparece na prática." description="Cenários por segmento — mesmo quando o cliente não pode ser nomeado, os desafios, soluções e resultados são reais." />
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-10">
+      <section className="casos-page mx-auto max-w-7xl px-4 lg:px-8 py-10">
         <div className="flex flex-wrap gap-2">
           {segments.map((s) => (
             <button
