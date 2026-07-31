@@ -455,18 +455,25 @@
 .presenting .quem-somos-page .space-y-6 > * { margin-top: 0.75rem; margin-bottom: 0.75rem; }
 
 /* Equipe */
-.presenting .equipe-combined .p-6,
-.presenting .equipe-combined .lg\:p-8 { padding: 0.65rem; }
-.presenting .equipe-combined h3 { font-size: clamp(1rem, 1.2vw, 1.25rem); }
-.presenting .equipe-combined li { font-size: 0.82rem; line-height: 1.4; }
+.presenting .equipe-page .p-6,
+.presenting .equipe-page .lg\:p-8 { padding: 0.65rem; }
+.presenting .equipe-page h3 { font-size: clamp(1rem, 1.2vw, 1.25rem); }
+.presenting .equipe-page li { font-size: 0.82rem; line-height: 1.4; }
+.presenting .equipe-page .mt-6 { margin-top: 0.5rem; }
+.presenting .equipe-page .mt-4 { margin-top: 0.35rem; }
 
 /* IA */
-.presenting .ia-unified .p-6 { padding: 0.65rem; }
-.presenting .ia-unified .p-4 { padding: 0.5rem; }
-.presenting .ia-unified .h-40 { height: 5rem; }
-.presenting .ia-unified .grid.gap-3.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
-.presenting .ia-unified h3 { font-size: 0.9rem; }
-.presenting .ia-unified p { font-size: 0.78rem; }
+.presenting .ia-page .p-6 { padding: 0.65rem; }
+.presenting .ia-page .p-4 { padding: 0.5rem; }
+.presenting .ia-page .p-5 { padding: 0.55rem; }
+.presenting .ia-page .h-40 { height: 5rem; }
+.presenting .ia-page .grid.gap-3.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.presenting .ia-page .grid.gap-3.md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; }
+.presenting .ia-page .grid.gap-3.md\:grid-cols-\\[2fr_1fr\\] { grid-template-columns: 2fr 1fr; gap: 0.5rem; }
+.presenting .ia-page h3 { font-size: 0.9rem; }
+.presenting .ia-page p { font-size: 0.78rem; }
+.presenting .ia-page .mt-4 { margin-top: 0.35rem; }
+.presenting .ia-page .mt-6 { margin-top: 0.5rem; }
 
 /* Ecossistema */
 .presenting .ecossistema-page .p-5 { padding: 0.55rem; }
