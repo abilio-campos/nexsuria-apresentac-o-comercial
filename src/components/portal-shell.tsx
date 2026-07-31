@@ -164,31 +164,64 @@ export function PortalShell({ children }: { children: ReactNode }) {
     if (!presenting) return;
     let lock = false;
     let accum = 0;
+    let touchY = 0;
     const idx = items.findIndex((it) => (it.to === "/" ? pathname === "/" : pathname.startsWith(it.to)));
+    const scroller = () => (document.scrollingElement as HTMLElement) ?? document.documentElement;
+    const edges = () => {
+      const el = scroller();
+      const max = el.scrollHeight - el.clientHeight;
+      return { atTop: el.scrollTop <= 4, atBottom: max <= 4 || el.scrollTop >= max - 4 };
+    };
     const go = (dir: 1 | -1) => {
+      if (lock || idx === -1) return;
       const target = items[idx + dir];
-      if (!target || lock) return;
+      if (!target) return;
       lock = true;
       accum = 0;
-      navigate({ to: target.to }).then(() => {
-        window.scrollTo({ top: dir === 1 ? 0 : document.documentElement.scrollHeight, behavior: "instant" as ScrollBehavior });
-        setTimeout(() => { lock = false; }, 600);
-      });
+      void navigate({ to: target.to });
+      const settle = () => {
+        const el = scroller();
+        el.scrollTop = dir === 1 ? 0 : el.scrollHeight;
+      };
+      requestAnimationFrame(settle);
+      setTimeout(settle, 120);
+      setTimeout(() => { lock = false; }, 700);
     };
-    const onWheel = (e: WheelEvent) => {
-      if (idx === -1 || lock) return;
-      const el = document.documentElement;
-      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 2;
-      const atTop = el.scrollTop <= 2;
-      if (e.deltaY > 0 && atBottom) accum += e.deltaY;
-      else if (e.deltaY < 0 && atTop) accum += e.deltaY;
+    const intent = (delta: number) => {
+      if (lock || idx === -1) return;
+      const { atTop, atBottom } = edges();
+      if (delta > 0 && atBottom) accum += delta;
+      else if (delta < 0 && atTop) accum += delta;
       else { accum = 0; return; }
-      if (accum > 120) go(1);
-      else if (accum < -120) go(-1);
+      if (accum > 90) go(1);
+      else if (accum < -90) go(-1);
+    };
+    const onWheel = (e: WheelEvent) => intent(e.deltaY);
+    const onKey = (e: KeyboardEvent) => {
+      const tgt = e.target as HTMLElement | null;
+      if (tgt && (tgt.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(tgt.tagName))) return;
+      if (e.key === "PageDown" || e.key === " ") intent(200);
+      else if (e.key === "PageUp") intent(-200);
+    };
+    const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0]?.clientY ?? 0; };
+    const onTouchMove = (e: TouchEvent) => {
+      const y = e.touches[0]?.clientY ?? 0;
+      const d = touchY - y;
+      touchY = y;
+      intent(d * 2);
     };
     window.addEventListener("wheel", onWheel, { passive: true });
-    return () => window.removeEventListener("wheel", onWheel);
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+    };
   }, [presenting, items, pathname, navigate]);
+
 
 
   return (
