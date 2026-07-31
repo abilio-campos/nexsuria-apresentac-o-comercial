@@ -33,7 +33,7 @@ function SolucoesLayout() {
         title="13 frentes para evoluir sua empresa"
         description="Cada solução segue a lógica Problema → O que a Nexsuria entrega → Capacidades → Especialista → Indicadores → Diagnóstico."
       />
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
+      <section className="solucoes-page mx-auto max-w-7xl px-4 lg:px-8 py-16">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((s, idx) => {
             const hidden = list.isHidden(s.slug);

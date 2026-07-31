@@ -320,20 +320,23 @@
 }
 
 /* Sessões abaixo da faixa azul: sticky, altura = viewport - header,
-   com scroll interno se o conteúdo exceder (garante no máx 2 telas
-   de rolagem por sessão via overflow-y auto dentro do sticky) */
+   podendo expandir até 2 telas quando o conteúdo precisar.
+   Removemos height fixo para evitar rolagem interna desnecessária. */
 .presenting main > section.page-header ~ section,
 .presenting main > div > section.page-header ~ section {
   position: sticky;
   top: calc(var(--presenting-header-h, 0px) + 0.75rem);
   min-height: calc(100vh - var(--presenting-header-h, 0px) - 0.75rem);
-  height: calc(100vh - var(--presenting-header-h, 0px) - 0.75rem);
+  max-height: calc(200vh - var(--presenting-header-h, 0px) - 0.75rem);
+  height: auto;
   z-index: 1;
   box-shadow: 0 -10px 34px -20px color-mix(in oklab, var(--foreground) 22%, transparent);
   background: var(--background);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: safe center;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
@@ -398,11 +401,12 @@
   position: relative;
   height: auto;
   min-height: 0;
+  max-height: none;
   overflow: visible;
   display: block;
   box-shadow: none;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
   background: var(--background);
   width: 100%;
   max-width: 100%;
@@ -411,13 +415,33 @@
 }
 /* O hero mantém o gradiente próprio; sessões seguintes ficam opacas full-width. */
 .presenting main > section.home-flow:first-of-type { background: transparent; }
-.presenting .home-flow .py-20 { padding-top: 0.85rem; padding-bottom: 0.85rem; }
-.presenting .home-flow .py-14 { padding-top: 0.7rem; padding-bottom: 0.7rem; }
-.presenting .home-flow .md\:py-20 { padding-top: 0.85rem; padding-bottom: 0.85rem; }
-.presenting .home-flow .mt-16 { margin-top: 0.75rem; }
-.presenting .home-flow .mt-10 { margin-top: 0.6rem; }
-.presenting .home-flow .mt-8  { margin-top: 0.5rem; }
-.presenting .home-flow .mt-6  { margin-top: 0.4rem; }
+.presenting .home-flow .py-20 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.presenting .home-flow .py-14 { padding-top: 0.45rem; padding-bottom: 0.45rem; }
+.presenting .home-flow .md\:py-20 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.presenting .home-flow .mt-16 { margin-top: 0.4rem; }
+.presenting .home-flow .mt-10 { margin-top: 0.3rem; }
+.presenting .home-flow .mt-8  { margin-top: 0.25rem; }
+.presenting .home-flow .mt-6  { margin-top: 0.2rem; }
+.presenting .home-flow .mb-10 { margin-bottom: 0.3rem; }
+.presenting .home-flow h1 { font-size: clamp(1.5rem, 2.2vw, 2.3rem); }
+.presenting .home-flow h2 { font-size: clamp(1.15rem, 1.5vw, 1.6rem); }
+.presenting .home-flow h3 { font-size: clamp(0.9rem, 1vw, 1.05rem); }
+.presenting .home-flow p { font-size: 0.8rem; line-height: 1.4; }
+.presenting .home-flow .text-3xl,
+.presenting .home-flow .text-4xl { font-size: clamp(1.15rem, 1.6vw, 1.6rem); }
+.presenting .home-flow .p-6 { padding: 0.55rem; }
+.presenting .home-flow .p-5 { padding: 0.5rem; }
+.presenting .home-flow .p-4 { padding: 0.45rem; }
+.presenting .home-flow .grid-cols-2.md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.35rem; }
+.presenting .home-flow .grid.gap-4.md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
+.presenting .home-flow .grid-cols-2 { gap: 0.4rem; }
+.presenting .home-flow .gap-4 { gap: 0.4rem; }
+.presenting .home-flow .gap-3 { gap: 0.3rem; }
+.presenting .home-flow .gap-8 { gap: 0.5rem; }
+.presenting .home-flow .inline-flex { padding: 0.2rem 0.5rem; }
+.presenting .home-flow button { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
+.presenting .home-flow .h-10 { height: 2rem; width: 2rem; }
+.presenting .home-flow .h-10 svg { height: 1rem; width: 1rem; }
 
 /* Botão escalável (mantém sistema existente) */
 :root { --btn-scale: 1; }
@@ -425,6 +449,61 @@
   transform: scale(var(--btn-scale, 1));
   transform-origin: left center;
 }
+
+/* ---------- Compressão extra por sessão no modo Apresentar ---------- */
+
+/* Quem Somos: PMV + Valores + Mapa/Timeline */
+.presenting .quem-somos-page .p-6 { padding: 0.65rem; }
+.presenting .quem-somos-page h2,
+.presenting .quem-somos-page h3 { font-size: clamp(1.05rem, 1.3vw, 1.45rem); }
+.presenting .quem-somos-page p { font-size: 0.82rem; line-height: 1.45; }
+.presenting .quem-somos-page .grid.gap-4.sm\:grid-cols-2.lg\:grid-cols-3,
+.presenting .quem-somos-page .grid.md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.presenting .quem-somos-page .grid.md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.presenting .quem-somos-page .space-y-6 > * { margin-top: 0.75rem; margin-bottom: 0.75rem; }
+
+/* Equipe */
+.presenting .equipe-page .p-6,
+.presenting .equipe-page .lg\:p-8 { padding: 0.65rem; }
+.presenting .equipe-page h3 { font-size: clamp(1rem, 1.2vw, 1.25rem); }
+.presenting .equipe-page li { font-size: 0.82rem; line-height: 1.4; }
+.presenting .equipe-page .mt-6 { margin-top: 0.5rem; }
+.presenting .equipe-page .mt-4 { margin-top: 0.35rem; }
+
+/* IA */
+.presenting .ia-page .p-6 { padding: 0.65rem; }
+.presenting .ia-page .p-4 { padding: 0.5rem; }
+.presenting .ia-page .p-5 { padding: 0.55rem; }
+.presenting .ia-page .h-40 { height: 5rem; }
+.presenting .ia-page .grid.gap-3.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.presenting .ia-page .grid.gap-3.md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; }
+.presenting .ia-page .grid.gap-3.md\:grid-cols-\[2fr_1fr\] { grid-template-columns: 2fr 1fr; gap: 0.5rem; }
+.presenting .ia-page h3 { font-size: 0.9rem; }
+.presenting .ia-page p { font-size: 0.78rem; }
+.presenting .ia-page .mt-4 { margin-top: 0.35rem; }
+.presenting .ia-page .mt-6 { margin-top: 0.5rem; }
+
+/* Ecossistema */
+.presenting .ecossistema-page .p-5 { padding: 0.55rem; }
+.presenting .ecossistema-page .p-6 { padding: 0.65rem; }
+.presenting .ecossistema-page .py-16 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.presenting .ecossistema-page .pb-16 { padding-bottom: 0.75rem; }
+.presenting .ecossistema-page .grid.gap-3.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+
+/* Soluções */
+.presenting .solucoes-page .p-6 { padding: 0.65rem; }
+.presenting .solucoes-page .grid.gap-4.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+
+/* Diferenciais / Metodologia / Casos de Uso / Contato */
+.presenting .diferenciais-page .p-6,
+.presenting .metodologia-page .p-6,
+.presenting .casos-page .p-6,
+.presenting .contato-page .p-8 { padding: 0.65rem; }
+.presenting .diferenciais-page .grid.gap-4.sm\:grid-cols-2.lg\:grid-cols-4,
+.presenting .metodologia-page .grid.gap-4.md\:grid-cols-2.lg\:grid-cols-3,
+.presenting .casos-page .grid.gap-4.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.presenting .contato-page .grid.gap-4.sm\:grid-cols-2 { gap: 0.5rem; }
+.presenting .contato-page textarea { height: 4rem; min-height: 4rem; }
 
 /* Movable handle */
 .movable-handle {

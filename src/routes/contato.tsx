@@ -31,7 +31,7 @@ function Contato() {
         title="Solicite um Diagnóstico Estratégico"
         description="Um único ponto focal, todo o ecossistema Nexsuria trabalhando para o seu resultado."
       />
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
+      <section className="contato-page mx-auto max-w-7xl px-4 lg:px-8 py-16 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
         <Hideable id="contato.form" label="Formulário"><div className="rounded-2xl border border-border bg-card p-8 shadow-card-soft">
           {sent ? (
             <div className="text-center py-10">

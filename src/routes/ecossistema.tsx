@@ -48,7 +48,7 @@ function Ecossistema() {
         description="Cada parceiro é líder em sua especialidade — e todos operam sob a coordenação estratégica da Nexsuria. Um único relacionamento, uma responsabilidade."
       />
 
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
+      <section className="ecossistema-page mx-auto max-w-7xl px-4 lg:px-8 py-16">
         {(() => {
           // Build node graph: Nexsuria + partners + clients + prospects
           const CENTER = { x: 50, y: 50 };
@@ -231,7 +231,7 @@ function Ecossistema() {
       </section>
 
 
-      <section className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
+      <section className="ecossistema-page mx-auto max-w-7xl px-4 lg:px-8 py-16">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {partners.map((p) => {
             const slug = solutionSlugForPartner(p.name);
@@ -269,7 +269,7 @@ function Ecossistema() {
           em um único bloco muito longo; separada para não estourar a régua
           de "no máx. 2 telas por seção" do modo Apresentar) */}
       <Hideable id="ecossistema.clientes.section" label="Seção Clientes">
-        <section className="mx-auto max-w-7xl px-4 lg:px-8 py-10">
+        <section className="ecossistema-page mx-auto max-w-7xl px-4 lg:px-8 py-10">
           <EditableText id="ecossistema.clientes.title" as="h3" className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
             Clientes
           </EditableText>
@@ -295,7 +295,7 @@ function Ecossistema() {
 
       {/* Prospects — mesma lógica: seção própria */}
       <Hideable id="ecossistema.prospects.section" label="Seção Prospects">
-        <section className="mx-auto max-w-7xl px-4 lg:px-8 pb-16">
+        <section className="ecossistema-page mx-auto max-w-7xl px-4 lg:px-8 pb-16">
           <EditableText id="ecossistema.prospects.title" as="h3" className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
             Prospects
           </EditableText>

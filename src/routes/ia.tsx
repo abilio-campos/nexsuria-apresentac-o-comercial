@@ -35,7 +35,7 @@ function IA() {
         description="Do dashboard executivo ao agente autônomo: aplicamos IA para acelerar decisões, automatizar operações e criar vantagem competitiva sustentável."
       />
 
-      <section className="ia-unified mx-auto max-w-7xl px-4 lg:px-8 -mt-8 pb-10">
+      <section className="ia-page ia-unified mx-auto max-w-7xl px-4 lg:px-8 -mt-8 pb-10">
         <Hideable id="ia.dashboard" label="Dashboard executivo">
         <div className="rounded-2xl border border-border bg-card p-6 shadow-elegant">
           <div className="flex items-center justify-between">

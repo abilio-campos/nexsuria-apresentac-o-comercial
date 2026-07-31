@@ -26,7 +26,7 @@ function QuemSomos() {
         description="Nascida em Campinas/SP com a missão de conectar pessoas e negócios, a Nexsuria atua como Centro de Inteligência Empresarial — reunindo os melhores especialistas do mercado sob uma única coordenação estratégica."
       />
 
-      <section className="quem-somos-combined">
+      <section className="quem-somos-page quem-somos-combined">
         <Movable id="quem-somos.section.pmv" label="Seção Propósito/Missão/Visão" as="div" className="mx-auto max-w-7xl px-4 lg:px-8 pt-10 pb-8 grid gap-6 md:grid-cols-3">
           {[
             { title: "Propósito", text: "Conectar pessoas e negócios para gerar evolução empresarial mensurável." },
@@ -66,7 +66,7 @@ function QuemSomos() {
         </Movable>
       </section>
 
-      <Movable id="quem-somos.section.mapa" label="Seção Mapa/Linha do tempo" as="section" className="mx-auto max-w-7xl px-4 lg:px-8 py-16">
+      <Movable id="quem-somos.section.mapa" label="Seção Mapa/Linha do tempo" as="section" className="quem-somos-page mx-auto max-w-7xl px-4 lg:px-8 py-16">
         <div className="grid md:grid-cols-[1fr_2fr] gap-10">
           <Hideable id="quem-somos.mapa" label="Mapa de atuação">
             <div>
