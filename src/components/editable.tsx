@@ -323,8 +323,21 @@ export function EditableText({ id, as = "span", children, className, multiline }
           Limpar
         </button>
         <span className="w-full text-[10px] uppercase tracking-wider text-muted-foreground px-1 pt-2 pb-1 border-t border-border mt-1">
+          Estilo
+        </span>
+        <button
+          type="button"
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={applyBold}
+          title="Negrito (seleção ou item inteiro)"
+          className="h-6 min-w-8 px-1.5 rounded border border-border text-[12px] font-bold hover:bg-secondary"
+        >
+          B
+        </button>
+        <span className="w-full text-[10px] uppercase tracking-wider text-muted-foreground px-1 pt-2 pb-1 border-t border-border mt-1">
           Tamanho
         </span>
+
         {SIZE_OPTIONS.map((opt) => (
           <button
             key={opt.key}
