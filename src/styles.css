@@ -469,7 +469,7 @@
 .presenting .ia-page .h-40 { height: 5rem; }
 .presenting .ia-page .grid.gap-3.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
 .presenting .ia-page .grid.gap-3.md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; }
-.presenting .ia-page .grid.gap-3.md\:grid-cols-\\[2fr_1fr\\] { grid-template-columns: 2fr 1fr; gap: 0.5rem; }
+.presenting .ia-page .grid.gap-3.md\:grid-cols-\[2fr_1fr\] { grid-template-columns: 2fr 1fr; gap: 0.5rem; }
 .presenting .ia-page h3 { font-size: 0.9rem; }
 .presenting .ia-page p { font-size: 0.78rem; }
 .presenting .ia-page .mt-4 { margin-top: 0.35rem; }
