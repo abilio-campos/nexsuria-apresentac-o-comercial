@@ -211,6 +211,27 @@ export function EditableText({ id, as = "span", children, className, multiline }
   };
   const clearSize = () => portal.resetText(`__size__${id}`);
 
+  // Negrito: aplica na seleção; sem seleção, alterna o negrito do item todo.
+  const applyBold = () => {
+    const el = ref.current;
+    if (!el) return;
+    const range = getEditableRange();
+    if (range) {
+      try {
+        document.execCommand("styleWithCSS", false, "true");
+        document.execCommand("bold");
+        rememberSelection();
+      } catch {}
+      portal.setText(id, el.innerHTML);
+      return;
+    }
+    const html = el.innerHTML;
+    const isBold = /^\s*<(strong|b)[^>]*>[\s\S]*<\/(strong|b)>\s*$/i.test(html);
+    el.innerHTML = isBold ? html.replace(/^\s*<(strong|b)[^>]*>([\s\S]*)<\/(strong|b)>\s*$/i, "$2") : `<strong>${html}</strong>`;
+    portal.setText(id, el.innerHTML);
+  };
+
+
   return (
     <span className="relative inline-block align-baseline" style={{ maxWidth: "100%" }}>
     <Tag
