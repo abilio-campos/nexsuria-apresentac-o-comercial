@@ -27,13 +27,16 @@ function Diferenciais() {
             return (
               <Hideable key={d.title} id={`diferenciais.${i}`} label={`Diferencial: ${d.title}`}>
                 <div className="rounded-2xl border border-border bg-card p-6">
-                  <div className="grid h-10 w-10 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
-                    <Icon className="h-5 w-5" />
+                  <div className="flex items-center gap-3">
+                    <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-accent-gradient text-primary-foreground">
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <EditableText id={`diferenciais.${i}.title`} as="h3" className="block font-semibold leading-tight">{d.title}</EditableText>
                   </div>
-                  <EditableText id={`diferenciais.${i}.title`} as="h3" className="mt-4 block font-semibold">{d.title}</EditableText>
-                  <EditableText id={`diferenciais.${i}.description`} as="p" multiline className="mt-1 text-sm text-muted-foreground">{d.description}</EditableText>
+                  <EditableText id={`diferenciais.${i}.description`} as="p" multiline className="mt-3 text-sm text-muted-foreground">{d.description}</EditableText>
                 </div>
               </Hideable>
+
             );
           })}
         </div>
