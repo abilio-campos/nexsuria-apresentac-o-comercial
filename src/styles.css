@@ -319,31 +319,28 @@
   min-height: auto !important;
 }
 
-/* Sessões abaixo da faixa azul: sticky, altura = viewport - header,
-   podendo expandir até 2 telas quando o conteúdo precisar.
-   Removemos height fixo para evitar rolagem interna desnecessária. */
+/* Sessões abaixo da faixa azul: rolagem contínua (sem sobreposição).
+   O cabeçalho azul continua fixo no topo; o conteúdo simplesmente flui
+   e rola normalmente no documento. */
 .presenting main > section.page-header ~ section,
 .presenting main > div > section.page-header ~ section {
-  position: sticky;
-  top: calc(var(--presenting-header-h, 0px) + 0.75rem);
-  min-height: calc(100vh - var(--presenting-header-h, 0px) - 0.75rem);
-  max-height: calc(200vh - var(--presenting-header-h, 0px) - 0.75rem);
-  height: auto;
+  position: relative;
   z-index: 1;
-  box-shadow: 0 -10px 34px -20px color-mix(in oklab, var(--foreground) 22%, transparent);
+  box-shadow: none;
   background: var(--background);
-  display: flex;
-  flex-direction: column;
-  justify-content: safe center;
+  display: block;
+  min-height: 0;
+  max-height: none;
+  height: auto;
+  overflow: visible;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  overflow-y: auto;
-  overflow-x: hidden;
   width: 100%;
   max-width: min(1720px, 100%);
   margin-left: auto;
   margin-right: auto;
 }
+
 
 /* Fit ecossistema no viewport */
 .presenting .presenting-fit {
