@@ -156,12 +156,12 @@ export function PortalShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [items, pathname, navigate, presenting]);
 
-  // Rolagem contínua no modo Apresentar: ao chegar no fim da sessão atual,
-  // continuar rolando avança para a próxima sessão do menu (e o item do menu
-  // acompanha automaticamente, pois o destaque segue a rota). Rolando para
-  // cima no topo, volta para a sessão anterior.
+  // Rolagem contínua (documento único) — ativa tanto na visualização normal
+  // quanto no modo Apresentar. Ao chegar no fim da sessão atual, continuar
+  // rolando avança para a próxima sessão do menu (com looping); rolando para
+  // cima no topo, volta para a anterior. Desativada no modo de edição.
   useEffect(() => {
-    if (!presenting) return;
+    if (store.editMode) return;
     let lock = false;
     let accum = 0;
     let touchY = 0;
@@ -183,7 +183,10 @@ export function PortalShell({ children }: { children: ReactNode }) {
       void navigate({ to: target.to });
       const settle = () => {
         const el = scroller();
+        const prev = el.style.scrollBehavior;
+        el.style.scrollBehavior = "auto";
         el.scrollTop = dir === 1 ? 0 : el.scrollHeight;
+        el.style.scrollBehavior = prev;
       };
       requestAnimationFrame(settle);
       setTimeout(settle, 120);
@@ -222,7 +225,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [presenting, items, pathname, navigate]);
+  }, [store.editMode, items, pathname, navigate]);
+
 
 
 
