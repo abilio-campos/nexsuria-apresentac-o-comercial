@@ -514,7 +514,12 @@ export function PortalShell({ children }: { children: ReactNode }) {
             <Link to="/admin" className="underline underline-offset-2">Painel de configuração</Link>
           </div>
         )}
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          {/* Transição suave entre sessões: o conteúdo troca com um fade curto,
+              dando a sensação de um documento único e contínuo. */}
+          <div key={pathname} className="nx-page-fade">{children}</div>
+        </main>
+
         {store.editMode && auth.user && (
           <EditFloatingToolbar pathname={pathname} btnScale={store.btnScale} />
         )}

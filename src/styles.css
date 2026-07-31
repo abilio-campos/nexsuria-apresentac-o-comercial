@@ -526,3 +526,36 @@
 
 /* Sidebar drag */
 .nav-drag-over { outline: 2px dashed var(--primary); outline-offset: -2px; border-radius: 8px; }
+
+/* ---------- Documento contínuo: troca de sessão sem "piscar" ---------- */
+/* O fade curto disfarça a troca de rota, dando a sensação de um único
+   documento que apenas avança de tema. Vale para visualização e Apresentar. */
+@keyframes nxPageFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.nx-page-fade {
+  animation: nxPageFade 220ms ease-out both;
+  will-change: opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-page-fade { animation: none; }
+}
+
+/* ---------- Correções de sobreposição de layout ---------- */
+/* O cabeçalho azul fica fixo no topo em Apresentar; sem fundo opaco o
+   conteúdo rolava visível atrás dele. */
+.presenting main > section.page-header,
+.presenting main > div > section.page-header {
+  background: var(--background);
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+}
+
+/* Garante empilhamento previsível das sessões (nada passa por cima). */
+main > section { position: relative; }
+main > div > section { position: relative; }
+
+/* Blocos reposicionados via arraste não devem sobrepor os vizinhos ao
+   entrar em colapso de margem: mantém contexto próprio de empilhamento. */
+.movable-moved { position: relative; z-index: 1; }
