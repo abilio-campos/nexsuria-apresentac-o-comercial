@@ -445,10 +445,14 @@
 /* ---------- Compressão extra por sessão no modo Apresentar ---------- */
 
 /* Quem Somos: PMV + Valores + Mapa/Timeline */
-.presenting .quem-somos-combined .p-6 { padding: 0.65rem; }
-.presenting .quem-somos-combined h2 { font-size: clamp(1.15rem, 1.5vw, 1.6rem); }
-.presenting .quem-somos-combined .grid.gap-4.sm\:grid-cols-2.lg\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
-.presenting .quem-somos-combined .grid.md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.presenting .quem-somos-page .p-6 { padding: 0.65rem; }
+.presenting .quem-somos-page h2,
+.presenting .quem-somos-page h3 { font-size: clamp(1.05rem, 1.3vw, 1.45rem); }
+.presenting .quem-somos-page p { font-size: 0.82rem; line-height: 1.45; }
+.presenting .quem-somos-page .grid.gap-4.sm\:grid-cols-2.lg\:grid-cols-3,
+.presenting .quem-somos-page .grid.md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
+.presenting .quem-somos-page .grid.md\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.presenting .quem-somos-page .space-y-6 > * { margin-top: 0.75rem; margin-bottom: 0.75rem; }
 
 /* Equipe */
 .presenting .equipe-combined .p-6,
