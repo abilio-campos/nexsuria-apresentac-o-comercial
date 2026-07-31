@@ -334,9 +334,9 @@
   background: var(--background);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  justify-content: safe center;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
