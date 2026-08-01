@@ -294,7 +294,7 @@
 /* Footer some no modo apresentação */
 .presenting footer { display: none; }
 
-/* ---------- Sticky overlap header + sections ---------- */
+/* ---------- Cabeçalho da sessão + sessões (modo Apresentar) ---------- */
 :root { --presenting-header-h: 0px; }
 
 .presenting main > section,
