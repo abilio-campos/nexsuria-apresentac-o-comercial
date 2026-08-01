@@ -27,6 +27,12 @@ export function TopBar({
     <div className="nx-topbar sticky top-12 lg:top-0 z-40 border-b border-primary/60 bg-primary text-primary-foreground shadow-sm">
       <div className="mx-auto flex h-14 w-full max-w-[1180px] items-center gap-4 px-4">
         <img src={logoAsset.url} alt="Nexsuria" className="h-7 w-7 object-contain shrink-0" />
+        <div className="hidden sm:flex flex-col justify-center">
+          <span className="text-[11px] font-medium tracking-wide text-primary-foreground/90">
+            Apresentação Institucional e Comercial
+          </span>
+          <span className="text-[10px] font-mono text-orange-400">V-26.07-01</span>
+        </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
             <span className="text-[11px] font-mono text-primary-foreground/70">
