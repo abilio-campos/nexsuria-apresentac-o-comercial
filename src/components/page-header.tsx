@@ -15,7 +15,10 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
     const rect = el?.getBoundingClientRect();
     const current = axis === "w" ? (size?.w ?? rect?.width ?? 800) : (size?.h ?? rect?.height ?? 120);
     const next = Math.max(axis === "w" ? 280 : 72, Math.round(current + delta));
-    portal.setSize(sizeId, { w: axis === "w" ? next : size?.w, h: axis === "h" ? next : size?.h });
+    portal.setSize(sizeId, { w: axis === "w" ? next : size?.w, h: axis === "h" ? next : size?.h, fixedH: size?.fixedH });
+  };
+  const toggleFixedH = () => {
+    portal.setSize(sizeId, { w: size?.w, h: size?.h, fixedH: !size?.fixedH });
   };
 
 
@@ -53,7 +56,7 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
   return (
     <section ref={ref} className="page-header mx-auto max-w-7xl px-4 lg:px-8 pt-3">
       {s.editMode && (
-        <div className="mb-1.5 flex items-center gap-1.5 text-[11px]">
+        <div className="mb-1.5 flex flex-wrap items-center gap-1.5 text-[11px]">
           <button
             type="button"
             onClick={() => setActiveTarget(`rz:${sizeId}`)}
@@ -69,6 +72,15 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
               <span className="ml-1 text-muted-foreground">largura</span>
               <button type="button" onClick={() => bump("w", -40)} className="rounded-md border border-border px-1.5 hover:bg-secondary">−</button>
               <button type="button" onClick={() => bump("w", 40)} className="rounded-md border border-border px-1.5 hover:bg-secondary">+</button>
+              <label className="ml-1 flex items-center gap-1 rounded-md border border-border px-2 py-0.5 hover:bg-secondary cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={!!size?.fixedH}
+                  onChange={toggleFixedH}
+                  className="h-3 w-3 accent-primary"
+                />
+                <span>Altura fixa</span>
+              </label>
               <button type="button" onClick={() => portal.setSize(sizeId, null)} className="ml-1 rounded-md border border-border px-1.5 hover:bg-secondary" title="Restaurar tamanho">↺</button>
             </>
           )}

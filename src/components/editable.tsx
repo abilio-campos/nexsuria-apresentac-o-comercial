@@ -606,6 +606,7 @@ export function Resizable({
   maxH,
   defaultW,
   defaultH,
+  fixedH = false,
   className,
   style,
   as = "div",
@@ -619,6 +620,7 @@ export function Resizable({
   maxH?: number;
   defaultW?: number;
   defaultH?: number;
+  fixedH?: boolean;
   className?: string;
   style?: CSSProperties;
   as?: "div" | "section" | "span";
@@ -629,6 +631,7 @@ export function Resizable({
   const size = s.sizes[id];
   const w = size?.w ?? defaultW;
   const h = size?.h ?? defaultH;
+  const isFixedH = size?.fixedH ?? fixedH;
   const Tag = as as any;
   const ref = useRef<HTMLElement>(null);
 
@@ -651,6 +654,7 @@ export function Resizable({
       portal.setSize(id, {
         w: dir === "y" ? size?.w : Math.round(nw),
         h: dir === "x" ? size?.h : Math.round(nh),
+        fixedH: isFixedH,
       });
     };
     const onUp = () => {
@@ -666,8 +670,16 @@ export function Resizable({
     appliedStyle.width = `${w}px`;
     appliedStyle.maxWidth = "100%";
   }
-  // Altura como mínimo: se o conteúdo for maior, ele cresce em vez de ser cortado.
-  if (h != null && (axis === "y" || axis === "both")) appliedStyle.minHeight = `${h}px`;
+  // Altura: padrão min-height (não corta conteúdo), mas pode ser fixa quando
+  // o usuário precisar de controle exato da altura do item.
+  if (h != null && (axis === "y" || axis === "both")) {
+    if (isFixedH) {
+      appliedStyle.height = `${h}px`;
+      appliedStyle.overflow = "visible";
+    } else {
+      appliedStyle.minHeight = `${h}px`;
+    }
+  }
 
   if (!s.editMode) {
     return (

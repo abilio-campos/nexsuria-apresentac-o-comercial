@@ -79,6 +79,7 @@ const MANAGED = [
   "maxWidth",
   "height",
   "minHeight",
+  "overflow",
   "borderRadius",
   "padding",
   "fontSize",
@@ -117,9 +118,18 @@ function applyStyles(styles: Record<string, ElStyle>, editMode: boolean) {
       el.style.setProperty("width", `${st.w}px`, "important");
       el.style.setProperty("max-width", "100%", "important");
     }
-    // min-height em vez de height: o bloco cresce se o conteúdo for maior,
-    // então nada é cortado ao redimensionar.
-    if (st.h) el.style.setProperty("min-height", `${st.h}px`, "important");
+    // Altura: o padrão é min-height para não cortar conteúdo, mas o usuário
+    // pode optar por altura fixa quando quiser controle exato.
+    if (st.h) {
+      if (st.fixedH) {
+        el.style.setProperty("height", `${st.h}px`, "important");
+        el.style.setProperty("overflow", "visible", "important");
+      } else {
+        el.style.setProperty("min-height", `${st.h}px`, "important");
+        el.style.removeProperty("height");
+        el.style.removeProperty("overflow");
+      }
+    }
     if (st.radius != null) el.style.setProperty("border-radius", `${st.radius}px`, "important");
     if (st.pad != null) el.style.setProperty("padding", `${st.pad}px`, "important");
     if (st.fs) el.style.setProperty("font-size", `${st.fs}px`, "important");
@@ -436,9 +446,20 @@ export function ElementEditor() {
           </section>
 
           <section className="space-y-2">
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Tamanho</div>
+            <div className="flex items-center justify-between">
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Tamanho</div>
+            </div>
             <Range label="Largura" value={st.w} min={40} max={1400} onChange={(v) => patch({ w: v })} onClear={() => patch({ w: undefined })} />
-            <Range label="Altura" value={st.h} min={20} max={900} onChange={(v) => patch({ h: v })} onClear={() => patch({ h: undefined })} />
+            <Range label="Altura" value={st.h} min={20} max={1400} onChange={(v) => patch({ h: v })} onClear={() => patch({ h: undefined })} />
+            <label className="flex items-center gap-2 text-xs">
+              <input
+                type="checkbox"
+                checked={!!st.fixedH}
+                onChange={(e) => patch({ fixedH: e.target.checked })}
+                className="h-3.5 w-3.5 accent-primary"
+              />
+              <span>Altura fixa (height em vez de min-height)</span>
+            </label>
             <Range label="Espaçamento interno" value={st.pad} min={0} max={80} onChange={(v) => patch({ pad: v })} onClear={() => patch({ pad: undefined })} />
             <Range label="Arredondamento" value={st.radius} min={0} max={48} onChange={(v) => patch({ radius: v })} onClear={() => patch({ radius: undefined })} />
             <Range label="Tamanho do texto" value={st.fs} min={10} max={72} onChange={(v) => patch({ fs: v })} onClear={() => patch({ fs: undefined })} />

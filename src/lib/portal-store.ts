@@ -67,6 +67,7 @@ export type ElStyle = {
   color?: string;
   w?: number;
   h?: number;
+  fixedH?: boolean;
   radius?: number;
   pad?: number;
   fs?: number;
@@ -83,7 +84,7 @@ type State = {
   listOrders: Record<string, string[]>;
   listHidden: Record<string, string[]>;
   positions: Record<string, { x: number; y: number }>;
-  sizes: Record<string, { w?: number; h?: number }>;
+  sizes: Record<string, { w?: number; h?: number; fixedH?: boolean }>;
   elStyles: Record<string, ElStyle>;
   spacers: Record<string, number[]>;
   btnScale: "p" | "m" | "g" | "gg";
@@ -261,9 +262,9 @@ export const portal = {
     else delete positions[id];
     set({ positions });
   },
-  setSize(id: string, size: { w?: number; h?: number } | null) {
+  setSize(id: string, size: { w?: number; h?: number; fixedH?: boolean } | null) {
     const sizes = { ...state.sizes };
-    if (size && (size.w != null || size.h != null)) sizes[id] = size;
+    if (size && (size.w != null || size.h != null || size.fixedH != null)) sizes[id] = size;
     else delete sizes[id];
     set({ sizes });
   },
