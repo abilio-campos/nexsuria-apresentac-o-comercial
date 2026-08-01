@@ -258,6 +258,15 @@ export function PortalShell({ children }: { children: ReactNode }) {
                       >
                       <Link
                         to={item.to}
+                        onClick={(e) => {
+                          // No documento contínuo, o menu não troca de página:
+                          // apenas rola até a sessão (sem piscar a tela).
+                          if (!docMode || !isDocPath(item.to)) return;
+                          if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+                          e.preventDefault();
+                          goSection(item.to);
+                        }}
+
                         
 
                         className={cn(
