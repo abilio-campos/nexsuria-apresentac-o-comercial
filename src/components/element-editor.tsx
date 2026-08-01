@@ -118,9 +118,18 @@ function applyStyles(styles: Record<string, ElStyle>, editMode: boolean) {
       el.style.setProperty("width", `${st.w}px`, "important");
       el.style.setProperty("max-width", "100%", "important");
     }
-    // min-height em vez de height: o bloco cresce se o conteúdo for maior,
-    // então nada é cortado ao redimensionar.
-    if (st.h) el.style.setProperty("min-height", `${st.h}px`, "important");
+    // Altura: o padrão é min-height para não cortar conteúdo, mas o usuário
+    // pode optar por altura fixa quando quiser controle exato.
+    if (st.h) {
+      if (st.fixedH) {
+        el.style.setProperty("height", `${st.h}px`, "important");
+        el.style.setProperty("overflow", "visible", "important");
+      } else {
+        el.style.setProperty("min-height", `${st.h}px`, "important");
+        el.style.removeProperty("height");
+        el.style.removeProperty("overflow");
+      }
+    }
     if (st.radius != null) el.style.setProperty("border-radius", `${st.radius}px`, "important");
     if (st.pad != null) el.style.setProperty("padding", `${st.pad}px`, "important");
     if (st.fs) el.style.setProperty("font-size", `${st.fs}px`, "important");
