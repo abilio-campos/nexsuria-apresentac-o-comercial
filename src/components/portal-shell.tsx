@@ -147,7 +147,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
     return Array.from(map.entries());
   }, [items]);
 
-  // Sequential numbering across all visible items (LG-style "01, 02, …")
+  // Numeração sequencial dos itens visíveis ("01", "02", …)
   const numberMap = useMemo(() => {
     const map = new Map<string, string>();
     items.forEach((it, idx) => map.set(it.to, String(idx + 1).padStart(2, "0")));
