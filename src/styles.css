@@ -520,17 +520,12 @@
 /* Sidebar drag */
 .nav-drag-over { outline: 2px dashed var(--primary); outline-offset: -2px; border-radius: 8px; }
 
-/* ---------- Rolagem simples ---------- */
-/* Sem animações de troca de sessão: a navegação é instantânea e a rolagem é
-   a nativa do navegador. */
+/* ---------- Documento contínuo (rolagem nativa) ---------- */
 .nx-doc {
   background-color: var(--background);
 }
 
-/* No documento contínuo cada sessão traz seu próprio cabeçalho azul. Se ele
-   ficar sticky, o cabeçalho da sessão seguinte "entra por cima" e some, o que
-   dá a impressão de piscar. Aqui a rolagem é simples: nada é sticky, nada
-   sobrepõe. */
+/* Nenhum cabeçalho de sessão é sticky: evita que um entre por cima do outro. */
 .nx-doc section.page-header,
 .presenting .nx-doc section.page-header,
 .presenting .nx-doc main > section.page-header,
@@ -540,8 +535,7 @@
   z-index: 1 !important;
 }
 
-/* Sessões do documento fluem uma após a outra, sem sombras/limites de altura
-   que criem "degraus" durante a rolagem. */
+/* Sessões fluem uma após a outra, sem limites de altura. */
 .nx-doc .nx-doc-section {
   position: relative;
   scroll-margin-top: 0;
@@ -552,12 +546,7 @@
   min-height: 0 !important;
 }
 
-
-
-
 /* ---------- Correções de sobreposição de layout ---------- */
-/* O cabeçalho azul fica fixo no topo em Apresentar; sem fundo opaco o
-   conteúdo rolava visível atrás dele. */
 .presenting main > section.page-header,
 .presenting main > div > section.page-header {
   background: var(--background);
