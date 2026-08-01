@@ -156,83 +156,9 @@ export function PortalShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [items, pathname, navigate, presenting]);
 
-  // Rolagem contínua (documento único) — ativa tanto na visualização normal
-  // quanto no modo Apresentar. Ao chegar no fim da sessão atual, continuar
-  // rolando avança para a próxima sessão do menu (com looping); rolando para
-  // cima no topo, volta para a anterior. Desativada no modo de edição.
-  useEffect(() => {
-    if (store.editMode) return;
-    let lock = false;
-    let accum = 0;
-    let touchY = 0;
-    const idx = items.findIndex((it) => (it.to === "/" ? pathname === "/" : pathname.startsWith(it.to)));
-    const scroller = () => (document.scrollingElement as HTMLElement) ?? document.documentElement;
-    const edges = () => {
-      const el = scroller();
-      const max = el.scrollHeight - el.clientHeight;
-      return { atTop: el.scrollTop <= 4, atBottom: max <= 4 || el.scrollTop >= max - 4 };
-    };
-    const go = (dir: 1 | -1) => {
-      if (lock || idx === -1 || items.length < 2) return;
-      // Looping: ao passar do último item volta ao primeiro (e vice-versa).
-      const target = items[(idx + dir + items.length) % items.length];
-      if (!target) return;
+  // Rolagem simples e nativa: nenhuma interceptação de wheel/touch/teclado.
+  // A troca de sessão acontece somente ao clicar no menu.
 
-      lock = true;
-      accum = 0;
-      const el = scroller();
-      // Posiciona o scroll ANTES da troca, para não haver salto visível.
-      const prevBehavior = el.style.scrollBehavior;
-      el.style.scrollBehavior = "auto";
-      el.scrollTop = dir === 1 ? 0 : el.scrollHeight;
-      el.style.scrollBehavior = prevBehavior;
-      void navigate({ to: target.to, viewTransition: true, resetScroll: false });
-      const settle = () => {
-        const s = scroller();
-        const prev = s.style.scrollBehavior;
-        s.style.scrollBehavior = "auto";
-        s.scrollTop = dir === 1 ? 0 : s.scrollHeight;
-        s.style.scrollBehavior = prev;
-      };
-      requestAnimationFrame(settle);
-      setTimeout(settle, 120);
-      setTimeout(() => { lock = false; }, 700);
-
-    };
-    const intent = (delta: number) => {
-      if (lock || idx === -1) return;
-      const { atTop, atBottom } = edges();
-      if (delta > 0 && atBottom) accum += delta;
-      else if (delta < 0 && atTop) accum += delta;
-      else { accum = 0; return; }
-      if (accum > 90) go(1);
-      else if (accum < -90) go(-1);
-    };
-    const onWheel = (e: WheelEvent) => intent(e.deltaY);
-    const onKey = (e: KeyboardEvent) => {
-      const tgt = e.target as HTMLElement | null;
-      if (tgt && (tgt.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(tgt.tagName))) return;
-      if (e.key === "PageDown" || e.key === " ") intent(200);
-      else if (e.key === "PageUp") intent(-200);
-    };
-    const onTouchStart = (e: TouchEvent) => { touchY = e.touches[0]?.clientY ?? 0; };
-    const onTouchMove = (e: TouchEvent) => {
-      const y = e.touches[0]?.clientY ?? 0;
-      const d = touchY - y;
-      touchY = y;
-      intent(d * 2);
-    };
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("keydown", onKey);
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("keydown", onKey);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
-    };
-  }, [store.editMode, items, pathname, navigate]);
 
 
 
