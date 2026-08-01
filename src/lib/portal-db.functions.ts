@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import type {
+  ElStyle,
   Mark,
   NavCfg,
   Perceptions,
@@ -64,7 +65,7 @@ export const loadPortalConfig = createServerFn({ method: "GET" })
       listHidden?: Record<string, string[]>;
       positions?: Record<string, { x: number; y: number }>;
       sizes?: Record<string, { w?: number; h?: number }>;
-      elStyles?: Record<string, Record<string, unknown>>;
+      elStyles?: Record<string, ElStyle>;
       spacers?: Record<string, number[]>;
       theme?: { primary?: string; foreground?: string };
       perceptions?: Perceptions;
@@ -97,7 +98,7 @@ export const savePortalConfig = createServerFn({ method: "POST" })
     listHidden?: Record<string, string[]>;
     positions?: Record<string, { x: number; y: number }>;
     sizes?: Record<string, { w?: number; h?: number }>;
-    elStyles?: Record<string, Record<string, unknown>>;
+    elStyles?: Record<string, ElStyle>;
     spacers?: Record<string, number[]>;
     theme?: { primary?: string; foreground?: string };
     perceptions?: Perceptions;

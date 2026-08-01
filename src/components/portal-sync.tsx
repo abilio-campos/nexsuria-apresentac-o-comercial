@@ -36,7 +36,7 @@ export function PortalSync() {
             listHidden: data.listHidden,
             positions: data.positions,
             sizes: data.sizes,
-            elStyles: data.elStyles as never,
+            elStyles: data.elStyles,
             spacers: data.spacers,
             theme: data.theme,
             perceptions: data.perceptions,
