@@ -219,6 +219,17 @@ export function PortalShell({ children }: { children: ReactNode }) {
           </button>
         </div>
 
+        <div className={cn("shrink-0 p-2 border-b", sidebarDark ? "border-[var(--sidebar-executive-border)]" : "border-sidebar-border")}>
+          <button
+            onClick={togglePresent}
+            className="w-full flex items-center justify-center gap-2 rounded-md px-3 py-2.5 text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 shadow-[0_2px_12px_-4px_var(--primary)]"
+            title="Modo apresentação (F)"
+          >
+            {isFullscreen ? <Minimize2 className="h-4 w-4 shrink-0" /> : <Maximize2 className="h-4 w-4 shrink-0" />}
+            {!collapsed && <span>{isFullscreen ? "Sair da apresentação" : "Apresentar"}</span>}
+          </button>
+        </div>
+
         <nav className="flex-1 overflow-y-auto py-3 px-2 space-y-2">
           {groups.map(([group, list]) => (
             <div key={group}>
