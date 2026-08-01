@@ -229,77 +229,21 @@
   --shadow-card: 0 6px 20px -10px oklch(0 0 0 / 35%);
 }
 
-/* ---------- General presenting adjustments (all breakpoints) ---------- */
-.presenting {
-  font-size: 16px;
-}
+/* ----------------------------------------------------------------
+   Modo Apresentar
+   O documento é o MESMO em visualização e em apresentação: nenhuma
+   regra abaixo altera geometria (paddings, larguras, fontes, grids).
+   Assim qualquer ajuste feito no editor aparece igual nos dois modos.
+   Aqui só escondemos cromo de interface e fixamos o cabeçalho.
+   ---------------------------------------------------------------- */
+:root { --presenting-header-h: 0px; }
 
-/* Em Apresentar mantemos a sidebar visível — apenas escondemos a toolbar de edição. */
 .presenting header.sticky,
 .presenting .edit-toolbar { display: none !important; }
 
-
-/* Titles / subtitles — mais compactos e proporcionais na apresentação */
-.presenting h1 { font-size: clamp(1.75rem, 2.6vw, 2.75rem); line-height: 1.08; letter-spacing: -0.01em; }
-.presenting h2 { font-size: clamp(1.4rem, 1.8vw, 2rem);    line-height: 1.12; letter-spacing: -0.005em; }
-.presenting h3 { font-size: clamp(1.05rem, 1.2vw, 1.35rem); line-height: 1.2; }
-.presenting p  { line-height: 1.5; }
-
-/* Uniform section paddings — corta o espaço vertical de todas as classes py-* */
-.presenting .py-24, .presenting .py-20 { padding-top: 1.75rem; padding-bottom: 1.75rem; }
-.presenting .py-16 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-.presenting .py-14 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
-.presenting .py-12 { padding-top: 1.1rem; padding-bottom: 1.1rem; }
-.presenting .py-10 { padding-top: 1rem;   padding-bottom: 1rem; }
-.presenting .py-8  { padding-top: 0.85rem; padding-bottom: 0.85rem; }
-.presenting .pt-20 { padding-top: 1.75rem; }
-.presenting .pt-16 { padding-top: 1.5rem; }
-.presenting .pt-14 { padding-top: 1.25rem; }
-.presenting .pt-12 { padding-top: 1.1rem; }
-.presenting .pt-10 { padding-top: 1rem; }
-.presenting .pb-20 { padding-bottom: 1.75rem; }
-.presenting .pb-16 { padding-bottom: 1.5rem; }
-.presenting .pb-14 { padding-bottom: 1.25rem; }
-.presenting .pb-12 { padding-bottom: 1.1rem; }
-.presenting .pb-10 { padding-bottom: 1rem; }
-.presenting .md\:py-20 { padding-top: 1.75rem; padding-bottom: 1.75rem; }
-.presenting .md\:py-16 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
-
-/* Cards / boxes — padding uniforme e menor */
-.presenting .p-8  { padding: 1.1rem; }
-.presenting .p-7  { padding: 1rem; }
-.presenting .p-6  { padding: 0.9rem; }
-.presenting .p-5  { padding: 0.8rem; }
-.presenting .p-4  { padding: 0.7rem; }
-
-/* Larguras uniformes em todos os breakpoints (não só ≥1024px) */
-.presenting .max-w-7xl,
-.presenting .max-w-6xl,
-.presenting .max-w-5xl { max-width: min(1720px, 100%); }
-.presenting .max-w-4xl { max-width: min(1400px, 100%); }
-.presenting .max-w-3xl { max-width: min(1200px, 95%); }
-.presenting .max-w-2xl { max-width: min(1000px, 92%); }
-
-.presenting main, .presenting section {
-  padding-left: clamp(1rem, 1.6vw, 2rem);
-  padding-right: clamp(1rem, 1.6vw, 2rem);
-}
-
-/* Botões — escala consistente, evita botões desproporcionais */
-.presenting button, .presenting .btn, .presenting a[role="button"] {
-  font-size: 0.9rem;
-}
-.presenting [data-btn-scalable] { --btn-scale: 0.95; }
-
-/* Footer some no modo apresentação */
 .presenting footer { display: none; }
 
-/* ---------- Cabeçalho da sessão + sessões (modo Apresentar) ---------- */
-:root { --presenting-header-h: 0px; }
-
-.presenting main > section,
-.presenting main > div > section { background: var(--background); }
-
+/* Cabeçalho da sessão fixo durante a rolagem */
 .presenting main > section.page-header,
 .presenting main > div > section.page-header {
   position: sticky;
@@ -307,131 +251,12 @@
   z-index: 40;
 }
 
-/* Header alinhado horizontalmente com as sessões — largura uniforme */
-.presenting section.page-header > div {
-  width: 100% !important;
-  max-width: min(1720px, 100%) !important;
-  height: auto !important;
-  margin-left: auto;
-  margin-right: auto;
-}
-.presenting section.page-header .rounded-2xl {
-  min-height: auto !important;
-}
-
-/* Sessões abaixo da faixa azul: rolagem contínua, sem sobreposição. */
-.presenting main > section.page-header ~ section,
-.presenting main > div > section.page-header ~ section {
-  position: relative;
-  z-index: 1;
-  box-shadow: none;
-  background: var(--background);
-  display: block;
-  min-height: 0;
-  max-height: none;
-  height: auto;
-  overflow: visible;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  width: 100%;
-  max-width: min(1720px, 100%);
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* Fit ecossistema no viewport */
+/* Ecossistema: mantém o diagrama dentro do viewport */
 .presenting .presenting-fit {
   max-width: min(100%, calc(100vh - var(--presenting-header-h, 0px) - 5rem));
   max-height: calc(100vh - var(--presenting-header-h, 0px) - 5rem);
 }
 
-/* Em Apresentar, zera a margem negativa (-mt-8) da 1ª seção após o
-   cabeçalho para evitar sobreposição com a faixa azul. */
-.presenting main > section.page-header ~ section.-mt-8,
-.presenting main > div > section.page-header ~ section.-mt-8 {
-  margin-top: 0 !important;
-}
-
-/* Quem-somos combinada */
-.presenting main > section.quem-somos-combined { gap: 0.75rem; }
-.presenting main > section.quem-somos-combined > * { flex: 0 0 auto; }
-
-/* Equipe combinada */
-.presenting main > section.equipe-combined,
-.presenting main > div > section.equipe-combined {
-  justify-content: flex-start;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-/* IA unificada */
-.presenting main > section.ia-unified,
-.presenting main > div > section.ia-unified {
-  justify-content: flex-start;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-}
-.presenting .ia-unified .h-40 { height: 6.5rem; }
-
-/* Long-form: percepções → scroll normal */
-.presenting main > section.percepcoes-page,
-.presenting main > div > section.percepcoes-page {
-  position: static;
-  height: auto;
-  min-height: 0;
-  overflow: visible;
-  display: block;
-  box-shadow: none;
-}
-
-/* ---------- Home (sem PageHeader) — flui em 2 telas de rolagem ---------- */
-.presenting main > section.home-flow,
-.presenting main > div > section.home-flow {
-  position: relative;
-  height: auto;
-  min-height: 0;
-  max-height: none;
-  overflow: visible;
-  display: block;
-  box-shadow: none;
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
-  background: var(--background);
-  width: 100%;
-  max-width: 100%;
-  margin-left: 0;
-  margin-right: 0;
-}
-/* O hero mantém o gradiente próprio; sessões seguintes ficam opacas full-width. */
-.presenting main > section.home-flow:first-of-type { background: transparent; }
-.presenting .home-flow .py-20 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-.presenting .home-flow .py-14 { padding-top: 0.45rem; padding-bottom: 0.45rem; }
-.presenting .home-flow .md\:py-20 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-.presenting .home-flow .mt-16 { margin-top: 0.4rem; }
-.presenting .home-flow .mt-10 { margin-top: 0.3rem; }
-.presenting .home-flow .mt-8  { margin-top: 0.25rem; }
-.presenting .home-flow .mt-6  { margin-top: 0.2rem; }
-.presenting .home-flow .mb-10 { margin-bottom: 0.3rem; }
-.presenting .home-flow h1 { font-size: clamp(1.5rem, 2.2vw, 2.3rem); }
-.presenting .home-flow h2 { font-size: clamp(1.15rem, 1.5vw, 1.6rem); }
-.presenting .home-flow h3 { font-size: clamp(0.9rem, 1vw, 1.05rem); }
-.presenting .home-flow p { font-size: 0.8rem; line-height: 1.4; }
-.presenting .home-flow .text-3xl,
-.presenting .home-flow .text-4xl { font-size: clamp(1.15rem, 1.6vw, 1.6rem); }
-.presenting .home-flow .p-6 { padding: 0.55rem; }
-.presenting .home-flow .p-5 { padding: 0.5rem; }
-.presenting .home-flow .p-4 { padding: 0.45rem; }
-.presenting .home-flow .grid-cols-2.md\:grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.35rem; }
-.presenting .home-flow .grid.gap-4.md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
-.presenting .home-flow .grid-cols-2 { gap: 0.4rem; }
-.presenting .home-flow .gap-4 { gap: 0.4rem; }
-.presenting .home-flow .gap-3 { gap: 0.3rem; }
-.presenting .home-flow .gap-8 { gap: 0.5rem; }
-.presenting .home-flow .inline-flex { padding: 0.2rem 0.5rem; }
-.presenting .home-flow button { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
-.presenting .home-flow .h-10 { height: 2rem; width: 2rem; }
-.presenting .home-flow .h-10 svg { height: 1rem; width: 1rem; }
 
 /* Botão escalável (mantém sistema existente) */
 :root { --btn-scale: 1; }
@@ -572,3 +397,13 @@ main > div > section { position: relative; }
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
+
+/* Ao editar dentro do modo Apresentar, o cabeçalho deixa de flutuar para
+   que as alças e controles do item selecionado não se misturem a ele. */
+.presenting.nx-editing main > section.page-header,
+.presenting.nx-editing main > div > section.page-header {
+  position: relative;
+  top: auto;
+  z-index: 1;
+}
+
