@@ -64,6 +64,8 @@ export const loadPortalConfig = createServerFn({ method: "GET" })
       listHidden?: Record<string, string[]>;
       positions?: Record<string, { x: number; y: number }>;
       sizes?: Record<string, { w?: number; h?: number }>;
+      elStyles?: Record<string, Record<string, unknown>>;
+      spacers?: Record<string, number[]>;
       theme?: { primary?: string; foreground?: string };
       perceptions?: Perceptions;
     };
@@ -76,6 +78,8 @@ export const loadPortalConfig = createServerFn({ method: "GET" })
       listHidden: config.listHidden,
       positions: config.positions,
       sizes: config.sizes,
+      elStyles: config.elStyles,
+      spacers: config.spacers,
       theme: config.theme,
       perceptions: config.perceptions,
       marks: markMap,
@@ -93,6 +97,8 @@ export const savePortalConfig = createServerFn({ method: "POST" })
     listHidden?: Record<string, string[]>;
     positions?: Record<string, { x: number; y: number }>;
     sizes?: Record<string, { w?: number; h?: number }>;
+    elStyles?: Record<string, Record<string, unknown>>;
+    spacers?: Record<string, number[]>;
     theme?: { primary?: string; foreground?: string };
     perceptions?: Perceptions;
   }) => data)
