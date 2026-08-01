@@ -515,10 +515,12 @@ export function PortalShell({ children }: { children: ReactNode }) {
           </div>
         )}
         <main className="flex-1">
-          {/* Transição suave entre sessões: o conteúdo troca com um fade curto,
-              dando a sensação de um documento único e contínuo. */}
-          <div key={pathname} className="nx-page-fade">{children}</div>
+          {/* Documento contínuo: o conteúdo não é remontado com fade a partir do
+              zero (isso causava o "piscar"). A troca usa View Transitions,
+              fazendo um crossfade entre o conteúdo antigo e o novo. */}
+          <div className="nx-doc">{children}</div>
         </main>
+
 
         {store.editMode && auth.user && (
           <EditFloatingToolbar pathname={pathname} btnScale={store.btnScale} />
