@@ -12,7 +12,9 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { setActiveTarget } from "@/components/editable";
 import { portal, usePortalStore, type ElStyle } from "@/lib/portal-store";
+
 
 /* ------------------------------------------------------------------ *
  * Identificação estável de qualquer elemento dentro de uma sessão.
