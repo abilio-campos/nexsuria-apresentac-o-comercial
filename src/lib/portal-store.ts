@@ -368,6 +368,9 @@ export const portal = {
       listHidden: { ...state.listHidden, ...(patch.listHidden || {}) },
       positions: { ...state.positions, ...(patch.positions || {}) },
       sizes: { ...state.sizes, ...(patch.sizes || {}) },
+      elStyles: { ...state.elStyles, ...(patch.elStyles || {}) },
+      spacers: { ...state.spacers, ...(patch.spacers || {}) },
+
       btnScale: patch.btnScale ?? state.btnScale,
       theme: { ...state.theme, ...(patch.theme || {}) },
       perceptions: { ...state.perceptions, ...(patch.perceptions || {}) },
