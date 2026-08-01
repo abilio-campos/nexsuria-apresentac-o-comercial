@@ -71,7 +71,7 @@ export function ContinuousDoc({
     // reposiciona algumas vezes até estabilizar.
     settling.current = true;
     const timers = [0, 80, 200, 450, 800, 1200].map((t) =>
-      window.setTimeout(() => scrollToDocSection(initialPath, "auto"), t),
+      window.setTimeout(() => scrollToDocSection(initialPath, "instant" as ScrollBehavior), t),
     );
     const done = window.setTimeout(() => { settling.current = false; }, 1400);
     return () => { timers.forEach(clearTimeout); clearTimeout(done); };
