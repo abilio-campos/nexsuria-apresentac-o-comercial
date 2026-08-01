@@ -12,7 +12,9 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { setActiveTarget } from "@/components/editable";
 import { portal, usePortalStore, type ElStyle } from "@/lib/portal-store";
+
 
 /* ------------------------------------------------------------------ *
  * Identificação estável de qualquer elemento dentro de uma sessão.
@@ -251,18 +253,35 @@ export function ElementEditor() {
       if (t.closest("[data-nx-editor]")) return;
       if (t.isContentEditable || t.closest("[contenteditable='true']")) return;
       const next = elementId(t);
-      if (!next) return;
+      if (!next) {
+        selectElement(null);
+        setActiveTarget(null);
+        return;
+      }
       if (t.closest("a")) e.preventDefault();
       selectElement(next);
       setPanelOpen(true);
     };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      selectElement(null);
+      setActiveTarget(null);
+    };
     document.addEventListener("mousedown", onDown, true);
-    return () => document.removeEventListener("mousedown", onDown, true);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown, true);
+      document.removeEventListener("keydown", onKey);
+    };
   }, [s.editMode]);
 
   useEffect(() => {
-    if (!s.editMode) selectElement(null);
+    if (!s.editMode) {
+      selectElement(null);
+      setActiveTarget(null);
+    }
   }, [s.editMode]);
+
 
   // Contorno de seleção acompanha rolagem/resize.
   useEffect(() => {

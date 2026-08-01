@@ -1,12 +1,23 @@
 import { useEffect, useRef, type ReactNode } from "react";
-import { EditableText, Resizable } from "@/components/editable";
-import { usePortalStore } from "@/lib/portal-store";
+import { EditableText, Resizable, setActiveTarget, useActiveTarget } from "@/components/editable";
+import { portal, usePortalStore } from "@/lib/portal-store";
 
 export function PageHeader({ id, eyebrow, title, description, children }: { id?: string; eyebrow?: string; title: string; description?: string; children?: ReactNode }) {
   const base = id ?? "page";
   const ref = useRef<HTMLElement | null>(null);
   const s = usePortalStore();
-  const size = s.sizes[`${base}.header`];
+  const sizeId = `${base}.header`;
+  const size = s.sizes[sizeId];
+  const active = useActiveTarget() === `rz:${sizeId}`;
+
+  const bump = (axis: "w" | "h", delta: number) => {
+    const el = ref.current?.querySelector<HTMLElement>(".nx-selectable");
+    const rect = el?.getBoundingClientRect();
+    const current = axis === "w" ? (size?.w ?? rect?.width ?? 800) : (size?.h ?? rect?.height ?? 120);
+    const next = Math.max(axis === "w" ? 280 : 72, Math.round(current + delta));
+    portal.setSize(sizeId, { w: axis === "w" ? next : size?.w, h: axis === "h" ? next : size?.h });
+  };
+
 
   useEffect(() => {
     const el = ref.current;
@@ -16,9 +27,16 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
     // rolagem pisca/salta ao trocar de sessão.
     const isPrimary = document.querySelector("section.page-header") === el;
     if (!isPrimary) return;
+    let raf = 0;
+    let last = -1;
     const update = () => {
-      const h = el.getBoundingClientRect().height;
-      document.documentElement.style.setProperty("--presenting-header-h", `${Math.round(h)}px`);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const h = Math.round(el.getBoundingClientRect().height);
+        if (h === last) return;
+        last = h;
+        document.documentElement.style.setProperty("--presenting-header-h", `${h}px`);
+      });
     };
     update();
     const ro = new ResizeObserver(update);
@@ -26,6 +44,7 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
     window.addEventListener("resize", update);
     return () => {
       ro.disconnect();
+      cancelAnimationFrame(raf);
       window.removeEventListener("resize", update);
     };
   }, [size?.w, size?.h]);
@@ -33,13 +52,36 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
 
   return (
     <section ref={ref} className="page-header mx-auto max-w-7xl px-4 lg:px-8 pt-3">
+      {s.editMode && (
+        <div className="mb-1.5 flex items-center gap-1.5 text-[11px]">
+          <button
+            type="button"
+            onClick={() => setActiveTarget(`rz:${sizeId}`)}
+            className={`rounded-md border px-2 py-0.5 ${active ? "border-primary bg-primary/10 text-primary" : "border-border hover:bg-secondary"}`}
+          >
+            Faixa da sessão
+          </button>
+          {active && (
+            <>
+              <span className="text-muted-foreground">altura</span>
+              <button type="button" onClick={() => bump("h", -12)} className="rounded-md border border-border px-1.5 hover:bg-secondary">−</button>
+              <button type="button" onClick={() => bump("h", 12)} className="rounded-md border border-border px-1.5 hover:bg-secondary">+</button>
+              <span className="ml-1 text-muted-foreground">largura</span>
+              <button type="button" onClick={() => bump("w", -40)} className="rounded-md border border-border px-1.5 hover:bg-secondary">−</button>
+              <button type="button" onClick={() => bump("w", 40)} className="rounded-md border border-border px-1.5 hover:bg-secondary">+</button>
+              <button type="button" onClick={() => portal.setSize(sizeId, null)} className="ml-1 rounded-md border border-border px-1.5 hover:bg-secondary" title="Restaurar tamanho">↺</button>
+            </>
+          )}
+        </div>
+      )}
       <Resizable
-        id={`${base}.header`}
+        id={sizeId}
         axis="both"
         minW={280}
         minH={72}
         className="mx-auto"
       >
+
         <div className="relative isolate overflow-hidden rounded-2xl border border-border shadow-card-soft h-full">
           <div className="absolute inset-0 -z-10 bg-hero-gradient opacity-95" />
           <div className="absolute inset-0 -z-10 opacity-20 [background:radial-gradient(700px_300px_at_10%_0%,white,transparent),radial-gradient(600px_300px_at_100%_100%,white,transparent)]" />

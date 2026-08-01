@@ -1,7 +1,33 @@
-import { useEffect, useRef, useState, type ReactNode, type FocusEvent, type KeyboardEvent, type CSSProperties } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode, type FocusEvent, type KeyboardEvent, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { portal, registerText, usePortalStore } from "@/lib/portal-store";
 import { cn } from "@/lib/utils";
+
+/* --------------------------------------------------------------- *
+ * Seleção de objeto no modo edição: os controles (arrastar,
+ * redimensionar, restaurar) só aparecem no objeto selecionado,
+ * evitando a poluição visual de todos os marcadores ao mesmo tempo.
+ * --------------------------------------------------------------- */
+let activeTarget: string | null = null;
+const targetListeners = new Set<() => void>();
+
+export function setActiveTarget(id: string | null) {
+  if (activeTarget === id) return;
+  activeTarget = id;
+  targetListeners.forEach((l) => l());
+}
+
+export function useActiveTarget() {
+  return useSyncExternalStore(
+    (cb) => {
+      targetListeners.add(cb);
+      return () => targetListeners.delete(cb);
+    },
+    () => activeTarget,
+    () => null,
+  );
+}
+
 
 const EDIT_PALETTE = [
   "#2279D1", "#0A1F44", "#0057FF", "#227981", "#3A7BFF",
@@ -460,9 +486,12 @@ export function Movable({
   inline?: boolean;
 }) {
   const s = usePortalStore();
+  const active = useActiveTarget();
+  const isActive = active === `mv:${id}`;
   const pos = s.positions[id];
   const wrapperRef = useRef<HTMLDivElement>(null);
   const Tag = as as any;
+
 
   const startDrag = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -499,23 +528,30 @@ export function Movable({
   return (
     <Tag
       ref={wrapperRef as any}
+      onMouseDown={(e: React.MouseEvent) => {
+        e.stopPropagation();
+        setActiveTarget(`mv:${id}`);
+      }}
       className={cn(
-        "relative group/movable",
+        "relative nx-selectable",
+        isActive && "nx-selected",
         inline ? "inline-block align-baseline" : "",
         pos && "movable-moved",
         className,
       )}
       style={pos ? { transform: `translate(${pos.x}px, ${pos.y}px)` } : undefined}
     >
-      <button
-        onMouseDown={startDrag}
-        className="movable-handle"
-        title={label ? `Arrastar: ${label}` : "Arrastar para reposicionar"}
-        type="button"
-      >
-        ✥
-      </button>
-      {pos && (
+      {isActive && (
+        <button
+          onMouseDown={startDrag}
+          className="movable-handle"
+          title={label ? `Arrastar: ${label}` : "Arrastar para reposicionar"}
+          type="button"
+        >
+          ✥
+        </button>
+      )}
+      {isActive && pos && (
         <button
           onClick={() => portal.setPosition(id, null)}
           className="absolute -top-2 -right-2 z-10 rounded-full bg-secondary text-secondary-foreground text-[10px] px-2 py-0.5 shadow"
@@ -530,6 +566,7 @@ export function Movable({
   );
 }
 
+
 // Linha divisória de seção que pode ser reposicionada e redimensionada.
 export function SectionDivider({ id, className }: { id: string; className?: string }) {
   const s = usePortalStore();
@@ -537,7 +574,7 @@ export function SectionDivider({ id, className }: { id: string; className?: stri
   const w = size?.w;
   const h = size?.h ?? 1;
   return (
-    <Movable id={id} label="Divisor" className={cn("block", className)}>
+    <Movable id={id} label="Divisor" className={cn("block", s.editMode && "py-1.5", className)}>
       <Resizable
         id={id}
         axis="both"
@@ -587,11 +624,14 @@ export function Resizable({
   as?: "div" | "section" | "span";
 }) {
   const s = usePortalStore();
+  const active = useActiveTarget();
+  const isActive = active === `rz:${id}`;
   const size = s.sizes[id];
   const w = size?.w ?? defaultW;
   const h = size?.h ?? defaultH;
   const Tag = as as any;
   const ref = useRef<HTMLElement>(null);
+
 
   const startResize = (dir: "x" | "y" | "both") => (e: React.MouseEvent) => {
     e.preventDefault();
@@ -636,32 +676,36 @@ export function Resizable({
   return (
     <Tag
       ref={ref as any}
-      className={cn("relative group/resizable", className)}
+      onMouseDown={(e: React.MouseEvent) => {
+        e.stopPropagation();
+        setActiveTarget(`rz:${id}`);
+      }}
+      className={cn("relative nx-selectable", isActive && "nx-selected", className)}
       style={appliedStyle}
     >
       {children}
-      {(axis === "x" || axis === "both") && (
+      {isActive && (axis === "x" || axis === "both") && (
         <span
           onMouseDown={startResize("x")}
           title="Redimensionar largura"
-          className="absolute top-1/2 -right-1 -translate-y-1/2 z-20 h-8 w-2 rounded-full bg-primary/70 hover:bg-primary cursor-ew-resize shadow ring-1 ring-white/30"
+          className="absolute top-1/2 -right-1 -translate-y-1/2 z-20 h-10 w-2.5 rounded-full bg-primary cursor-ew-resize shadow ring-1 ring-white/40"
         />
       )}
-      {(axis === "y" || axis === "both") && (
+      {isActive && (axis === "y" || axis === "both") && (
         <span
           onMouseDown={startResize("y")}
           title="Redimensionar altura"
-          className="absolute left-1/2 -bottom-1 -translate-x-1/2 z-20 h-2 w-8 rounded-full bg-primary/70 hover:bg-primary cursor-ns-resize shadow ring-1 ring-white/30"
+          className="absolute left-1/2 -bottom-1 -translate-x-1/2 z-20 h-2.5 w-10 rounded-full bg-primary cursor-ns-resize shadow ring-1 ring-white/40"
         />
       )}
-      {axis === "both" && (
+      {isActive && axis === "both" && (
         <span
           onMouseDown={startResize("both")}
           title="Redimensionar"
-          className="absolute -right-1 -bottom-1 z-20 h-3 w-3 rounded-sm bg-primary hover:scale-110 cursor-nwse-resize shadow ring-1 ring-white/30"
+          className="absolute -right-1 -bottom-1 z-20 h-3.5 w-3.5 rounded-sm bg-primary hover:scale-110 cursor-nwse-resize shadow ring-1 ring-white/40"
         />
       )}
-      {(size?.w != null || size?.h != null) && (
+      {isActive && (size?.w != null || size?.h != null) && (
         <button
           type="button"
           onClick={() => portal.setSize(id, null)}
@@ -673,5 +717,6 @@ export function Resizable({
       )}
     </Tag>
   );
+
 }
 
