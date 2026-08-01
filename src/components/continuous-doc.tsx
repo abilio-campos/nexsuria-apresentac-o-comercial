@@ -40,8 +40,7 @@ export function docSectionId(to: string) {
 export function scrollToDocSection(to: string, behavior: ScrollBehavior = "smooth") {
   const el = document.getElementById(docSectionId(to));
   if (!el) return false;
-  const top = el.getBoundingClientRect().top + window.scrollY;
-  window.scrollTo({ top: Math.max(0, top - 1), behavior });
+  el.scrollIntoView({ behavior, block: "start" });
   return true;
 }
 
@@ -55,61 +54,43 @@ export function ContinuousDoc({
   onActiveChange: (path: string) => void;
 }) {
   const paths = order.filter(isDocPath);
-  const jumped = useRef<string | null>(null);
-  const settling = useRef(true);
+  const initialJumpDone = useRef(false);
 
-  // Ao entrar (ou ao clicar em um item do menu), posiciona na sessão pedida.
+  // Posiciona uma única vez ao abrir por um endereço direto. Diferente da
+  // implementação anterior, não repetimos o salto enquanto imagens carregam:
+  // isso fazia a sessão seguinte subir rapidamente durante a rolagem.
   useEffect(() => {
-    if (jumped.current === initialPath) return;
-    const first = jumped.current === null;
-    jumped.current = initialPath;
-    if (!first) {
-      scrollToDocSection(initialPath, "instant" as ScrollBehavior);
-      return;
-    }
-    // Na primeira renderização o layout ainda cresce (fontes/imagens), então
-    // reposiciona algumas vezes até estabilizar.
-    settling.current = true;
-    const timers = [0, 80, 200, 450, 800, 1200].map((t) =>
-      window.setTimeout(() => scrollToDocSection(initialPath, "instant" as ScrollBehavior), t),
-    );
-    const done = window.setTimeout(() => { settling.current = false; }, 1400);
-    return () => { timers.forEach(clearTimeout); clearTimeout(done); };
+    if (initialJumpDone.current) return;
+    initialJumpDone.current = true;
+    const frame = requestAnimationFrame(() => {
+      if (initialPath !== "/") scrollToDocSection(initialPath, "instant" as ScrollBehavior);
+    });
+    return () => cancelAnimationFrame(frame);
   }, [initialPath]);
 
-  // Scroll-spy: marca no menu a sessão visível, sem trocar de rota.
+  // Mesmo mecanismo do projeto de referência: o observador apenas marca no
+  // menu a seção com maior área visível. A URL e o scroll nunca são alterados.
   useEffect(() => {
-    let raf = 0;
-    let current = initialPath;
-    const compute = () => {
-      raf = 0;
-      if (settling.current) return;
-      const probe = window.innerHeight * 0.3;
-      let found = paths[0];
-      for (const p of paths) {
-        const el = document.getElementById(docSectionId(p));
-        if (!el) continue;
-        if (el.getBoundingClientRect().top <= probe) found = p;
-      }
-      if (found && found !== current) {
-        current = found;
-        onActiveChange(found);
-        const url = found === "/" ? "/" : found;
-        if (window.location.pathname !== url) window.history.replaceState(null, "", url);
-      }
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(compute);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    compute();
+    const pathByElement = new Map<Element, string>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        const path = visible ? pathByElement.get(visible.target) : undefined;
+        if (path) onActiveChange(path);
+      },
+      { threshold: [0.2, 0.5] },
+    );
 
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    paths.forEach((path) => {
+      const element = document.getElementById(docSectionId(path));
+      if (!element) return;
+      pathByElement.set(element, path);
+      observer.observe(element);
+    });
+
+    return () => observer.disconnect();
   }, [paths.join("|"), onActiveChange]);
 
   return (

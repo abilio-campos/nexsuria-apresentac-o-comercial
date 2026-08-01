@@ -551,7 +551,8 @@
    que criem "degraus" durante a rolagem. */
 .nx-doc .nx-doc-section {
   position: relative;
-  isolation: isolate;
+  scroll-margin-top: 0;
+  overflow-anchor: none;
 }
 .nx-doc .nx-doc-section > main,
 .nx-doc .nx-doc-section > div > main {

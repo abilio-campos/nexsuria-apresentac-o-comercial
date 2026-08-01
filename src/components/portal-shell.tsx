@@ -25,19 +25,16 @@ export function PortalShell({ children }: { children: ReactNode }) {
   // até a sessão e a rolagem marca sozinha o item ativo.
   const docMode = isDocPath(pathname);
   const [docActive, setDocActive] = useState(pathname);
-  const [docTarget, setDocTarget] = useState(pathname);
   useEffect(() => {
     if (isDocPath(pathname)) {
       setDocActive(pathname);
-      setDocTarget(pathname);
     }
   }, [pathname]);
   const activePath = docMode ? docActive : pathname;
   const goSection = (to: string) => {
     setDocActive(to);
-    setDocTarget(to);
-    if (window.location.pathname !== to) window.history.replaceState(null, "", to);
-    scrollToDocSection(to, "instant" as ScrollBehavior);
+    scrollToDocSection(to, "smooth");
+    setMobileOpen(false);
   };
 
   useEffect(() => setMobileOpen(false), [pathname]);
@@ -486,7 +483,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
           {docMode ? (
             <ContinuousDoc
               order={items.map((i) => i.to)}
-              initialPath={docTarget}
+              initialPath={pathname}
               onActiveChange={setDocActive}
             />
           ) : (
