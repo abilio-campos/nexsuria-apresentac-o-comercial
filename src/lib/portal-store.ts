@@ -62,6 +62,20 @@ export const DEPARTAMENTO_SUGGESTIONS = [
   "Jurídico",
 ];
 
+export type ElStyle = {
+  bg?: string;
+  color?: string;
+  w?: number;
+  h?: number;
+  radius?: number;
+  pad?: number;
+  fs?: number;
+  bold?: boolean;
+  border?: string;
+  borderW?: number;
+  hidden?: boolean;
+};
+
 type State = {
   nav: NavCfg;
   texts: Record<string, string>;
@@ -70,6 +84,8 @@ type State = {
   listHidden: Record<string, string[]>;
   positions: Record<string, { x: number; y: number }>;
   sizes: Record<string, { w?: number; h?: number }>;
+  elStyles: Record<string, ElStyle>;
+  spacers: Record<string, number[]>;
   btnScale: "p" | "m" | "g" | "gg";
   editMode: boolean;
   theme: { primary?: string; foreground?: string };
@@ -87,6 +103,8 @@ const initial: State = {
   listHidden: {},
   positions: {},
   sizes: {},
+  elStyles: {},
+  spacers: {},
   btnScale: "m",
   editMode: false,
   theme: {},
@@ -94,6 +112,7 @@ const initial: State = {
   perceptions: { company: "", contact: "", painsFree: "", opportunitiesFree: "", notes: "" },
   visitEntries: [],
 };
+
 
 let state: State = initial;
 const listeners = new Set<() => void>();
