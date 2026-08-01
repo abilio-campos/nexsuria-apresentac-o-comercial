@@ -11,6 +11,11 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // No documento contínuo existem vários cabeçalhos; apenas o primeiro
+    // define a altura de referência, senão o valor fica "brigando" e a
+    // rolagem pisca/salta ao trocar de sessão.
+    const isPrimary = document.querySelector("section.page-header") === el;
+    if (!isPrimary) return;
     const update = () => {
       const h = el.getBoundingClientRect().height;
       document.documentElement.style.setProperty("--presenting-header-h", `${Math.round(h)}px`);
@@ -24,6 +29,7 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
       window.removeEventListener("resize", update);
     };
   }, [size?.w, size?.h]);
+
 
   return (
     <section ref={ref} className="page-header mx-auto max-w-7xl px-4 lg:px-8 pt-3">

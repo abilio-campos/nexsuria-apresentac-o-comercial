@@ -534,6 +534,31 @@
   background-color: var(--background);
 }
 
+/* No documento contínuo cada sessão traz seu próprio cabeçalho azul. Se ele
+   ficar sticky, o cabeçalho da sessão seguinte "entra por cima" e some, o que
+   dá a impressão de piscar. Aqui a rolagem é simples: nada é sticky, nada
+   sobrepõe. */
+.nx-doc section.page-header,
+.presenting .nx-doc section.page-header,
+.presenting .nx-doc main > section.page-header,
+.presenting .nx-doc main > div > section.page-header {
+  position: relative !important;
+  top: auto !important;
+  z-index: 1 !important;
+}
+
+/* Sessões do documento fluem uma após a outra, sem sombras/limites de altura
+   que criem "degraus" durante a rolagem. */
+.nx-doc .nx-doc-section {
+  position: relative;
+  isolation: isolate;
+}
+.nx-doc .nx-doc-section > main,
+.nx-doc .nx-doc-section > div > main {
+  min-height: 0 !important;
+}
+
+
 
 
 /* ---------- Correções de sobreposição de layout ---------- */
