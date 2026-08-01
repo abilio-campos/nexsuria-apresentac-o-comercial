@@ -79,6 +79,7 @@ const MANAGED = [
   "maxWidth",
   "height",
   "minHeight",
+  "overflow",
   "borderRadius",
   "padding",
   "fontSize",
