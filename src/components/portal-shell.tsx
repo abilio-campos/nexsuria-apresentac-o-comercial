@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, Moon, Sun, Pencil, Settings2, ChevronLeft, LogIn, LogOut, User, PanelLeft, Maximize2, Minimize2, GripVertical, Trash2 } from "lucide-react";
+import { Menu, X, Moon, Sun, Pencil, Settings2, ChevronLeft, LogIn, LogOut, User, PanelLeft, GripVertical, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
@@ -219,17 +219,6 @@ export function PortalShell({ children }: { children: ReactNode }) {
             aria-label="Recolher menu"
           >
             <ChevronLeft className={cn("h-4 w-4 transition-transform", collapsed && "rotate-180")} />
-          </button>
-        </div>
-
-        <div className={cn("shrink-0 p-2 border-b", sidebarDark ? "border-[var(--sidebar-executive-border)]" : "border-sidebar-border")}>
-          <button
-            onClick={togglePresent}
-            className="w-full flex items-center justify-center gap-2 rounded-md px-3 py-2.5 text-sm font-semibold bg-primary text-primary-foreground hover:brightness-110 shadow-[0_2px_12px_-4px_var(--primary)]"
-            title="Modo apresentação (F)"
-          >
-            {isFullscreen ? <Minimize2 className="h-4 w-4 shrink-0" /> : <Maximize2 className="h-4 w-4 shrink-0" />}
-            {!collapsed && <span>{isFullscreen ? "Sair da apresentação" : "Apresentar"}</span>}
           </button>
         </div>
 
