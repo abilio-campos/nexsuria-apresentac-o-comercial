@@ -1,12 +1,23 @@
 import { useEffect, useRef, type ReactNode } from "react";
-import { EditableText, Resizable } from "@/components/editable";
-import { usePortalStore } from "@/lib/portal-store";
+import { EditableText, Resizable, setActiveTarget, useActiveTarget } from "@/components/editable";
+import { portal, usePortalStore } from "@/lib/portal-store";
 
 export function PageHeader({ id, eyebrow, title, description, children }: { id?: string; eyebrow?: string; title: string; description?: string; children?: ReactNode }) {
   const base = id ?? "page";
   const ref = useRef<HTMLElement | null>(null);
   const s = usePortalStore();
-  const size = s.sizes[`${base}.header`];
+  const sizeId = `${base}.header`;
+  const size = s.sizes[sizeId];
+  const active = useActiveTarget() === `rz:${sizeId}`;
+
+  const bump = (axis: "w" | "h", delta: number) => {
+    const el = ref.current?.querySelector<HTMLElement>(".nx-selectable");
+    const rect = el?.getBoundingClientRect();
+    const current = axis === "w" ? (size?.w ?? rect?.width ?? 800) : (size?.h ?? rect?.height ?? 120);
+    const next = Math.max(axis === "w" ? 280 : 72, Math.round(current + delta));
+    portal.setSize(sizeId, { w: axis === "w" ? next : size?.w, h: axis === "h" ? next : size?.h });
+  };
+
 
   useEffect(() => {
     const el = ref.current;
