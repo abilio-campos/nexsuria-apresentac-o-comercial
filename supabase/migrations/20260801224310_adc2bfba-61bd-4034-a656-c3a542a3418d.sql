@@ -1,0 +1,7 @@
+update portal_settings
+set value = jsonb_set(value, '{elStyles}', (
+  select coalesce(jsonb_object_agg(k, v), '{}'::jsonb)
+  from jsonb_each(value->'elStyles') as e(k, v)
+  where k not like '/|%'
+))
+where key = 'config' and value ? 'elStyles';
