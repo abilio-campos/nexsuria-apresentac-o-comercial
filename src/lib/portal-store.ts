@@ -62,6 +62,20 @@ export const DEPARTAMENTO_SUGGESTIONS = [
   "Jurídico",
 ];
 
+export type ElStyle = {
+  bg?: string;
+  color?: string;
+  w?: number;
+  h?: number;
+  radius?: number;
+  pad?: number;
+  fs?: number;
+  bold?: boolean;
+  border?: string;
+  borderW?: number;
+  hidden?: boolean;
+};
+
 type State = {
   nav: NavCfg;
   texts: Record<string, string>;
@@ -70,6 +84,8 @@ type State = {
   listHidden: Record<string, string[]>;
   positions: Record<string, { x: number; y: number }>;
   sizes: Record<string, { w?: number; h?: number }>;
+  elStyles: Record<string, ElStyle>;
+  spacers: Record<string, number[]>;
   btnScale: "p" | "m" | "g" | "gg";
   editMode: boolean;
   theme: { primary?: string; foreground?: string };
@@ -87,6 +103,8 @@ const initial: State = {
   listHidden: {},
   positions: {},
   sizes: {},
+  elStyles: {},
+  spacers: {},
   btnScale: "m",
   editMode: false,
   theme: {},
@@ -94,6 +112,7 @@ const initial: State = {
   perceptions: { company: "", contact: "", painsFree: "", opportunitiesFree: "", notes: "" },
   visitEntries: [],
 };
+
 
 let state: State = initial;
 const listeners = new Set<() => void>();
@@ -115,6 +134,9 @@ function load() {
         listHidden: { ...(parsed.listHidden || {}) },
         positions: { ...(parsed.positions || {}) },
         sizes: { ...(parsed.sizes || {}) },
+        elStyles: { ...(parsed.elStyles || {}) },
+        spacers: { ...(parsed.spacers || {}) },
+
         btnScale: (parsed.btnScale as State["btnScale"]) || "m",
         theme: { ...(parsed.theme || {}) },
         marks: { ...(parsed.marks || {}) },
@@ -245,9 +267,44 @@ export const portal = {
     else delete sizes[id];
     set({ sizes });
   },
+  patchElStyle(id: string, patch: Partial<ElStyle>) {
+    const cur = state.elStyles[id] ?? {};
+    const next: ElStyle = { ...cur, ...patch };
+    (Object.keys(next) as (keyof ElStyle)[]).forEach((k) => {
+      const v = next[k];
+      if (v === undefined || v === null || v === "" || v === false) delete next[k];
+    });
+    const elStyles = { ...state.elStyles };
+    if (Object.keys(next).length === 0) delete elStyles[id];
+    else elStyles[id] = next;
+    set({ elStyles });
+  },
+  clearElStyle(id: string) {
+    const elStyles = { ...state.elStyles };
+    delete elStyles[id];
+    set({ elStyles });
+  },
+  addSpacer(path: string, height = 120) {
+    const cur = state.spacers[path] ?? [];
+    set({ spacers: { ...state.spacers, [path]: [...cur, height] } });
+  },
+  setSpacerHeight(path: string, index: number, height: number) {
+    const cur = (state.spacers[path] ?? []).slice();
+    if (index < 0 || index >= cur.length) return;
+    cur[index] = Math.max(8, Math.round(height));
+    set({ spacers: { ...state.spacers, [path]: cur } });
+  },
+  removeSpacer(path: string, index: number) {
+    const cur = (state.spacers[path] ?? []).filter((_, i) => i !== index);
+    const spacers = { ...state.spacers };
+    if (cur.length === 0) delete spacers[path];
+    else spacers[path] = cur;
+    set({ spacers });
+  },
   setBtnScale(scale: State["btnScale"]) {
     set({ btnScale: scale });
   },
+
   moveNavTo(to: string, targetIndex: number) {
     const order = getOrder();
     const from = order.indexOf(to);
@@ -311,6 +368,9 @@ export const portal = {
       listHidden: { ...state.listHidden, ...(patch.listHidden || {}) },
       positions: { ...state.positions, ...(patch.positions || {}) },
       sizes: { ...state.sizes, ...(patch.sizes || {}) },
+      elStyles: { ...state.elStyles, ...(patch.elStyles || {}) },
+      spacers: { ...state.spacers, ...(patch.spacers || {}) },
+
       btnScale: patch.btnScale ?? state.btnScale,
       theme: { ...state.theme, ...(patch.theme || {}) },
       perceptions: { ...state.perceptions, ...(patch.perceptions || {}) },

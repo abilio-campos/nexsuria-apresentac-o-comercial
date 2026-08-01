@@ -11,6 +11,7 @@ import { Diferenciais } from "@/pages/diferenciais";
 import { Casos } from "@/pages/casos-de-uso";
 import { PercepcoesPage } from "@/pages/percepcoes";
 import { Contato } from "@/pages/contato";
+import { SectionSpacers } from "@/components/section-spacer";
 
 /**
  * Todas as sessões do portal vivem em um único documento rolável.
@@ -100,9 +101,11 @@ export function ContinuousDoc({
         return (
           <div key={p} id={docSectionId(p)} data-doc-path={p} className="nx-doc-section">
             <Section />
+            <SectionSpacers path={p} />
           </div>
         );
       })}
+
     </div>
   );
 }

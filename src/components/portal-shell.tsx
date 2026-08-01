@@ -7,6 +7,9 @@ import logoAsset from "@/assets/nexsuria-logo.png.asset.json";
 import { getResolvedNav, portal, usePortalStore } from "@/lib/portal-store";
 import { useAuth } from "@/lib/auth";
 import { ContinuousDoc, isDocPath, scrollToDocSection } from "@/components/continuous-doc";
+import { TopBar } from "@/components/top-bar";
+import { SectionSpacers } from "@/components/section-spacer";
+import { ElementEditor, ElementStyleApplier } from "@/components/element-editor";
 
 export function PortalShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -473,12 +476,22 @@ export function PortalShell({ children }: { children: ReactNode }) {
             <Minimize2 className="h-3.5 w-3.5" /> Sair
           </button>
         )}
+        <TopBar
+          label={items.find((i) => i.to === activePath)?.label ?? "Nexsuria"}
+          index={Math.max(0, items.findIndex((i) => i.to === activePath))}
+          total={items.length}
+          progress={scrollPct}
+          presenting={presenting}
+          onTogglePresent={togglePresent}
+        />
         {store.editMode && (
           <div className="sticky top-12 lg:top-0 z-20 bg-primary text-primary-foreground text-xs px-4 py-1.5 flex items-center justify-between">
-            <span>Modo edição ativo — clique nos textos para editar. As alterações são salvas automaticamente.</span>
+            <span>Modo edição ativo — clique em textos e objetos para editar tamanho, cores e visibilidade.</span>
             <Link to="/admin" className="underline underline-offset-2">Painel de configuração</Link>
           </div>
         )}
+        <ElementStyleApplier />
+        <ElementEditor />
         <main className="flex-1">
           {/* Documento contínuo: o conteúdo não é remontado com fade a partir do
               zero (isso causava o "piscar"). A troca usa View Transitions,
@@ -490,9 +503,13 @@ export function PortalShell({ children }: { children: ReactNode }) {
               onActiveChange={setDocActive}
             />
           ) : (
-            <div className="nx-doc">{children}</div>
+            <div className="nx-doc" data-doc-path={pathname}>
+              {children}
+              <SectionSpacers path={pathname} />
+            </div>
           )}
         </main>
+
 
 
         {store.editMode && auth.user && (
