@@ -528,19 +528,30 @@
 .nav-drag-over { outline: 2px dashed var(--primary); outline-offset: -2px; border-radius: 8px; }
 
 /* ---------- Documento contínuo: troca de sessão sem "piscar" ---------- */
-/* O fade curto disfarça a troca de rota, dando a sensação de um único
-   documento que apenas avança de tema. Vale para visualização e Apresentar. */
-@keyframes nxPageFade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+/* O conteúdo principal participa de uma View Transition: o navegador faz um
+   crossfade entre a sessão antiga e a nova, sem tela branca intermediária. */
+.nx-doc {
+  view-transition-name: nx-doc;
+  background-color: var(--background);
 }
-.nx-page-fade {
-  animation: nxPageFade 220ms ease-out both;
-  will-change: opacity;
+
+::view-transition-old(nx-doc),
+::view-transition-new(nx-doc) {
+  animation-duration: 320ms;
+  animation-timing-function: ease;
+  mix-blend-mode: normal;
 }
+::view-transition-old(nx-doc) { animation-name: nxFadeOut; }
+::view-transition-new(nx-doc) { animation-name: nxFadeIn; }
+
+@keyframes nxFadeOut { from { opacity: 1; } to { opacity: 0; } }
+@keyframes nxFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
 @media (prefers-reduced-motion: reduce) {
-  .nx-page-fade { animation: none; }
+  ::view-transition-old(nx-doc),
+  ::view-transition-new(nx-doc) { animation: none; }
 }
+
 
 /* ---------- Correções de sobreposição de layout ---------- */
 /* O cabeçalho azul fica fixo no topo em Apresentar; sem fundo opaco o

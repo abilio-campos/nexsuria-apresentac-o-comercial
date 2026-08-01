@@ -180,17 +180,24 @@ export function PortalShell({ children }: { children: ReactNode }) {
 
       lock = true;
       accum = 0;
-      void navigate({ to: target.to });
+      const el = scroller();
+      // Posiciona o scroll ANTES da troca, para não haver salto visível.
+      const prevBehavior = el.style.scrollBehavior;
+      el.style.scrollBehavior = "auto";
+      el.scrollTop = dir === 1 ? 0 : el.scrollHeight;
+      el.style.scrollBehavior = prevBehavior;
+      void navigate({ to: target.to, viewTransition: true, resetScroll: false });
       const settle = () => {
-        const el = scroller();
-        const prev = el.style.scrollBehavior;
-        el.style.scrollBehavior = "auto";
-        el.scrollTop = dir === 1 ? 0 : el.scrollHeight;
-        el.style.scrollBehavior = prev;
+        const s = scroller();
+        const prev = s.style.scrollBehavior;
+        s.style.scrollBehavior = "auto";
+        s.scrollTop = dir === 1 ? 0 : s.scrollHeight;
+        s.style.scrollBehavior = prev;
       };
       requestAnimationFrame(settle);
       setTimeout(settle, 120);
       setTimeout(() => { lock = false; }, 700);
+
     };
     const intent = (delta: number) => {
       if (lock || idx === -1) return;
@@ -304,6 +311,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
                       >
                       <Link
                         to={item.to}
+                        viewTransition
+
                         className={cn(
                           "group relative flex items-center gap-3 rounded-lg overflow-hidden transition-all duration-300",
                           collapsed ? "px-0 py-1.5 justify-center" : "px-3 py-1.5",
@@ -515,10 +524,12 @@ export function PortalShell({ children }: { children: ReactNode }) {
           </div>
         )}
         <main className="flex-1">
-          {/* Transição suave entre sessões: o conteúdo troca com um fade curto,
-              dando a sensação de um documento único e contínuo. */}
-          <div key={pathname} className="nx-page-fade">{children}</div>
+          {/* Documento contínuo: o conteúdo não é remontado com fade a partir do
+              zero (isso causava o "piscar"). A troca usa View Transitions,
+              fazendo um crossfade entre o conteúdo antigo e o novo. */}
+          <div className="nx-doc">{children}</div>
         </main>
+
 
         {store.editMode && auth.user && (
           <EditFloatingToolbar pathname={pathname} btnScale={store.btnScale} />
