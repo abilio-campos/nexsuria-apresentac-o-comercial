@@ -134,6 +134,9 @@ function load() {
         listHidden: { ...(parsed.listHidden || {}) },
         positions: { ...(parsed.positions || {}) },
         sizes: { ...(parsed.sizes || {}) },
+        elStyles: { ...(parsed.elStyles || {}) },
+        spacers: { ...(parsed.spacers || {}) },
+
         btnScale: (parsed.btnScale as State["btnScale"]) || "m",
         theme: { ...(parsed.theme || {}) },
         marks: { ...(parsed.marks || {}) },
