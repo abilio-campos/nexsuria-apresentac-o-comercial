@@ -111,8 +111,13 @@ function applyStyles(styles: Record<string, ElStyle>, editMode: boolean) {
         touched.add(child);
       });
     }
-    if (st.w) el.style.setProperty("width", `${st.w}px`, "important");
-    if (st.h) el.style.setProperty("height", `${st.h}px`, "important");
+    if (st.w) {
+      el.style.setProperty("width", `${st.w}px`, "important");
+      el.style.setProperty("max-width", "100%", "important");
+    }
+    // min-height em vez de height: o bloco cresce se o conteúdo for maior,
+    // então nada é cortado ao redimensionar.
+    if (st.h) el.style.setProperty("min-height", `${st.h}px`, "important");
     if (st.radius != null) el.style.setProperty("border-radius", `${st.radius}px`, "important");
     if (st.pad != null) el.style.setProperty("padding", `${st.pad}px`, "important");
     if (st.fs) el.style.setProperty("font-size", `${st.fs}px`, "important");
