@@ -64,7 +64,7 @@ export function ContinuousDoc({
     const first = jumped.current === null;
     jumped.current = initialPath;
     if (!first) {
-      scrollToDocSection(initialPath, "smooth");
+      scrollToDocSection(initialPath, "instant" as ScrollBehavior);
       return;
     }
     // Na primeira renderização o layout ainda cresce (fontes/imagens), então

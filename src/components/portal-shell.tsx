@@ -37,7 +37,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
     setDocActive(to);
     setDocTarget(to);
     if (window.location.pathname !== to) window.history.replaceState(null, "", to);
-    scrollToDocSection(to, "smooth");
+    scrollToDocSection(to, "instant" as ScrollBehavior);
   };
 
   useEffect(() => setMobileOpen(false), [pathname]);
