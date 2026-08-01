@@ -67,8 +67,8 @@ export function ContinuousDoc({
     return () => cancelAnimationFrame(frame);
   }, [initialPath]);
 
-  // Mesmo mecanismo do projeto de referência: o observador apenas marca no
-  // menu a seção com maior área visível. A URL e o scroll nunca são alterados.
+  // O observador apenas marca no menu a seção com maior área visível.
+  // A URL e o scroll nunca são alterados.
   useEffect(() => {
     const pathByElement = new Map<Element, string>();
     const observer = new IntersectionObserver(
