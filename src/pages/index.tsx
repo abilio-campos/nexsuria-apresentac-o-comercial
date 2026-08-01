@@ -11,18 +11,27 @@ export function HomePage() {
         <div className="absolute inset-0 -z-10 bg-hero-gradient opacity-95" />
         <div className="absolute inset-0 -z-10 opacity-30 [background:radial-gradient(1000px_500px_at_20%_0%,white,transparent),radial-gradient(800px_400px_at_80%_100%,white,transparent)]" />
         <div className="mx-auto max-w-7xl px-4 lg:px-8 py-14 md:py-20 text-primary-foreground">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur">
-            <Sparkles className="h-3.5 w-3.5" />
-            <EditableText id="home.badge">Centro de Inteligência Empresarial</EditableText>
-          </div>
-          <h1 className="mt-6 max-w-4xl font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight">
-            <EditableText id="home.title.line1" as="span">A Nexsuria não vende software.</EditableText>
-            <br />
-            <EditableText id="home.title.line2" as="span" className="text-white/85">Entregamos evolução empresarial.</EditableText>
-          </h1>
-          <EditableText id="home.subtitle" as="p" multiline className="mt-6 max-w-2xl text-lg text-white/80">
-            {"Conectamos estratégia, tecnologia, Inteligência Artificial, processos e pessoas para acelerar resultados. Um único relacionamento — uma responsabilidade: a nossa."}
-          </EditableText>
+          <Movable id="home.badge.box" label="Badge: Centro de Inteligência" inline>
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs backdrop-blur">
+              <Sparkles className="h-3.5 w-3.5" />
+              <EditableText id="home.badge">Centro de Inteligência Empresarial</EditableText>
+            </span>
+          </Movable>
+          <Movable id="home.title.line1.box" label="Título: linha 1">
+            <h1 className="mt-6 max-w-4xl font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight">
+              <EditableText id="home.title.line1" as="span">A Nexsuria não vende software.</EditableText>
+            </h1>
+          </Movable>
+          <Movable id="home.title.line2.box" label="Título: linha 2">
+            <h2 className="max-w-4xl font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight text-white/85">
+              <EditableText id="home.title.line2" as="span">Entregamos evolução empresarial.</EditableText>
+            </h2>
+          </Movable>
+          <Movable id="home.subtitle.box" label="Texto: subtítulo">
+            <EditableText id="home.subtitle" as="p" multiline className="mt-6 max-w-2xl text-lg text-white/80">
+              {"Conectamos estratégia, tecnologia, Inteligência Artificial, processos e pessoas para acelerar resultados. Um único relacionamento — uma responsabilidade: a nossa."}
+            </EditableText>
+          </Movable>
           <div className="mt-8 flex flex-wrap gap-3">
             <Hideable id="home.cta.ecossistema" label="Botão Ecossistema">
               <Button asChild size="lg" className="bg-white text-primary hover:bg-white/90">
