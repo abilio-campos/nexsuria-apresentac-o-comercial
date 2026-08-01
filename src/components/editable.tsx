@@ -486,9 +486,12 @@ export function Movable({
   inline?: boolean;
 }) {
   const s = usePortalStore();
+  const active = useActiveTarget();
+  const isActive = active === `mv:${id}`;
   const pos = s.positions[id];
   const wrapperRef = useRef<HTMLDivElement>(null);
   const Tag = as as any;
+
 
   const startDrag = (e: React.MouseEvent) => {
     e.preventDefault();
