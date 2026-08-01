@@ -561,3 +561,14 @@ main > div > section { position: relative; }
 /* Blocos reposicionados via arraste não devem sobrepor os vizinhos ao
    entrar em colapso de margem: mantém contexto próprio de empilhamento. */
 .movable-moved { position: relative; z-index: 1; }
+
+/* ---------- Seleção de objetos no modo edição ---------- */
+.nx-selectable:hover {
+  outline: 1px dashed color-mix(in oklab, var(--primary) 45%, transparent);
+  outline-offset: 3px;
+}
+.nx-selected,
+.nx-selected:hover {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
