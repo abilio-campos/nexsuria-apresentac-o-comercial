@@ -30,6 +30,7 @@ export function Ecossistema() {
   return (
     <>
       <PageHeader
+        id="ecossistema"
         eyebrow="Ecossistema"
         title="10 especialistas. Uma orquestradora."
         description="Cada parceiro é líder em sua especialidade — e todos operam sob a coordenação estratégica da Nexsuria. Um único relacionamento, uma responsabilidade."

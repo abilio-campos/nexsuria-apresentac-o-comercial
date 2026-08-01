@@ -5,6 +5,7 @@ export function Metodologia() {
   return (
     <>
       <PageHeader
+        id="metodologia"
         eyebrow="Nossa Metodologia"
         title="Do diagnóstico à evolução contínua"
         description="Um framework claro para transformar estratégia em execução — com o especialista certo em cada etapa e governança do início ao fim."

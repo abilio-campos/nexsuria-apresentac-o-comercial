@@ -662,8 +662,12 @@ export function Resizable({
   };
 
   const appliedStyle: CSSProperties = { ...style };
-  if (w != null) appliedStyle.width = `${w}px`;
-  if (h != null && (axis === "y" || axis === "both")) appliedStyle.height = `${h}px`;
+  if (w != null) {
+    appliedStyle.width = `${w}px`;
+    appliedStyle.maxWidth = "100%";
+  }
+  // Altura como mínimo: se o conteúdo for maior, ele cresce em vez de ser cortado.
+  if (h != null && (axis === "y" || axis === "both")) appliedStyle.minHeight = `${h}px`;
 
   if (!s.editMode) {
     return (
