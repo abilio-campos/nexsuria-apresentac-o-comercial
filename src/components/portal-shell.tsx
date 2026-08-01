@@ -365,7 +365,11 @@ export function PortalShell({ children }: { children: ReactNode }) {
               className={cn(
                 "w-full flex items-center gap-3 rounded-md px-3 py-2 text-sm",
                 sidebarDark ? "hover:bg-[var(--sidebar-executive-accent)]" : "hover:bg-sidebar-accent",
-                store.editMode && "bg-primary/10 text-primary",
+                store.editMode &&
+                  (sidebarDark
+                    ? "bg-[var(--sidebar-executive-accent)] text-[var(--sidebar-executive-foreground)]"
+                    : "bg-secondary text-secondary-foreground"),
+
               )}
             >
               <Pencil className="h-4 w-4 shrink-0" />
