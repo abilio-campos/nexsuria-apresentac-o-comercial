@@ -528,23 +528,30 @@ export function Movable({
   return (
     <Tag
       ref={wrapperRef as any}
+      onMouseDown={(e: React.MouseEvent) => {
+        e.stopPropagation();
+        setActiveTarget(`mv:${id}`);
+      }}
       className={cn(
-        "relative group/movable",
+        "relative nx-selectable",
+        isActive && "nx-selected",
         inline ? "inline-block align-baseline" : "",
         pos && "movable-moved",
         className,
       )}
       style={pos ? { transform: `translate(${pos.x}px, ${pos.y}px)` } : undefined}
     >
-      <button
-        onMouseDown={startDrag}
-        className="movable-handle"
-        title={label ? `Arrastar: ${label}` : "Arrastar para reposicionar"}
-        type="button"
-      >
-        ✥
-      </button>
-      {pos && (
+      {isActive && (
+        <button
+          onMouseDown={startDrag}
+          className="movable-handle"
+          title={label ? `Arrastar: ${label}` : "Arrastar para reposicionar"}
+          type="button"
+        >
+          ✥
+        </button>
+      )}
+      {isActive && pos && (
         <button
           onClick={() => portal.setPosition(id, null)}
           className="absolute -top-2 -right-2 z-10 rounded-full bg-secondary text-secondary-foreground text-[10px] px-2 py-0.5 shadow"
@@ -558,6 +565,7 @@ export function Movable({
     </Tag>
   );
 }
+
 
 // Linha divisória de seção que pode ser reposicionada e redimensionada.
 export function SectionDivider({ id, className }: { id: string; className?: string }) {
