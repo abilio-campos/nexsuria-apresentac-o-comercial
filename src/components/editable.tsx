@@ -606,6 +606,7 @@ export function Resizable({
   maxH,
   defaultW,
   defaultH,
+  fixedH = false,
   className,
   style,
   as = "div",
