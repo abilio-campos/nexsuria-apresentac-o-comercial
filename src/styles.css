@@ -319,9 +319,7 @@
   min-height: auto !important;
 }
 
-/* Sessões abaixo da faixa azul: rolagem contínua (sem sobreposição).
-   O cabeçalho azul continua fixo no topo; o conteúdo simplesmente flui
-   e rola normalmente no documento. */
+/* Sessões abaixo da faixa azul: rolagem contínua, sem sobreposição. */
 .presenting main > section.page-header ~ section,
 .presenting main > div > section.page-header ~ section {
   position: relative;
