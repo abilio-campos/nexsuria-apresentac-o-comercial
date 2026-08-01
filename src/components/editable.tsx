@@ -1,7 +1,33 @@
-import { useEffect, useRef, useState, type ReactNode, type FocusEvent, type KeyboardEvent, type CSSProperties } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode, type FocusEvent, type KeyboardEvent, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { portal, registerText, usePortalStore } from "@/lib/portal-store";
 import { cn } from "@/lib/utils";
+
+/* --------------------------------------------------------------- *
+ * Seleção de objeto no modo edição: os controles (arrastar,
+ * redimensionar, restaurar) só aparecem no objeto selecionado,
+ * evitando a poluição visual de todos os marcadores ao mesmo tempo.
+ * --------------------------------------------------------------- */
+let activeTarget: string | null = null;
+const targetListeners = new Set<() => void>();
+
+export function setActiveTarget(id: string | null) {
+  if (activeTarget === id) return;
+  activeTarget = id;
+  targetListeners.forEach((l) => l());
+}
+
+export function useActiveTarget() {
+  return useSyncExternalStore(
+    (cb) => {
+      targetListeners.add(cb);
+      return () => targetListeners.delete(cb);
+    },
+    () => activeTarget,
+    () => null,
+  );
+}
+
 
 const EDIT_PALETTE = [
   "#2279D1", "#0A1F44", "#0057FF", "#227981", "#3A7BFF",
