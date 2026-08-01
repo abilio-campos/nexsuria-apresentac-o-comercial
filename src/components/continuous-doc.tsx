@@ -100,9 +100,11 @@ export function ContinuousDoc({
         return (
           <div key={p} id={docSectionId(p)} data-doc-path={p} className="nx-doc-section">
             <Section />
+            <SectionSpacers path={p} />
           </div>
         );
       })}
+
     </div>
   );
 }
