@@ -167,15 +167,15 @@ export function PortalShell({ children }: { children: ReactNode }) {
       if (e.key === "f" || e.key === "F") { e.preventDefault(); togglePresent(); return; }
       if (e.key === "Escape" && presenting) { setPresenting(false); exitFullscreen(); return; }
       if (e.key !== "ArrowDown" && e.key !== "ArrowUp" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
-      const idx = items.findIndex((it) => (it.to === "/" ? pathname === "/" : pathname.startsWith(it.to)));
+      const idx = items.findIndex((it) => (it.to === "/" ? activePath === "/" : activePath.startsWith(it.to)));
       if (idx === -1) return;
       const dir = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1;
       const next = items[(idx + dir + items.length) % items.length];
-      if (next) { e.preventDefault(); navigate({ to: next.to }); }
+      if (next) { e.preventDefault(); if (docMode && isDocPath(next.to)) goSection(next.to); else navigate({ to: next.to }); }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [items, pathname, navigate, presenting]);
+  }, [items, activePath, navigate, presenting, docMode]);
 
   // Rolagem simples e nativa: nenhuma interceptação de wheel/touch/teclado.
   // A troca de sessão acontece somente ao clicar no menu.
@@ -227,7 +227,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
             <div key={group}>
               <ul className="space-y-0.5">
                 {list.map((item) => {
-                  const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+                  const active = item.to === "/" ? activePath === "/" : activePath.startsWith(item.to);
                   const num = numberMap.get(item.to) ?? "";
                   return (
                     <li key={item.to}>
@@ -483,7 +483,15 @@ export function PortalShell({ children }: { children: ReactNode }) {
           {/* Documento contínuo: o conteúdo não é remontado com fade a partir do
               zero (isso causava o "piscar"). A troca usa View Transitions,
               fazendo um crossfade entre o conteúdo antigo e o novo. */}
-          <div className="nx-doc">{children}</div>
+          {docMode ? (
+            <ContinuousDoc
+              order={items.map((i) => i.to)}
+              initialPath={docTarget}
+              onActiveChange={setDocActive}
+            />
+          ) : (
+            <div className="nx-doc">{children}</div>
+          )}
         </main>
 
 
