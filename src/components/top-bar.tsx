@@ -1,5 +1,5 @@
 import { Maximize2, Minimize2, Pencil } from "lucide-react";
-import logo from "@/assets/nexsuria-logo.png";
+import logoAsset from "@/assets/nexsuria-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 import { portal, usePortalStore } from "@/lib/portal-store";
 
