@@ -311,6 +311,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
                       >
                       <Link
                         to={item.to}
+                        viewTransition
+
                         className={cn(
                           "group relative flex items-center gap-3 rounded-lg overflow-hidden transition-all duration-300",
                           collapsed ? "px-0 py-1.5 justify-center" : "px-3 py-1.5",
