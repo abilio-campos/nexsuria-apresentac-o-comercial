@@ -446,9 +446,20 @@ export function ElementEditor() {
           </section>
 
           <section className="space-y-2">
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Tamanho</div>
+            <div className="flex items-center justify-between">
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Tamanho</div>
+            </div>
             <Range label="Largura" value={st.w} min={40} max={1400} onChange={(v) => patch({ w: v })} onClear={() => patch({ w: undefined })} />
-            <Range label="Altura" value={st.h} min={20} max={900} onChange={(v) => patch({ h: v })} onClear={() => patch({ h: undefined })} />
+            <Range label="Altura" value={st.h} min={20} max={1400} onChange={(v) => patch({ h: v })} onClear={() => patch({ h: undefined })} />
+            <label className="flex items-center gap-2 text-xs">
+              <input
+                type="checkbox"
+                checked={!!st.fixedH}
+                onChange={(e) => patch({ fixedH: e.target.checked })}
+                className="h-3.5 w-3.5 accent-primary"
+              />
+              <span>Altura fixa (height em vez de min-height)</span>
+            </label>
             <Range label="Espaçamento interno" value={st.pad} min={0} max={80} onChange={(v) => patch({ pad: v })} onClear={() => patch({ pad: undefined })} />
             <Range label="Arredondamento" value={st.radius} min={0} max={48} onChange={(v) => patch({ radius: v })} onClear={() => patch({ radius: undefined })} />
             <Range label="Tamanho do texto" value={st.fs} min={10} max={72} onChange={(v) => patch({ fs: v })} onClear={() => patch({ fs: undefined })} />
