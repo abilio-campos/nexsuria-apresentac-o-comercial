@@ -574,7 +574,7 @@ export function SectionDivider({ id, className }: { id: string; className?: stri
   const w = size?.w;
   const h = size?.h ?? 1;
   return (
-    <Movable id={id} label="Divisor" className={cn("block", className)}>
+    <Movable id={id} label="Divisor" className={cn("block", s.editMode && "py-1.5", className)}>
       <Resizable
         id={id}
         axis="both"

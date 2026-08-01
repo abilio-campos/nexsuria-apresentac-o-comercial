@@ -27,9 +27,16 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
     // rolagem pisca/salta ao trocar de sessão.
     const isPrimary = document.querySelector("section.page-header") === el;
     if (!isPrimary) return;
+    let raf = 0;
+    let last = -1;
     const update = () => {
-      const h = el.getBoundingClientRect().height;
-      document.documentElement.style.setProperty("--presenting-header-h", `${Math.round(h)}px`);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const h = Math.round(el.getBoundingClientRect().height);
+        if (h === last) return;
+        last = h;
+        document.documentElement.style.setProperty("--presenting-header-h", `${h}px`);
+      });
     };
     update();
     const ro = new ResizeObserver(update);
@@ -37,6 +44,7 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
     window.addEventListener("resize", update);
     return () => {
       ro.disconnect();
+      cancelAnimationFrame(raf);
       window.removeEventListener("resize", update);
     };
   }, [size?.w, size?.h]);
