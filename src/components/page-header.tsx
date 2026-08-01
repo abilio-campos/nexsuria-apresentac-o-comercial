@@ -15,7 +15,10 @@ export function PageHeader({ id, eyebrow, title, description, children }: { id?:
     const rect = el?.getBoundingClientRect();
     const current = axis === "w" ? (size?.w ?? rect?.width ?? 800) : (size?.h ?? rect?.height ?? 120);
     const next = Math.max(axis === "w" ? 280 : 72, Math.round(current + delta));
-    portal.setSize(sizeId, { w: axis === "w" ? next : size?.w, h: axis === "h" ? next : size?.h });
+    portal.setSize(sizeId, { w: axis === "w" ? next : size?.w, h: axis === "h" ? next : size?.h, fixedH: size?.fixedH });
+  };
+  const toggleFixedH = () => {
+    portal.setSize(sizeId, { w: size?.w, h: size?.h, fixedH: !size?.fixedH });
   };
 
 
