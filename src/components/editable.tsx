@@ -619,6 +619,7 @@ export function Resizable({
   maxH?: number;
   defaultW?: number;
   defaultH?: number;
+  fixedH?: boolean;
   className?: string;
   style?: CSSProperties;
   as?: "div" | "section" | "span";
