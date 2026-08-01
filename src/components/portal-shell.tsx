@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import logoAsset from "@/assets/nexsuria-logo.png.asset.json";
 import { getResolvedNav, portal, usePortalStore } from "@/lib/portal-store";
 import { useAuth } from "@/lib/auth";
+import { ContinuousDoc, isDocPath, scrollToDocSection } from "@/components/continuous-doc";
 
 export function PortalShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -19,8 +20,28 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const [scrollPct, setScrollPct] = useState(0);
   const [presenting, setPresenting] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  // Documento contínuo: quando a rota atual é uma sessão do portal, todas as
+  // sessões são renderizadas em uma única página rolável. O menu apenas rola
+  // até a sessão e a rolagem marca sozinha o item ativo.
+  const docMode = isDocPath(pathname);
+  const [docActive, setDocActive] = useState(pathname);
+  const [docTarget, setDocTarget] = useState(pathname);
+  useEffect(() => {
+    if (isDocPath(pathname)) {
+      setDocActive(pathname);
+      setDocTarget(pathname);
+    }
+  }, [pathname]);
+  const activePath = docMode ? docActive : pathname;
+  const goSection = (to: string) => {
+    setDocActive(to);
+    setDocTarget(to);
+    if (window.location.pathname !== to) window.history.replaceState(null, "", to);
+    scrollToDocSection(to, "instant" as ScrollBehavior);
+  };
 
   useEffect(() => setMobileOpen(false), [pathname]);
+
   useEffect(() => {
     const stored = localStorage.getItem("nx-theme");
     if (stored === "dark") { document.documentElement.classList.add("dark"); setDark(true); }
@@ -146,15 +167,15 @@ export function PortalShell({ children }: { children: ReactNode }) {
       if (e.key === "f" || e.key === "F") { e.preventDefault(); togglePresent(); return; }
       if (e.key === "Escape" && presenting) { setPresenting(false); exitFullscreen(); return; }
       if (e.key !== "ArrowDown" && e.key !== "ArrowUp" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
-      const idx = items.findIndex((it) => (it.to === "/" ? pathname === "/" : pathname.startsWith(it.to)));
+      const idx = items.findIndex((it) => (it.to === "/" ? activePath === "/" : activePath.startsWith(it.to)));
       if (idx === -1) return;
       const dir = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1;
       const next = items[(idx + dir + items.length) % items.length];
-      if (next) { e.preventDefault(); navigate({ to: next.to }); }
+      if (next) { e.preventDefault(); if (docMode && isDocPath(next.to)) goSection(next.to); else navigate({ to: next.to }); }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [items, pathname, navigate, presenting]);
+  }, [items, activePath, navigate, presenting, docMode]);
 
   // Rolagem simples e nativa: nenhuma interceptação de wheel/touch/teclado.
   // A troca de sessão acontece somente ao clicar no menu.
@@ -206,7 +227,7 @@ export function PortalShell({ children }: { children: ReactNode }) {
             <div key={group}>
               <ul className="space-y-0.5">
                 {list.map((item) => {
-                  const active = item.to === "/" ? pathname === "/" : pathname.startsWith(item.to);
+                  const active = item.to === "/" ? activePath === "/" : activePath.startsWith(item.to);
                   const num = numberMap.get(item.to) ?? "";
                   return (
                     <li key={item.to}>
@@ -237,6 +258,15 @@ export function PortalShell({ children }: { children: ReactNode }) {
                       >
                       <Link
                         to={item.to}
+                        onClick={(e) => {
+                          // No documento contínuo, o menu não troca de página:
+                          // apenas rola até a sessão (sem piscar a tela).
+                          if (!docMode || !isDocPath(item.to)) return;
+                          if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+                          e.preventDefault();
+                          goSection(item.to);
+                        }}
+
                         
 
                         className={cn(
@@ -453,7 +483,15 @@ export function PortalShell({ children }: { children: ReactNode }) {
           {/* Documento contínuo: o conteúdo não é remontado com fade a partir do
               zero (isso causava o "piscar"). A troca usa View Transitions,
               fazendo um crossfade entre o conteúdo antigo e o novo. */}
-          <div className="nx-doc">{children}</div>
+          {docMode ? (
+            <ContinuousDoc
+              order={items.map((i) => i.to)}
+              initialPath={docTarget}
+              onActiveChange={setDocActive}
+            />
+          ) : (
+            <div className="nx-doc">{children}</div>
+          )}
         </main>
 
 
