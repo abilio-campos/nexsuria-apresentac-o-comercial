@@ -346,13 +346,8 @@
   max-height: calc(100vh - var(--presenting-header-h, 0px) - 5rem);
 }
 
-/* Corrige "salto" visual em Apresentar: algumas páginas (ex.: IA, detalhe
-   de Solução) usam margem negativa (-mt-8) na primeira seção após o
-   cabeçalho para colar visualmente no fundo azul durante a rolagem normal.
-   Em Apresentar essa seção já é posicionada via sticky (regra acima), então
-   a margem negativa só empurra o conteúdo para trás do cabeçalho antes de
-   "grudar", causando sobreposição/pulo ao rolar. Zeramos a margem apenas
-   nesse modo. */
+/* Em Apresentar, zera a margem negativa (-mt-8) da 1ª seção após o
+   cabeçalho para evitar sobreposição com a faixa azul. */
 .presenting main > section.page-header ~ section.-mt-8,
 .presenting main > div > section.page-header ~ section.-mt-8 {
   margin-top: 0 !important;
