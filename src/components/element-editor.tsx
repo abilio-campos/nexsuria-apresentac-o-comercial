@@ -113,7 +113,7 @@ function applyStyles(styles: Record<string, ElStyle>, editMode: boolean) {
         touched.add(child);
       });
     }
-    if (st.w) {
+    if (st.w && st.w >= 120) {
       el.style.setProperty("width", `${st.w}px`, "important");
       el.style.setProperty("max-width", "100%", "important");
     }
