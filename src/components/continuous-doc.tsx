@@ -56,18 +56,25 @@ export function ContinuousDoc({
 }) {
   const paths = order.filter(isDocPath);
   const jumped = useRef<string | null>(null);
+  const settling = useRef(true);
 
   // Ao entrar (ou ao clicar em um item do menu), posiciona na sessão pedida.
   useEffect(() => {
     if (jumped.current === initialPath) return;
     const first = jumped.current === null;
     jumped.current = initialPath;
-    const run = () => scrollToDocSection(initialPath, first ? "auto" : "smooth");
-    if (first) {
-      requestAnimationFrame(() => requestAnimationFrame(run));
-    } else {
-      run();
+    if (!first) {
+      scrollToDocSection(initialPath, "smooth");
+      return;
     }
+    // Na primeira renderização o layout ainda cresce (fontes/imagens), então
+    // reposiciona algumas vezes até estabilizar.
+    settling.current = true;
+    const timers = [0, 80, 200, 450, 800, 1200].map((t) =>
+      window.setTimeout(() => scrollToDocSection(initialPath, "auto"), t),
+    );
+    const done = window.setTimeout(() => { settling.current = false; }, 1400);
+    return () => { timers.forEach(clearTimeout); clearTimeout(done); };
   }, [initialPath]);
 
   // Scroll-spy: marca no menu a sessão visível, sem trocar de rota.
@@ -76,6 +83,7 @@ export function ContinuousDoc({
     let current = initialPath;
     const compute = () => {
       raf = 0;
+      if (settling.current) return;
       const probe = window.innerHeight * 0.3;
       let found = paths[0];
       for (const p of paths) {
@@ -96,6 +104,7 @@ export function ContinuousDoc({
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     compute();
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
