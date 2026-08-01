@@ -467,15 +467,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
 
       {/* Main */}
       <div className={cn("flex-1 flex flex-col min-w-0 transition-[margin] duration-300", collapsed ? "lg:ml-16" : "lg:ml-72", "pt-12 lg:pt-0")}>
-        {presenting && (
-          <button
-            onClick={togglePresent}
-            className="fixed top-4 right-4 z-50 inline-flex items-center gap-2 rounded-full border border-border bg-background/80 backdrop-blur px-3 py-1.5 text-xs text-foreground shadow-lg hover:bg-background"
-            title="Sair da apresentação (Esc)"
-          >
-            <Minimize2 className="h-3.5 w-3.5" /> Sair
-          </button>
-        )}
+        {/* O botão "Sair" fica apenas na barra superior (TopBar). */}
+
         <TopBar
           label={items.find((i) => i.to === activePath)?.label ?? "Nexsuria"}
           index={Math.max(0, items.findIndex((i) => i.to === activePath))}
