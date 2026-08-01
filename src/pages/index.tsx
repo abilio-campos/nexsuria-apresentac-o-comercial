@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Network, Sparkles, Target, BrainCircuit, ShieldCheck, Gauge, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { kpis, solutions, differentials } from "@/lib/nexsuria-data";
-import { EditableText, Hideable, Movable, SectionDivider } from "@/components/editable";
+import { EditableText, Hideable, Movable, Resizable, SectionDivider } from "@/components/editable";
 export function HomePage() {
   return (
     <>
@@ -18,19 +18,25 @@ export function HomePage() {
             </span>
           </Movable>
           <Movable id="home.title.line1.box" label="Título: linha 1">
-            <h1 className="mt-6 max-w-4xl font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight">
-              <EditableText id="home.title.line1" as="span">A Nexsuria não vende software.</EditableText>
-            </h1>
+            <Resizable id="home.title.line1.box" axis="x" minW={280} className="block">
+              <h1 className="mt-6 max-w-4xl font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight">
+                <EditableText id="home.title.line1" as="span">A Nexsuria não vende software.</EditableText>
+              </h1>
+            </Resizable>
           </Movable>
           <Movable id="home.title.line2.box" label="Título: linha 2">
-            <h2 className="max-w-4xl font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight text-white/85">
-              <EditableText id="home.title.line2" as="span">Entregamos evolução empresarial.</EditableText>
-            </h2>
+            <Resizable id="home.title.line2.box" axis="x" minW={280} className="block">
+              <h2 className="max-w-4xl font-[family-name:var(--font-display)] text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight text-white/85">
+                <EditableText id="home.title.line2" as="span">Entregamos evolução empresarial.</EditableText>
+              </h2>
+            </Resizable>
           </Movable>
           <Movable id="home.subtitle.box" label="Texto: subtítulo">
-            <EditableText id="home.subtitle" as="p" multiline className="mt-6 max-w-2xl text-lg text-white/80">
-              {"Conectamos estratégia, tecnologia, Inteligência Artificial, processos e pessoas para acelerar resultados. Um único relacionamento — uma responsabilidade: a nossa."}
-            </EditableText>
+            <Resizable id="home.subtitle.box" axis="x" minW={280} className="block">
+              <EditableText id="home.subtitle" as="p" multiline className="mt-6 max-w-2xl text-lg text-white/80">
+                {"Conectamos estratégia, tecnologia, Inteligência Artificial, processos e pessoas para acelerar resultados. Um único relacionamento — uma responsabilidade: a nossa."}
+              </EditableText>
+            </Resizable>
           </Movable>
           <div className="mt-8 flex flex-wrap gap-3">
             <Hideable id="home.cta.ecossistema" label="Botão Ecossistema">
