@@ -1,3 +1,4 @@
+import type React from "react";
 import { useEffect, useRef } from "react";
 import { HomePage } from "@/pages/index";
 import { QuemSomos } from "@/pages/quem-somos";
