@@ -67,6 +67,7 @@ export type ElStyle = {
   color?: string;
   w?: number;
   h?: number;
+  fixedH?: boolean;
   radius?: number;
   pad?: number;
   fs?: number;
