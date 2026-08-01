@@ -57,9 +57,7 @@ export function ContinuousDoc({
   const paths = order.filter(isDocPath);
   const initialJumpDone = useRef(false);
 
-  // Posiciona uma única vez ao abrir por um endereço direto. Diferente da
-  // implementação anterior, não repetimos o salto enquanto imagens carregam:
-  // isso fazia a sessão seguinte subir rapidamente durante a rolagem.
+  // Posiciona uma única vez ao abrir por um endereço direto.
   useEffect(() => {
     if (initialJumpDone.current) return;
     initialJumpDone.current = true;
@@ -69,8 +67,8 @@ export function ContinuousDoc({
     return () => cancelAnimationFrame(frame);
   }, [initialPath]);
 
-  // Mesmo mecanismo do projeto de referência: o observador apenas marca no
-  // menu a seção com maior área visível. A URL e o scroll nunca são alterados.
+  // O observador apenas marca no menu a seção com maior área visível.
+  // A URL e o scroll nunca são alterados.
   useEffect(() => {
     const pathByElement = new Map<Element, string>();
     const observer = new IntersectionObserver(

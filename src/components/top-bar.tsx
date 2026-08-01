@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import { portal, usePortalStore } from "@/lib/portal-store";
 
 /**
- * Barra fixa no topo da apresentação: marca, progresso das sessões e o
- * botão simples de Apresentar (padrão usado no projeto de referência).
+ * Barra fixa no topo: marca, título, versão, progresso das sessões e o
+ * botão Apresentar.
  */
 export function TopBar({
   label,

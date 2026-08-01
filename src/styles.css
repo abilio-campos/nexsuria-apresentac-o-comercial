@@ -294,7 +294,7 @@
 /* Footer some no modo apresentação */
 .presenting footer { display: none; }
 
-/* ---------- Sticky overlap header + sections ---------- */
+/* ---------- Cabeçalho da sessão + sessões (modo Apresentar) ---------- */
 :root { --presenting-header-h: 0px; }
 
 .presenting main > section,
@@ -319,9 +319,7 @@
   min-height: auto !important;
 }
 
-/* Sessões abaixo da faixa azul: rolagem contínua (sem sobreposição).
-   O cabeçalho azul continua fixo no topo; o conteúdo simplesmente flui
-   e rola normalmente no documento. */
+/* Sessões abaixo da faixa azul: rolagem contínua, sem sobreposição. */
 .presenting main > section.page-header ~ section,
 .presenting main > div > section.page-header ~ section {
   position: relative;
@@ -348,13 +346,8 @@
   max-height: calc(100vh - var(--presenting-header-h, 0px) - 5rem);
 }
 
-/* Corrige "salto" visual em Apresentar: algumas páginas (ex.: IA, detalhe
-   de Solução) usam margem negativa (-mt-8) na primeira seção após o
-   cabeçalho para colar visualmente no fundo azul durante a rolagem normal.
-   Em Apresentar essa seção já é posicionada via sticky (regra acima), então
-   a margem negativa só empurra o conteúdo para trás do cabeçalho antes de
-   "grudar", causando sobreposição/pulo ao rolar. Zeramos a margem apenas
-   nesse modo. */
+/* Em Apresentar, zera a margem negativa (-mt-8) da 1ª seção após o
+   cabeçalho para evitar sobreposição com a faixa azul. */
 .presenting main > section.page-header ~ section.-mt-8,
 .presenting main > div > section.page-header ~ section.-mt-8 {
   margin-top: 0 !important;
@@ -527,17 +520,12 @@
 /* Sidebar drag */
 .nav-drag-over { outline: 2px dashed var(--primary); outline-offset: -2px; border-radius: 8px; }
 
-/* ---------- Rolagem simples ---------- */
-/* Sem animações de troca de sessão: a navegação é instantânea e a rolagem é
-   a nativa do navegador. */
+/* ---------- Documento contínuo (rolagem nativa) ---------- */
 .nx-doc {
   background-color: var(--background);
 }
 
-/* No documento contínuo cada sessão traz seu próprio cabeçalho azul. Se ele
-   ficar sticky, o cabeçalho da sessão seguinte "entra por cima" e some, o que
-   dá a impressão de piscar. Aqui a rolagem é simples: nada é sticky, nada
-   sobrepõe. */
+/* Nenhum cabeçalho de sessão é sticky: evita que um entre por cima do outro. */
 .nx-doc section.page-header,
 .presenting .nx-doc section.page-header,
 .presenting .nx-doc main > section.page-header,
@@ -547,8 +535,7 @@
   z-index: 1 !important;
 }
 
-/* Sessões do documento fluem uma após a outra, sem sombras/limites de altura
-   que criem "degraus" durante a rolagem. */
+/* Sessões fluem uma após a outra, sem limites de altura. */
 .nx-doc .nx-doc-section {
   position: relative;
   scroll-margin-top: 0;
@@ -559,12 +546,7 @@
   min-height: 0 !important;
 }
 
-
-
-
 /* ---------- Correções de sobreposição de layout ---------- */
-/* O cabeçalho azul fica fixo no topo em Apresentar; sem fundo opaco o
-   conteúdo rolava visível atrás dele. */
 .presenting main > section.page-header,
 .presenting main > div > section.page-header {
   background: var(--background);
