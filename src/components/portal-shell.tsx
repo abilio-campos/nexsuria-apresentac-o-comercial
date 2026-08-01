@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import logoAsset from "@/assets/nexsuria-logo.png.asset.json";
 import { getResolvedNav, portal, usePortalStore } from "@/lib/portal-store";
 import { useAuth } from "@/lib/auth";
+import { ContinuousDoc, isDocPath, scrollToDocSection } from "@/components/continuous-doc";
 
 export function PortalShell({ children }: { children: ReactNode }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
