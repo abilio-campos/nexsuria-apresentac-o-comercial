@@ -673,32 +673,36 @@ export function Resizable({
   return (
     <Tag
       ref={ref as any}
-      className={cn("relative group/resizable", className)}
+      onMouseDown={(e: React.MouseEvent) => {
+        e.stopPropagation();
+        setActiveTarget(`rz:${id}`);
+      }}
+      className={cn("relative nx-selectable", isActive && "nx-selected", className)}
       style={appliedStyle}
     >
       {children}
-      {(axis === "x" || axis === "both") && (
+      {isActive && (axis === "x" || axis === "both") && (
         <span
           onMouseDown={startResize("x")}
           title="Redimensionar largura"
-          className="absolute top-1/2 -right-1 -translate-y-1/2 z-20 h-8 w-2 rounded-full bg-primary/70 hover:bg-primary cursor-ew-resize shadow ring-1 ring-white/30"
+          className="absolute top-1/2 -right-1 -translate-y-1/2 z-20 h-10 w-2.5 rounded-full bg-primary cursor-ew-resize shadow ring-1 ring-white/40"
         />
       )}
-      {(axis === "y" || axis === "both") && (
+      {isActive && (axis === "y" || axis === "both") && (
         <span
           onMouseDown={startResize("y")}
           title="Redimensionar altura"
-          className="absolute left-1/2 -bottom-1 -translate-x-1/2 z-20 h-2 w-8 rounded-full bg-primary/70 hover:bg-primary cursor-ns-resize shadow ring-1 ring-white/30"
+          className="absolute left-1/2 -bottom-1 -translate-x-1/2 z-20 h-2.5 w-10 rounded-full bg-primary cursor-ns-resize shadow ring-1 ring-white/40"
         />
       )}
-      {axis === "both" && (
+      {isActive && axis === "both" && (
         <span
           onMouseDown={startResize("both")}
           title="Redimensionar"
-          className="absolute -right-1 -bottom-1 z-20 h-3 w-3 rounded-sm bg-primary hover:scale-110 cursor-nwse-resize shadow ring-1 ring-white/30"
+          className="absolute -right-1 -bottom-1 z-20 h-3.5 w-3.5 rounded-sm bg-primary hover:scale-110 cursor-nwse-resize shadow ring-1 ring-white/40"
         />
       )}
-      {(size?.w != null || size?.h != null) && (
+      {isActive && (size?.w != null || size?.h != null) && (
         <button
           type="button"
           onClick={() => portal.setSize(id, null)}
@@ -710,5 +714,6 @@ export function Resizable({
       )}
     </Tag>
   );
+
 }
 
