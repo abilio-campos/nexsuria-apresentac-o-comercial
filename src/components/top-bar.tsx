@@ -44,7 +44,7 @@ export function TopBar({
         {!presenting && (
           <button
             type="button"
-            onClick={() => portal.setEditMode(!s.editMode)}
+            onClick={() => portal.toggleEdit()}
             className={cn(
               "hidden sm:inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium",
               s.editMode
