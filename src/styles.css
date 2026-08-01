@@ -527,30 +527,13 @@
 /* Sidebar drag */
 .nav-drag-over { outline: 2px dashed var(--primary); outline-offset: -2px; border-radius: 8px; }
 
-/* ---------- Documento contínuo: troca de sessão sem "piscar" ---------- */
-/* O conteúdo principal participa de uma View Transition: o navegador faz um
-   crossfade entre a sessão antiga e a nova, sem tela branca intermediária. */
+/* ---------- Rolagem simples ---------- */
+/* Sem animações de troca de sessão: a navegação é instantânea e a rolagem é
+   a nativa do navegador. */
 .nx-doc {
-  view-transition-name: nx-doc;
   background-color: var(--background);
 }
 
-::view-transition-old(nx-doc),
-::view-transition-new(nx-doc) {
-  animation-duration: 320ms;
-  animation-timing-function: ease;
-  mix-blend-mode: normal;
-}
-::view-transition-old(nx-doc) { animation-name: nxFadeOut; }
-::view-transition-new(nx-doc) { animation-name: nxFadeIn; }
-
-@keyframes nxFadeOut { from { opacity: 1; } to { opacity: 0; } }
-@keyframes nxFadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(nx-doc),
-  ::view-transition-new(nx-doc) { animation: none; }
-}
 
 
 /* ---------- Correções de sobreposição de layout ---------- */
