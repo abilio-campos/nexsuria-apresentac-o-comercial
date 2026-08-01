@@ -120,6 +120,11 @@ export function PortalShell({ children }: { children: ReactNode }) {
     return () => { document.documentElement.classList.remove("presenting"); };
   }, [presenting]);
   useEffect(() => {
+    document.documentElement.classList.toggle("nx-editing", store.editMode);
+    return () => { document.documentElement.classList.remove("nx-editing"); };
+  }, [store.editMode]);
+
+  useEffect(() => {
     const onFs = () => {
       const d = document as any;
       const fs = !!(d.fullscreenElement || d.webkitFullscreenElement);
