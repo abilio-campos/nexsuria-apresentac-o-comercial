@@ -624,11 +624,14 @@ export function Resizable({
   as?: "div" | "section" | "span";
 }) {
   const s = usePortalStore();
+  const active = useActiveTarget();
+  const isActive = active === `rz:${id}`;
   const size = s.sizes[id];
   const w = size?.w ?? defaultW;
   const h = size?.h ?? defaultH;
   const Tag = as as any;
   const ref = useRef<HTMLElement>(null);
+
 
   const startResize = (dir: "x" | "y" | "both") => (e: React.MouseEvent) => {
     e.preventDefault();
