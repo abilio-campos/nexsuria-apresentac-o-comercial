@@ -26,7 +26,7 @@ export function TopBar({
   return (
     <div className="nx-topbar sticky top-12 lg:top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-14 w-full max-w-[1180px] items-center gap-4 px-4">
-        <img src={logo} alt="Nexsuria" className="h-6 w-auto shrink-0" />
+        <img src={logoAsset.url} alt="Nexsuria" className="h-7 w-7 object-contain shrink-0" />
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
             <span className="text-[11px] font-mono text-muted-foreground">
