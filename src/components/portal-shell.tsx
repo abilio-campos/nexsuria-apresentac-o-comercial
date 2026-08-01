@@ -180,17 +180,24 @@ export function PortalShell({ children }: { children: ReactNode }) {
 
       lock = true;
       accum = 0;
-      void navigate({ to: target.to });
+      const el = scroller();
+      // Posiciona o scroll ANTES da troca, para não haver salto visível.
+      const prevBehavior = el.style.scrollBehavior;
+      el.style.scrollBehavior = "auto";
+      el.scrollTop = dir === 1 ? 0 : el.scrollHeight;
+      el.style.scrollBehavior = prevBehavior;
+      void navigate({ to: target.to, viewTransition: true, resetScroll: false });
       const settle = () => {
-        const el = scroller();
-        const prev = el.style.scrollBehavior;
-        el.style.scrollBehavior = "auto";
-        el.scrollTop = dir === 1 ? 0 : el.scrollHeight;
-        el.style.scrollBehavior = prev;
+        const s = scroller();
+        const prev = s.style.scrollBehavior;
+        s.style.scrollBehavior = "auto";
+        s.scrollTop = dir === 1 ? 0 : s.scrollHeight;
+        s.style.scrollBehavior = prev;
       };
       requestAnimationFrame(settle);
       setTimeout(settle, 120);
       setTimeout(() => { lock = false; }, 700);
+
     };
     const intent = (delta: number) => {
       if (lock || idx === -1) return;
