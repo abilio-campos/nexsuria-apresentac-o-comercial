@@ -19,8 +19,28 @@ export function PortalShell({ children }: { children: ReactNode }) {
   const [scrollPct, setScrollPct] = useState(0);
   const [presenting, setPresenting] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  // Documento contínuo: quando a rota atual é uma sessão do portal, todas as
+  // sessões são renderizadas em uma única página rolável. O menu apenas rola
+  // até a sessão e a rolagem marca sozinha o item ativo.
+  const docMode = isDocPath(pathname);
+  const [docActive, setDocActive] = useState(pathname);
+  const [docTarget, setDocTarget] = useState(pathname);
+  useEffect(() => {
+    if (isDocPath(pathname)) {
+      setDocActive(pathname);
+      setDocTarget(pathname);
+    }
+  }, [pathname]);
+  const activePath = docMode ? docActive : pathname;
+  const goSection = (to: string) => {
+    setDocActive(to);
+    setDocTarget(to);
+    if (window.location.pathname !== to) window.history.replaceState(null, "", to);
+    scrollToDocSection(to, "smooth");
+  };
 
   useEffect(() => setMobileOpen(false), [pathname]);
+
   useEffect(() => {
     const stored = localStorage.getItem("nx-theme");
     if (stored === "dark") { document.documentElement.classList.add("dark"); setDark(true); }
