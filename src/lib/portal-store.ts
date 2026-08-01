@@ -84,7 +84,7 @@ type State = {
   listOrders: Record<string, string[]>;
   listHidden: Record<string, string[]>;
   positions: Record<string, { x: number; y: number }>;
-  sizes: Record<string, { w?: number; h?: number }>;
+  sizes: Record<string, { w?: number; h?: number; fixedH?: boolean }>;
   elStyles: Record<string, ElStyle>;
   spacers: Record<string, number[]>;
   btnScale: "p" | "m" | "g" | "gg";
