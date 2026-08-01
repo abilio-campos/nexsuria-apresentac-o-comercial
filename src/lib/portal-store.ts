@@ -262,9 +262,9 @@ export const portal = {
     else delete positions[id];
     set({ positions });
   },
-  setSize(id: string, size: { w?: number; h?: number } | null) {
+  setSize(id: string, size: { w?: number; h?: number; fixedH?: boolean } | null) {
     const sizes = { ...state.sizes };
-    if (size && (size.w != null || size.h != null)) sizes[id] = size;
+    if (size && (size.w != null || size.h != null || size.fixedH != null)) sizes[id] = size;
     else delete sizes[id];
     set({ sizes });
   },
