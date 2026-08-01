@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X, Moon, Sun, Pencil, Settings2, ChevronLeft, LogIn, LogOut, User, PanelLeft, Maximize2, Minimize2, GripVertical, Trash2 } from "lucide-react";
+import { Menu, X, Moon, Sun, Pencil, Settings2, ChevronLeft, LogIn, LogOut, User, PanelLeft, GripVertical, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
