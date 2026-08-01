@@ -59,12 +59,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
     return () => { document.body.style.overflow = overflow; };
   }, [mobileOpen]);
   useEffect(() => {
-    // Calcula o progresso de rolagem da página. Em modo Apresentar, cada
-    // seção vira seu próprio container com rolagem interna (overflow-y:
-    // auto), então o scroll não acontece mais no document — por isso o
-    // listener usa capture (3º parâmetro "true") para também escutar a
-    // rolagem que ocorre dentro dessas seções, e calcula a porcentagem em
-    // cima do elemento que de fato rolou (e.target), não sempre do html.
+    // Progresso de rolagem: o listener usa capture para também captar
+    // rolagem interna de containers, calculando a % sobre quem rolou.
     const pct = (el: HTMLElement) => {
       const max = el.scrollHeight - el.clientHeight;
       return max > 0 ? Math.min(100, Math.max(0, (el.scrollTop / max) * 100)) : 0;
