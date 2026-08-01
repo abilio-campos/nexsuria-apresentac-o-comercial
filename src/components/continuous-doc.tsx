@@ -16,7 +16,7 @@ import { Contato } from "@/pages/contato";
  * O menu deixa de "trocar de página": ele apenas rola até a sessão, e a
  * rolagem contínua marca automaticamente o item correspondente no menu.
  */
-export const DOC_SECTIONS: Record<string, () => JSX.Element> = {
+export const DOC_SECTIONS: Record<string, () => React.ReactElement> = {
   "/": HomePage,
   "/quem-somos": QuemSomos,
   "/metodologia": Metodologia,
