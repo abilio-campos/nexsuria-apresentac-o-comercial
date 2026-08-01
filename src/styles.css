@@ -397,3 +397,13 @@ main > div > section { position: relative; }
   outline: 2px solid var(--primary);
   outline-offset: 3px;
 }
+
+/* Ao editar dentro do modo Apresentar, o cabeçalho deixa de flutuar para
+   que as alças e controles do item selecionado não se misturem a ele. */
+.presenting.nx-editing main > section.page-header,
+.presenting.nx-editing main > div > section.page-header {
+  position: relative;
+  top: auto;
+  z-index: 1;
+}
+
