@@ -173,8 +173,8 @@ export function PortalShell({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [items, activePath, navigate, presenting, docMode]);
 
-  // Rolagem simples e nativa: nenhuma interceptação de wheel/touch/teclado.
-  // A troca de sessão acontece somente ao clicar no menu.
+
+
 
 
 
